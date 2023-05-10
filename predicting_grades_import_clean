@@ -7,10 +7,10 @@ full = pd.read_csv('Copy of GCSE Science 2022-2023 - Y11 combined.csv')
 #to get target grades and pass grades
 just_grades = full[['FFT20', 'Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']]
 #to see what needs to be cleared
-display(just_grades.describe())
+print(just_grades.describe())
 
 #To see if I can just clean the missing data
-display(just_grades.isna().sum().sort_values(), len(just_grades) * 0.05)
+print(just_grades.isna().sum().sort_values(), len(just_grades) * 0.05)
 
 #less then 5% of the data is nan so can be removed
 
@@ -56,11 +56,11 @@ for col in columns:
 full_clean_grades = clean_grades.dropna(axis=0)
 
 #All the same legth, all objects 
-display(full_clean_grades.info())
+print(full_clean_grades.info())
 
 #all the correct possible unique values
 for col in columns:
-    display(full_clean_grades[col].unique())
+    print(full_clean_grades[col].unique())
     
 #needs to be exported back as clean file
 full_clean_grades.to_csv('clean_prediction.csv')
