@@ -3,8 +3,9 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import r2_score, mean_squared_error
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.linear_model import Lasso
+import matplotlib.pyplot as plt
 
 learning_grades = pd.read_csv('clean_prediction.csv')
 
@@ -39,9 +40,6 @@ print("Root Mean Squared Error (RMSE): {:.2f}".format(rmse))
 print("R2 score:", r2)
 
 #The above R2 scoreis so hight I will be checking that the data is not overfit
-
-from sklearn.model_selection import KFold, cross_val_score, learning_curve
-import matplotlib.pyplot as plt
 
 kfold = KFold(n_splits=10, shuffle=True, random_state=15)
 scores = cross_val_score(rf, X, y, cv=kfold, scoring='r2')
