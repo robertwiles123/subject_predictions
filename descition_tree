@@ -1,0 +1,39 @@
+from sklearn.tree import DecisionTreeRegressor
+
+dtr = DecisionTreeRegressor(random_state=142, max_depth=6, min_samples_leaf=1)
+
+dtr.fit(X_test, y_test)
+
+y_pred_dtr = dtr.predict(X_test)
+
+mse_dtr = mean_squared_error(y_test, y_pred_dtr)
+rmse_dtr = np.sqrt(mse_dtr)
+r2_dtr = r2_score(y_test, y_pred_dtr)
+
+print('Mean Squared Error (MSE):', mse_dtr)
+print('Root Mean Squared Error (RMSE):', rmse_dtr)
+print('R2 Score:', r2_dtr)
+
+#to check for overfitting
+
+kfold = KFold(n_splits=10, shuffle=True, random_state=15)
+scores = cross_val_score(dtr, X, y, cv=kfold, scoring='r2')
+#the cross-validated scores are very similar, reducing the chance that the model is overfitted
+print('Cross-validation scores:', scores)
+
+train_sizes, train_scores, test_scores = learning_curve(dtr, X, y, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
+                                                        
+train_mean = np.mean(train_scores, axis=1)
+train_std = np.std(train_scores, axis=1)
+test_mean = np.mean(test_scores, axis=1)
+test_std = np.std(test_scores, axis=1)
+                                                        
+plt.plot(train_sizes, train_mean, color='blue', marker='o', markersize=5, label='training score')
+plt.fill_between(train_sizes, train_mean + train_std, train_mean - train_std, alpha=0.15, color='blue')
+plt.plot(train_sizes, test_mean, color='green', linestyle='--', marker='s', markersize=5, label='test score')
+plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, alpha=0.15, color='green')
+plt.xlabel('Number of training samples')
+plt.ylabel('Score')
+plt.legend(loc='lower right')
+plt.ylim([0.99, 1.01])
+plt.show()
