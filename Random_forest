@@ -1,10 +1,12 @@
+import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import Lasso
 
-learning_grades = full_clean_grades.copy()
+learning_grades = pd.read_csv('clean_prediction.csv')
 
 le = LabelEncoder()
 learning_grades['Year 10 Combined MOCK GRADE'] = le.fit_transform(learning_grades['Year 10 Combined MOCK GRADE'])
