@@ -13,11 +13,7 @@ learning_grades['Year 10 Combined MOCK GRADE'] = le.fit_transform(learning_grade
 learning_grades['Combined MOCK GRADE term 2'] = le.fit_transform(learning_grades['Combined MOCK GRADE term 2'])
 learning_grades['Combined MOCK GRADE Term 4'] = le.fit_transform(learning_grades['Combined MOCK GRADE Term 4'])
 
-"""
-Started with this to create, but realised that I had not split the data to allow accuracy testing
-X_train = learning_grades[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
-y_train = learning_grades['Combined MOCK GRADE Term 4']
-X_test = X_train"""
+
 #when I have final grades to add in to this, will need to remove the y to join x and have true grade for y
 X = learning_grades[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
 y = learning_grades['Combined MOCK GRADE Term 4']
