@@ -1,0 +1,66 @@
+#improting and cleaning data
+import numpy as np
+import pandas as pd
+
+full = pd.read_csv('Copy of GCSE Science 2022-2023 - Y11 combined.csv')
+
+#to get target grades and pass grades
+just_grades = full[['FFT20', 'Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']]
+#to see what needs to be cleared
+display(just_grades.describe())
+
+#To see if I can just clean the missing data
+display(just_grades.isna().sum().sort_values(), len(just_grades) * 0.05)
+
+#less then 5% of the data is nan so can be removed
+
+
+#17 FFT20 there should only be 8 for values 1-9 inclusive
+#display(pd.unique(just_grades['FFT20']))
+
+just_grades_no_nan = just_grades.dropna(axis=0)
+just_grades_clean_FFT20 = just_grades_no_nan.copy()
+just_grades_clean_FFT20['FFT20'] = just_grades_no_nan['FFT20'].str.replace('[^\d]', '')
+
+#data has been cleaned and simplified to allow greater comparison
+#display(pd.unique(just_grades_clean_FFT20['FFT20']))
+
+#there are now too many grades in all three scores as well as U. This is due to scores being 1-1, 1-2 etc. it would be better to show it as 1, 1.5 respectably. And to change the U to a 0
+#display(just_grades_clean_FFT20.describe())
+
+#collect column names to clean one after another
+columns = []
+for col in just_grades_clean_FFT20.columns:
+    columns.append(col)
+
+clean_grades = just_grades_clean_FFT20.copy()
+
+#First did this to analyse any corrolation, but later realised that it is infact more useful if wanting to use this to predict grades to keep it as catagorical
+"""
+#dictonary of grades as hyphones in to grades as decimals
+replacements = {
+    'U': 0, '1-1': 1, '2-1': 1.5, '2-2': 2, '3-2': 2.5, '3-3': 3, '4-3': 3.5, '4-4': 4, '5-4': 4.5,
+    '5-5': 5, '6-5': 5.5, '6-6': 6, '7-6': 6.5, '7-7': 7, '8-7': 7.5, '8-8': 8, '9-8': 8.5,
+    '9-9': 9
+}
+
+for col in column:
+    clean_grades[col] = just_grades_clean_FFT20[col].replace(replacements)"""
+    
+#When looking through the data it seems that year 10 has 'Ab' to show absance and 'Combined OMCK GRADE term 4' as 'ABS'
+#display(clean_grades.info())
+
+for col in columns:
+    clean_grades[col] = clean_grades[col].replace({'Ab': np.nan, 'Abs':np.nan})
+
+full_clean_grades = clean_grades.dropna(axis=0)
+
+#All the same legth, all objects 
+display(full_clean_grades.info())
+
+#all the correct possible unique values
+for col in columns:
+    display(full_clean_grades[col].unique())
+    
+#needs to be exported back as clean file
+full_clean_grades.to_csv('clean_prediction.csv')
