@@ -1,3 +1,4 @@
+#could try importing more features, such as FFT20, intervention, PPE etc. and looking at importance to see what has the greatest effect on predicting grades
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
