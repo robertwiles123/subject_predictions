@@ -7,19 +7,30 @@ from sklearn.model_selection import train_test_split, KFold, cross_val_score, le
 from sklearn.linear_model import Lasso
 import matplotlib.pyplot as plt
 
-learning_grades = full_clean_grades
+file_name = input('What file do you want to test? ')
+learning_grades = pd.read_csv(file_name)
 
 le = LabelEncoder()
-columns_to_encode = ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']
 
-for col in columns_to_encode:
+type_science = input('Is it triple or combined? ')
+
+if type_science.lower()[0] == 'c':
+    columns_to_encode = ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']
     le = LabelEncoder()
-    learning_grades[col] = le.fit_transform(learning_grades[col])
+    for col in columns_to_encode:
+        learning_grades[col] = le.fit_transform(learning_grades[col])
+    X = learning_grades[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
+    y = learning_grades['Combined MOCK GRADE Term 4']
+else:
+    columns_to_encode = ['FFT20', 'year 10 bio grade', 'year 10 chem grade', 'year 10 phys grade', 
+                        'year 11 paper 1 bio grade', 'year 11 paper 1 chem grade', 'year 11 paper 1 phys grade',
+                        'year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade']
+    for col in columns_to_encode:
+        learning_grades[col] = le.fit_transform(learning_grades[col])
+    X = learning_grades[['year 10 bio grade', 'year 10 chem grade', 'year 10 phys grade', 
+                        'year 11 paper 1 bio grade', 'year 11 paper 1 chem grade', 'year 11 paper 1 phys grade']]
+    y = learning_grades[['year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade']]
 
-
-#when I have final grades to add in to this, will need to remove the y to join x and have true grade for y
-X = learning_grades[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
-y = learning_grades['Combined MOCK GRADE Term 4']
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,random_state=42)
@@ -38,7 +49,8 @@ rmse = np.sqrt(mse)
 r2 = r2_score(y_test, y_pred)
 print("Mean Squared Error (MSE): {:.2f}".format(mse))
 #thows an error due to difference in size, needs to be looked at
-print('Train MSE {:.2f}'.format(mean_squared_error(y_train[:41], y_pred)))
+y_train_size = y_pred.shape[0]
+print('Train MSE {:.2f}'.format(mean_squared_error(y_train[:y_train_size], y_pred)))
 print('testMSE {:.2f}'.format(mean_squared_error(y_test, y_pred)))
 
 print("Root Mean Squared Error (RMSE): {:.2f}".format(rmse))
