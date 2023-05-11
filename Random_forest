@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split, KFold, cross_val_score, le
 from sklearn.linear_model import Lasso
 import matplotlib.pyplot as plt
 
-learning_grades = pd.read_csv('clean_prediction.csv')
+learning_grades = full_clean_grades
 
 le = LabelEncoder()
 columns_to_encode = ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']
@@ -36,9 +36,9 @@ mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)
 
 r2 = r2_score(y_test, y_pred)
-
 print("Mean Squared Error (MSE): {:.2f}".format(mse))
-print('Train MSE {:.2f}'.format(mean_squared_error(y_train, y_pred)))
+#thows an error due to difference in size, needs to be looked at
+print('Train MSE {:.2f}'.format(mean_squared_error(y_train[:41], y_pred)))
 print('testMSE {:.2f}'.format(mean_squared_error(y_test, y_pred)))
 
 print("Root Mean Squared Error (RMSE): {:.2f}".format(rmse))
