@@ -1,4 +1,19 @@
 #could try importing more features, such as FFT20, intervention, PPE etc. and looking at importance to see what has the greatest effect on predicting grades
+#need to add in more features and compare which is most useful, things like FFT20, PPE, inteventions using something like bellow
+"""
+# Create a pd.Series of features importances
+importances = pd.Series(data=rf.feature_importances_,
+                        index= X_train.columns)
+
+# Sort importances
+importances_sorted = importances.sort_values()
+
+# Draw a horizontal barplot of importances_sorted
+importances_sorted.plot(kind='barh', color='lightgreen')
+plt.title('Features Importances')
+plt.show()
+"""
+
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
