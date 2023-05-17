@@ -6,6 +6,8 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
+#using joblib as it is more secure and will be predicting data based on GDPR and as all within sklearn the compatability isn't an issue
+from joblib import dump
 
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv(file_name)
@@ -79,3 +81,10 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0.99, 1.01])
 plt.show()
+
+
+save = input('should it be saved? ')
+if save[0].strip().lower() == 'y':
+    name = input('what is the name of the program? ')
+    dump(lr, name+'.joblib')
+
