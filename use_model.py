@@ -4,7 +4,8 @@ from joblib import load
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
 
-combined = pd.read_csv('combined.csv')
+combined = pd.read_csv('combined_clean.csv')
+
 
 combined_models_to_predict = ['combined_linear']
 combined_models_to_predict_dict = {}
@@ -36,7 +37,12 @@ def run_test(data, models=combined_models_to_predict_dict):
             encoded_prediction_data = combined_data[len(combined):]
             encoded_prediction_data = encoded_prediction_data[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
             prediction = v.predict(encoded_prediction_data)
-            outcomes[k] = le.inverse_transform(prediction)
+
+            # to be used when i have more info and can reverse the data
+            # outcomes[k] = le.inverse_transform(prediction)
+            # being used to check that something is being outputted
+            outcomes[k] = prediction
+
         else:
             print('Neither')
     return outcomes
