@@ -4,6 +4,8 @@ from joblib import load
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
 
+combined = pd.read_csv('combined.csv')
+
 combined_models_to_predict = ['combined_linear']
 combined_models_to_predict_dict = {}
 
@@ -23,15 +25,18 @@ def run_test(data, models=combined_models_to_predict_dict):
     for k, v in combined_models_to_predict_dict.items():
         if isinstance(data, str):
             print('oops')
+        #currently does not work, as I do not have enough training data and have missing encoudings. This happens with one shot encouding as well
         elif isinstance(data, pd.DataFrame):
             le = LabelEncoder()
             encoded_data = data.copy()
-            col_to_encode = ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']
+            col_to_encode = ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']
+            combined_data = pd.concat([combined, encoded_data])
             for col in col_to_encode:
-                encoded_data[col] = le.fit_transform(data[col])
-            prediction = v.predict(encoded_data)
-            print(prediction)
-            outcomes[k] = prediction
+                combined_data[col] = le.fit_transform(combined_data[col])
+            encoded_prediction_data = combined_data[len(combined):]
+            encoded_prediction_data = encoded_prediction_data[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
+            prediction = v.predict(encoded_prediction_data)
+            outcomes[k] = le.inverse_transform(prediction)
         else:
             print('Neither')
     return outcomes
