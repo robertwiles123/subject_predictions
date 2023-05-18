@@ -1,5 +1,4 @@
 Notes for future:
-Change if else statement to a function taking in the file name, the columns to use
 On each, create a dictonary from the col names with numbers assosicated - show dict to user and let them pick which catagories they want to use for the relevant file
 Change the cleaning file to simplify the names, doing this will mean changing the code in other places, but will make further code, and future CSV easier to fill
 Complete a Feature Selection to make sure what I am using is the best options
