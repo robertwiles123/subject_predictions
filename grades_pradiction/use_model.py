@@ -20,7 +20,7 @@ data = input('What data do you want to use? If a file, include .csv: ')
 
 if data.endswith('.csv'):
     data = pd.read_csv(data)
-
+# need to see if I can use my own package to do this, not sure it'll fit on this laptop, screen too small
 def run_test(data, models=combined_models_to_predict_dict):
     outcomes = {}
     for k, v in combined_models_to_predict_dict.items():
