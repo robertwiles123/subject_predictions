@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "./grades_packages",
+        "./grades_packages",
+        "./grades_packages"
+    ]
+}
