@@ -5,25 +5,12 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
-from grades_packages.preprocessing import encoding
-#using joblib as it is more secure and will be predicting data based on GDPR and as all within sklearn the compatability isn't an issue
-=======
 import encoding
 # using joblib as it is more secure and will be predicting data based on GDPR and as all within sklearn the compatability isn't an issue
->>>>>>> 48751b4 (large update to one hot coding)
 from joblib import dump
 
 # import whatever file I want to test
 file_name = input('What file do you want to test? ')
-<<<<<<< HEAD
-
-learning_grades = pd.read_csv(file_name)
-
-type_science = input('Is it triple or combined? ')
-
-learning_grades, X, y = encoding.le_science(learning_grades, type_science)
-=======
 
 learning_grades = pd.read_csv(file_name)
 
@@ -37,7 +24,6 @@ type_science = input('Is it triple or combined? ')
 # the label encoder was not effective at creating predicted grades. When chaging to a one hot encoder the model became less effective
 # May be worth adding in new variables and seeing how this affects the data
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
->>>>>>> 48751b4 (large update to one hot coding)
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
