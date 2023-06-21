@@ -92,4 +92,4 @@ grades_recoded = full_clean_grades.copy()
 for col in columns:
     grades_recoded[col] = full_clean_grades[col].map(grade_mapping)    
 file_out = input('What is the name of the output file, do not include file type: ')
-full_clean_grades.to_csv(file_out+'.csv')
+grades_recoded.to_csv(file_out+'.csv')
