@@ -63,7 +63,7 @@ print(full_clean_grades.info())
 # all the correct possible unique values
 for col in columns:
     print(full_clean_grades[col].unique())
-"""
+
 # after working with this data I think converting the grades in to '0' '1' '1.5' '2' would work better
 grade_mapping = {
     'U': 0,
@@ -91,6 +91,5 @@ grades_recoded = full_clean_grades.copy()
 # not working with fft20 atm as grades are different then the mapping
 for col in columns:
     grades_recoded[col] = full_clean_grades[col].map(grade_mapping)    
-"""
 file_out = input('What is the name of the output file, do not include file type: ')
 full_clean_grades.to_csv(file_out+'.csv')
