@@ -5,18 +5,40 @@ from sklearn.model_selection import train_test_split, KFold, cross_val_score, le
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 import encoding
+from joblib import dump
+# from sklearn.model_selection import GridSearchCV
 
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv(file_name)
 
 type_science = input('Is it triple or combined? ')
 
-learning_grades, X, y = encoding.le_science(learning_grades, type_science)
+encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
+
+"""
+dt = DecisionTreeRegressor()
+
+param_grid = {
+    'max_depth': [3, 5, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}
+
+# Create the GridSearchCV object
+grid_search = GridSearchCV(dt, param_grid, cv=5)
+
+# Perform grid search on the dataset
+grid_search.fit(X, y)
+
+# Print the best parameters and best score found during grid search
+print("Best Parameters: ", grid_search.best_params_)
+print("Best Score: ", grid_search.best_score_)
+"""
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-dtr = DecisionTreeRegressor(random_state=142, max_depth=6, min_samples_leaf=1)
+dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=2, min_samples_split=2)
 
 dtr.fit(X_test, y_test)
 
@@ -57,3 +79,8 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0.99, 1.01])
 plt.show()
+
+save = input('should it be saved? ')
+if save[0].strip().lower() == 'y':
+    dump(dtr, 'descition_tree.joblib')
+    dump(encoder, 'descition_tree_encoding.joblib')

@@ -1,13 +1,12 @@
 import pandas as pd
 from joblib import load
 import encoding
-import numpy as np
 
 data = input('What do you want to predict? ')
 # clean combined dataframe
 
 # current models I have, though this will be added to and taken away with more data, with accuracy
-combined_models_to_predict = ['combined_linear', 'random_forest']
+combined_models_to_predict = ['combined_linear', 'random_forest', 'descition_tree']
 combined_models_to_predict_dict = {}
 
 # populate a dict of model with the file so can apply them later as neeeded
