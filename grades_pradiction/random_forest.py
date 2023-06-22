@@ -1,18 +1,3 @@
-# could try importing more features, such as FFT20, intervention, PPE etc. and looking at importance to see what has the greatest effect on predicting grades
-# need to add in more features and compare which is most useful, things like FFT20, PPE, inteventions using something like bellow
-"""
-# Create a pd.Series of features importances
-importances = pd.Series(data=rf.feature_importances_,
-                        index= X_train.columns)
-
-# Sort importances
-importances_sorted = importances.sort_values()
-
-# Draw a horizontal barplot of importances_sorted
-importances_sorted.plot(kind='barh', color='lightgreen')
-plt.title('Features Importances')
-plt.show()
-"""
 import encoding
 import pandas as pd
 import numpy as np
@@ -20,18 +5,44 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 import matplotlib.pyplot as plt
+from joblib import dump
+# from sklearn.model_selection import GridSearchCV
 
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv(file_name)
 
 type_science = input('Is it triple or combined? ')
 
-learning_grades, X, y = encoding.le_science(learning_grades, type_science)
+encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+"""
+param_grid = {
+    'max_depth': [3, 5, 7, 10],
+    'n_estimators': [50, 100, 200],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4],
+    'max_features': ['sqrt', 'log2'],
+    'max_samples': [None, 0.5, 0.8],
+    'bootstrap': [True, False],
+    'random_state': [42]
+}
 
-rf = RandomForestRegressor(random_state=1, n_estimators=50, max_depth=3, min_samples_leaf=3)
+# Starting model
+rf_model = RandomForestRegressor()
+
+# Perform grid search with cross-validation
+grid_search = GridSearchCV(rf_model, param_grid, cv=5, scoring='neg_mean_squared_error')
+grid_search.fit(X_train, y_train)
+
+# Print the best hyperparameters and corresponding score
+print("Best hyperparameters:")
+print(grid_search.best_params_)
+print("Best Score (Negative MSE):", -grid_search.best_score_)
+"""
+
+rf = RandomForestRegressor(random_state=42, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=200)
 
 
 rf.fit(X_train, y_train)
@@ -77,3 +88,8 @@ plt.ylim([0.8, 1.0])
 plt.show()
 
 # It seems the model is good for making predictions if there are enough data points. I will continue to work on this if there is more data avalible
+
+save = input('should it be saved? ')
+if save[0].strip().lower() == 'y':
+    dump(rf, 'random_forest.joblib')
+    dump(encoder, 'random_forest_encoding.joblib')

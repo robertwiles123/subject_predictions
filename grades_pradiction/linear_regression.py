@@ -76,12 +76,8 @@ plt.legend(loc='lower right')
 plt.ylim([0.99, 1.01])
 plt.show()
 
-
-print(encoder)
 # if data is good give option to save and name to save
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
-    name = input('what is the name of the program? ')
-    dump(lr, name+'.joblib')
-    encoder = input('name encoder ')
-    dump(encoder, encoder+'.joblib')
+    dump(lr, 'combined_linear.joblib')
+    dump(encoder, 'combined_linear_encoding.joblib')

@@ -7,7 +7,7 @@ data = input('What do you want to predict? ')
 # clean combined dataframe
 
 # current models I have, though this will be added to and taken away with more data, with accuracy
-combined_models_to_predict = ['combined_linear']
+combined_models_to_predict = ['combined_linear', 'random_forest']
 combined_models_to_predict_dict = {}
 
 # populate a dict of model with the file so can apply them later as neeeded
@@ -31,7 +31,7 @@ for k, v in combined_models_to_predict_dict.items():
         print('oops')
     elif isinstance(data, pd.DataFrame):
         # combined and trimple have different encodings
-        encoder = load('testing.joblib')
+        encoder = load(k + '_encoding.joblib')
         encoded_data = encoding.new_data_one_hot(data, encoder)
         prediction = v.predict(encoded_data)
         print(type(prediction))
@@ -42,7 +42,7 @@ for k, v in combined_models_to_predict_dict.items():
         print('Neither')
 
 columns_to_skip = encoding.combined_columns()
-        for column in df_with_predictions.columns:
-            if column not in columns_to_skip:
-                df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
-        print(df_with_predictions)
+for column in df_with_predictions.columns:
+    if column not in columns_to_skip:
+        df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
+print(df_with_predictions)
