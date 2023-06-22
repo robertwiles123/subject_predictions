@@ -37,6 +37,7 @@ for k, v in combined_models_to_predict_dict.items():
         print(type(prediction))
         pred_df = pd.DataFrame({'Predicted grades': prediction})
         df_with_predictions = pd.concat([data, pred_df], axis=1)
+        df_with_predictions['Predicted grades'] = df_with_predictions['Predicted grades'].apply(lambda x: round(x * 2) / 2)
         print(df_with_predictions)
 
     else:
