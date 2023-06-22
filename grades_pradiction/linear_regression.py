@@ -85,4 +85,3 @@ if save[0].strip().lower() == 'y':
     dump(lr, name+'.joblib')
     encoder = input('name encoder ')
     dump(encoder, encoder+'.joblib')
-
