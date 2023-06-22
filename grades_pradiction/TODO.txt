@@ -1,0 +1,1 @@
+all columns to be tested are stored in seperate file so one change for all
