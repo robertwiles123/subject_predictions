@@ -2,6 +2,7 @@
 from sklearn.preprocessing import LabelEncoder
 import joblib
 from sklearn.preprocessing import OneHotEncoder
+import columns
 
 # takes in a data frame and a type and encoudes the data
 #  dataframe is the imported dataframe to use
@@ -11,7 +12,7 @@ from sklearn.preprocessing import OneHotEncoder
 def le_science(dataframe, type, train=True, file=False):
     learning_grades = dataframe.copy()
     if type.lower()[0] == 'c':
-        columns_to_encode = ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']
+        columns_to_encode = columns.combined_columns()
         le = LabelEncoder()
         for col in columns_to_encode:
             learning_grades[col] = le.fit_transform(dataframe[col])
@@ -19,9 +20,7 @@ def le_science(dataframe, type, train=True, file=False):
             X = learning_grades[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
             y = learning_grades['Combined MOCK GRADE Term 4']
     elif type.lower()[0] == 't':
-        columns_to_encode = ['FFT20', 'year 10 bio grade', 'year 10 chem grade', 'year 10 phys grade', 
-                            'year 11 paper 1 bio grade', 'year 11 paper 1 chem grade', 'year 11 paper 1 phys grade',
-                            'year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade']
+        columns_to_encode = columns.triple_columns
         for col in columns_to_encode:
             learning_grades[col] = le.fit_transform(dataframe[col])
         if train:
@@ -60,21 +59,13 @@ def one_hot_fit(dataframe, type, train=True):
         X = dataframe.drop('Combined MOCK GRADE Term 4', axis=1)
         y = dataframe['Combined MOCK GRADE Term 4']
         X_encoded = encoder.fit_transform(X)
-        joblib.dump(encoder, 'testing.joblib')
         return encoder, X_encoded, y
     elif type.lower()[0] == 't':
         encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
-        columns_to_encode = ['FFT20', 'year 10 bio grade', 'year 10 chem grade', 'year 10 phys grade', 
-                            'year 11 paper 1 bio grade', 'year 11 paper 1 chem grade', 'year 11 paper 1 phys grade',
-                            'year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade']
-        train_encoded = dataframe.copy()
-        for col in columns_to_encode:
-            train_encoded[col] = encoder.fit_transform(dataframe[col].values.reshape(-1, 1))
-        X = train_encoded.loc[:, ['FFT20', 'year 10 bio grade', 'year 10 chem grade', 'year 10 phys grade', 
-                            'year 11 paper 1 bio grade', 'year 11 paper 1 chem grade', 'year 11 paper 1 phys grade',
-                            'year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade']]
+        X = dataframe.drop(['year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade'], axis=1)
         y = dataframe[['year 11 paper 2 bio grade', 'year 11 paper 2 chem grade', 'year 11 paper 2 phys grade']]
-        return train_encoded, X, y
+        X_encoded = encoder.fit_transform(X)
+        return encoder, X_encoded, y
      
     else:
         print('Neither science selected')
@@ -86,5 +77,3 @@ def one_hot_inverse(data, encoder):
 def new_data_one_hot(data, encoder):
     return encoder.transform(data)
 
-def combined_columns():
-    return ['FFT20', 'Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']

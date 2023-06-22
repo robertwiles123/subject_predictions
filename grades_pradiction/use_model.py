@@ -1,6 +1,7 @@
 import pandas as pd
 from joblib import load
 import encoding
+import columns
 
 data = input('What do you want to predict? ')
 # clean combined dataframe
@@ -40,7 +41,7 @@ for k, v in combined_models_to_predict_dict.items():
     else:
         print('Neither')
 
-columns_to_skip = encoding.combined_columns()
+columns_to_skip = columns.combined_columns()
 for column in df_with_predictions.columns:
     if column not in columns_to_skip:
         df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)

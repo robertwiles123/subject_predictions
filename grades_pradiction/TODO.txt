@@ -1,1 +1,3 @@
-all columns to be tested are stored in seperate file so one change for all
+Add triple to use model csv
+Add ability to add in data as a typed string in use model
+Change cleaning to allow for more columns
