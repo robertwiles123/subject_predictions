@@ -35,10 +35,14 @@ for k, v in combined_models_to_predict_dict.items():
         encoded_data = encoding.new_data_one_hot(data, encoder)
         prediction = v.predict(encoded_data)
         print(type(prediction))
-        pred_df = pd.DataFrame({'Predicted grades': prediction})
+        pred_df = pd.DataFrame({k+'Predicted grades': prediction})
         df_with_predictions = pd.concat([data, pred_df], axis=1)
-        df_with_predictions['Predicted grades'] = df_with_predictions['Predicted grades'].apply(lambda x: round(x * 2) / 2)
-        print(df_with_predictions)
 
     else:
         print('Neither')
+
+columns_to_skip = encoding.combined_columns()
+        for column in df_with_predictions.columns:
+            if column not in columns_to_skip:
+                df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
+        print(df_with_predictions)

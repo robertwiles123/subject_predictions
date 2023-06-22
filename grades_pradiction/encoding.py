@@ -85,3 +85,6 @@ def one_hot_inverse(data, encoder):
 
 def new_data_one_hot(data, encoder):
     return encoder.transform(data)
+
+def combined_columns():
+    return ['FFT20', 'Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']
