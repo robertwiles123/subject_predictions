@@ -2,7 +2,7 @@
 from sklearn.preprocessing import LabelEncoder
 import joblib
 from sklearn.preprocessing import OneHotEncoder
-import columns
+import grades_pradiction.df_columns as df_columns
 
 # takes in a data frame and a type and encoudes the data
 #  dataframe is the imported dataframe to use
@@ -12,7 +12,7 @@ import columns
 def le_science(dataframe, type, train=True, file=False):
     learning_grades = dataframe.copy()
     if type.lower()[0] == 'c':
-        columns_to_encode = columns.combined_columns()
+        columns_to_encode = df_columns.combined_columns()
         le = LabelEncoder()
         for col in columns_to_encode:
             learning_grades[col] = le.fit_transform(dataframe[col])
@@ -20,7 +20,7 @@ def le_science(dataframe, type, train=True, file=False):
             X = learning_grades[['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2']]
             y = learning_grades['Combined MOCK GRADE Term 4']
     elif type.lower()[0] == 't':
-        columns_to_encode = columns.triple_columns
+        columns_to_encode = df_columns.triple_columns
         for col in columns_to_encode:
             learning_grades[col] = le.fit_transform(dataframe[col])
         if train:

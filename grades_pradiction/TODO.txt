@@ -1,3 +1,4 @@
+fix cleaning to clean the triple data correctly
 Add triple to use model csv
 Add ability to add in data as a typed string in use model
 Change cleaning to allow for more columns

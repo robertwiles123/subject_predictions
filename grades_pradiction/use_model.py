@@ -1,7 +1,7 @@
 import pandas as pd
 from joblib import load
 import encoding
-import columns
+import grades_pradiction.df_columns as df_columns
 
 data = input('What do you want to predict? ')
 # clean combined dataframe
@@ -61,7 +61,7 @@ elif type.lower()[0] == 't':
              
 df_with_predictions = data.assign(**outcomes)
 
-columns_to_skip = columns.combined_columns()
+columns_to_skip = df_columns.combined_columns()
 for column in df_with_predictions.columns:
     if column not in columns_to_skip:
         df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
