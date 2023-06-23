@@ -82,5 +82,9 @@ plt.show()
 
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
-    dump(dtr, 'descition_tree.joblib')
-    dump(encoder, 'descition_tree_encoding.joblib')
+    if type_science.lower()[0] == 'c':
+        dump(dtr, 'combined_descition_tree.joblib')
+        dump(encoder, 'combined)descition_tree_encoding.joblib')
+    else:
+        dump(dtr, 'triple_linear.joblib')
+        dump(encoder, 'triple_descition_tree_encoding.joblib')

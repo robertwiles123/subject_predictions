@@ -2,7 +2,7 @@
 from sklearn.preprocessing import LabelEncoder
 import joblib
 from sklearn.preprocessing import OneHotEncoder
-import grades_pradiction.df_columns as df_columns
+import df_columns
 
 # takes in a data frame and a type and encoudes the data
 #  dataframe is the imported dataframe to use

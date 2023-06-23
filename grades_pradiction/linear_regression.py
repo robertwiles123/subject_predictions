@@ -79,5 +79,9 @@ plt.show()
 # if data is good give option to save and name to save
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
-    dump(lr, 'combined_linear.joblib')
-    dump(encoder, 'combined_linear_encoding.joblib')
+    if type_science.lower()[0] == 'c':
+        dump(lr, 'combined_linear.joblib')
+        dump(encoder, 'combined_linear_encoding.joblib')
+    else:
+        dump(lr, 'triple_linear.joblib')
+        dump(encoder, 'triple_linear_encoding.joblib')

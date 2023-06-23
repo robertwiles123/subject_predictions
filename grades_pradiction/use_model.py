@@ -1,7 +1,7 @@
 import pandas as pd
 from joblib import load
 import encoding
-import grades_pradiction.df_columns as df_columns
+import df_columns
 
 data = input('What do you want to predict? ')
 # clean combined dataframe
@@ -9,10 +9,10 @@ type = input('Is the data for combined or triple? ')
 
 # current models I have, though this will be added to and taken away with more data, with accuracy
 if type.lower()[0] == 'c':
-    combined_models_to_predict = ['combined_linear', 'random_forest', 'descition_tree']
+    combined_models_to_predict = ['combined_linear', 'combinded_random_forest', 'combined_descition_tree']
     combined_models_to_predict_dict = {}
 elif type.lower()[0] == 't':
-    tripe_models_to_predict = ['combined_linear_triple', 'random_forest_triple', 'descition_tree_tripe']
+    tripe_models_to_predict = ['triple_linear', 'triple_random_forest', 'triple_descition_tree']
     triple_models_to_predict_dict = {}
 else:
     print('Failed to detarmine, no model loaded')
