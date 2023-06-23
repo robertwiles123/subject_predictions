@@ -11,21 +11,23 @@ type = input('Is the data for combined or triple? ')
 if type.lower()[0] == 'c':
     combined_models_to_predict = ['combined_linear', 'combinded_random_forest', 'combined_descition_tree']
     combined_models_to_predict_dict = {}
-    grades_pradiction/test.csv
+    for s in combined_models_to_predict:
+        model = load(s + '.joblib')
+        combined_models_to_predict_dict[s] = model
+    # check that the dict of files and models are correct
+    print(combined_models_to_predict_dict)
 elif type.lower()[0] == 't':
     tripe_models_to_predict = ['triple_linear', 'triple_random_forest', 'triple_descition_tree']
     triple_models_to_predict_dict = {}
+    # populate a dict of model with the file so can apply them later as neeeded
+    for s in tripe_models_to_predict:
+        model = load(s + '.joblib')
+        triple_models_to_predict_dict[s] = model
+        # check that the dict of files and models are correct
+    print(triple_models_to_predict_dict)
 else:
     print('Failed to detarmine, no model loaded')
     
-
-# populate a dict of model with the file so can apply them later as neeeded
-for s in combined_models_to_predict:
-    model = load(s + '.joblib')
-    combined_models_to_predict_dict[s] = model
-
-# check that the dict of files and models are correct
-print(combined_models_to_predict_dict)
 
 if data.endswith('.csv'):
     data = pd.read_csv(data)
@@ -46,12 +48,12 @@ if type.lower()[0] == 'c':
         else:
                 print('Error')
 elif type.lower()[0] == 't':
-    for k, v in combined_models_to_predict_dict.items():
+    for k, v in triple_models_to_predict_dict.items():
         # currently does not work, as I do not have enough training data and have missing encoudings. This happens with one shot encouding as well
         if isinstance(data, str):
             print('oops')
         elif isinstance(data, pd.DataFrame):
-                encoder = load(k + '_encoding_triple.joblib')
+                encoder = load(k + '_encoding.joblib')
                 encoded_data = encoding.new_data_one_hot(data, encoder)
                 prediction = v.predict(encoded_data)
                 pred_df = pd.DataFrame({k+'Predicted grades': prediction})
