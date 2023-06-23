@@ -11,6 +11,7 @@ type = input('Is the data for combined or triple? ')
 if type.lower()[0] == 'c':
     combined_models_to_predict = ['combined_linear', 'combinded_random_forest', 'combined_descition_tree']
     combined_models_to_predict_dict = {}
+    grades_pradiction/test.csv
 elif type.lower()[0] == 't':
     tripe_models_to_predict = ['triple_linear', 'triple_random_forest', 'triple_descition_tree']
     triple_models_to_predict_dict = {}
