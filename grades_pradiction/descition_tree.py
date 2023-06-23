@@ -84,7 +84,7 @@ save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
         dump(dtr, 'combined_descition_tree.joblib')
-        dump(encoder, 'combined)descition_tree_encoding.joblib')
+        dump(encoder, 'combined_descition_tree_encoding.joblib')
     else:
         dump(dtr, 'triple_descition_tree.joblib')
         dump(encoder, 'triple_descition_tree_encoding.joblib')

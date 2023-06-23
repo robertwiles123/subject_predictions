@@ -9,7 +9,7 @@ type = input('Is the data for combined or triple? ')
 
 # current models I have, though this will be added to and taken away with more data, with accuracy
 if type.lower()[0] == 'c':
-    combined_models_to_predict = ['combined_linear', 'combinded_random_forest', 'combined_descition_tree']
+    combined_models_to_predict = ['combined_linear', 'combined_random_forest', 'combined_descition_tree']
     combined_models_to_predict_dict = {}
     for s in combined_models_to_predict:
         model = load(s + '.joblib')
@@ -47,26 +47,30 @@ if type.lower()[0] == 'c':
                 outcomes[k] = prediction
         else:
                 print('Error')
+    df_with_predictions = data.assign(**outcomes)
+    columns_to_skip = df_columns.combined_columns()
+    for column in df_with_predictions.columns:
+        if column not in columns_to_skip:
+            df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
+
+    print(df_with_predictions)
 elif type.lower()[0] == 't':
+    outcome_df = pd.DataFrame()
     for k, v in triple_models_to_predict_dict.items():
         # currently does not work, as I do not have enough training data and have missing encoudings. This happens with one shot encouding as well
         if isinstance(data, str):
             print('oops')
         elif isinstance(data, pd.DataFrame):
+        # Doesn't work, probably because 3 numpy array at a guess
                 encoder = load(k + '_encoding.joblib')
                 encoded_data = encoding.new_data_one_hot(data, encoder)
                 prediction = v.predict(encoded_data)
-                pred_df = pd.DataFrame({k+'Predicted grades': prediction})
-                data = pd.concat([data, pred_df], axis=1)
+                outcomes[k] = prediction
+    for key, values in outcomes.items():
+        for i, value in enumerate(values):
+            column_name = f"{key}_{i+1}"
+            outcome_df[column_name] = value
         else:
-             print('error')
+            print('error')
+         
 
-             
-df_with_predictions = data.assign(**outcomes)
-
-columns_to_skip = df_columns.combined_columns()
-for column in df_with_predictions.columns:
-    if column not in columns_to_skip:
-        df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
-
-print(df_with_predictions)

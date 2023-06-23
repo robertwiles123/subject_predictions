@@ -92,8 +92,8 @@ plt.show()
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
-        dump(rf, 'random_forest.joblib')
-        dump(encoder, 'random_forest_encoding.joblib')
+        dump(rf, 'combined_random_forest.joblib')
+        dump(encoder, 'combined_random_forest_encoding.joblib')
     else:
         dump(rf, 'triple_random_forest.joblib')
         dump(encoder, 'triple_random_forest_encoding.joblib')
