@@ -1,0 +1,6 @@
+Add ability to add in data as a typed string in use model
+Change cleaning to allow for more columns for triple
+Test models to see if they are accurate or triple, or if they need to be adapted
+
+update grid search for combined
+update models for combined
