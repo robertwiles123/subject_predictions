@@ -55,8 +55,9 @@ if type.lower()[0] == 'c':
 
     print(df_with_predictions)
 elif type.lower()[0] == 't':
-    outcome_df = pd.DataFrame()
+    df_with_predictions = pd.DataFrame()
     for k, v in triple_models_to_predict_dict.items():
+        print(k, v)
         # currently does not work, as I do not have enough training data and have missing encoudings. This happens with one shot encouding as well
         if isinstance(data, str):
             print('oops')
@@ -66,11 +67,21 @@ elif type.lower()[0] == 't':
                 encoded_data = encoding.new_data_one_hot(data, encoder)
                 prediction = v.predict(encoded_data)
                 outcomes[k] = prediction
-    for key, values in outcomes.items():
-        for i, value in enumerate(values):
-            column_name = f"{key}_{i+1}"
-            outcome_df[column_name] = value
-        else:
-            print('error')
+        #need to take the dict and change in to a dataframe
+    for key, value in outcomes.items():
+        names = ['bio', 'chem', 'phys']
+    # Iterate over each predicted output column
+        for i in range(value.shape[1]):
+            col_name = f"{key}_{names[i]}"  # Create column name using the key and index
+            df_with_predictions[col_name] = value[:, i]  # Add the predicted output column to the dataframe
+    # To round columns that where predicted    
+    for column in df_with_predictions.columns:
+        df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x))
+    print(df_with_predictions)
+        
+    
+
+
+
          
 
