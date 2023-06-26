@@ -1,3 +1,3 @@
-Add triple to use model csv
 Add ability to add in data as a typed string in use model
 Change cleaning to allow for more columns
+Test models to see if they are accurate or triple, or if they need to be adapted
