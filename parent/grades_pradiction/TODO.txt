@@ -1,11 +1,5 @@
 Add ability to add in data as a typed string in use model
 Test models to see if they are accurate or triple, or if they need to be adapted
 
-Fix cleaning of triple loosing an unacceptable amount of data
-    if above doesn't fix:
-    Fix error with linear regression cross val when making triple model
-
-
-
 update grid search
 update models

@@ -27,10 +27,10 @@ just_grades['PP'] = just_grades['PP'].fillna(False)
 
 just_grades['PP'] = just_grades ['PP'].astype(bool)
 
+just_grades['SEN need(s)'] = just_grades ['SEN need(s)'].fillna("n")
 
 # To see if I can just clean the missing data
 print(just_grades.isna().sum().sort_values(), len(just_grades) * 0.05)
-
 # less then 5% of the data is nan so can be removed
 
 
