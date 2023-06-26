@@ -14,14 +14,14 @@ learning_grades = pd.read_csv(file_name)
 type_science = input('Is it triple or combined? ')
 
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
-
 """
 dt = DecisionTreeRegressor()
 
 param_grid = {
     'max_depth': [3, 5, None],
     'min_samples_split': [2, 5, 10],
-    'min_samples_leaf': [1, 2, 4]
+    'min_samples_leaf': [1, 2, 4],
+    'random_state': 142
 }
 
 # Create the GridSearchCV object
@@ -38,7 +38,12 @@ print("Best Score: ", grid_search.best_score_)
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=2, min_samples_split=2)
+if type_science.lower()[0] == 'c':
+    dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=2, min_samples_split=2)
+elif type_science.lower()[0] == 't':
+    dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=1, min_samples_split=10)
+else:
+    print('No model loaded')
 
 dtr.fit(X_test, y_test)
 

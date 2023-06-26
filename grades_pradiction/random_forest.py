@@ -41,9 +41,13 @@ print("Best hyperparameters:")
 print(grid_search.best_params_)
 print("Best Score (Negative MSE):", -grid_search.best_score_)
 """
-
-rf = RandomForestRegressor(random_state=42, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=200)
-
+if type_science.lower()[0] == 'c':
+    rf = RandomForestRegressor(random_state=42, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=200)
+elif type_science.lower()[0] == 't':
+    rf = RandomForestRegressor(bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=5, n_estimators=200, random_state=42)
+else:
+    print('No model selected')
+    
 
 rf.fit(X_train, y_train)
 
