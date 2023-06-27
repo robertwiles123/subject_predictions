@@ -80,8 +80,8 @@ plt.show()
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
-        dump(lr, 'combined_linear.joblib')
-        dump(encoder, 'combined_linear_encoding.joblib')
+        dump(lr, 'combined_models/combined_linear.joblib')
+        dump(encoder, 'combined_models/combined_linear_encoding.joblib')
     else:
-        dump(lr, 'triple_linear.joblib')
-        dump(encoder, 'triple_linear_encoding.joblib')
+        dump(lr, 'triple_models/triple_linear.joblib')
+        dump(encoder, 'triple_models/triple_linear_encoding.joblib')

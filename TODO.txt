@@ -1,6 +1,6 @@
 Add ability to add in data as a typed string in use model
 
-Sort out file structure to make sense
+Create folder for the various models that are being made and auto input to the use model
 
 Write readme
 
