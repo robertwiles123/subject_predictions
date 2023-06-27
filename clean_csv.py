@@ -1,11 +1,11 @@
 # improting and cleaning data
 import numpy as np
 import pandas as pd
-import df_columns
+from grades_packages import df_columns
 
 # allows user to import either a file full of combined grades with format of 1-1, 2-1, 2-2 or triple with just 1 2 3
 file_name = input('What file do you want cleaned, include file type? ')
-full = pd.read_csv(file_name)
+full = pd.read_csv('csv_dirty/' + file_name)
 full.columns = full.columns.str.strip()
 
 # to clean based on triple or combined
@@ -115,4 +115,4 @@ else:
         if column not in df_columns.triple_non_grades():
             full_clean_grades[column] = full_clean_grades[column].map(convert_to_int)
         
-full_clean_grades.to_csv('clean_' + file_name)
+full_clean_grades.to_csv('csv_clean/clean_' + file_name)

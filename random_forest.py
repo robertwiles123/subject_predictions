@@ -6,10 +6,10 @@ from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 import matplotlib.pyplot as plt
 from joblib import dump
-from sklearn.model_selection import GridSearchCV
+# from sklearn.model_selection import GridSearchCV
 
 file_name = input('What file do you want to test? ')
-learning_grades = pd.read_csv(file_name)
+learning_grades = pd.read_csv('csv_clean/' + file_name)
 
 type_science = input('Is it triple or combined? ')
 

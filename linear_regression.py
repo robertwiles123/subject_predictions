@@ -5,14 +5,14 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
-import encoding
+from grades_packages import encoding
 # using joblib as it is more secure and will be predicting data based on GDPR and as all within sklearn the compatability isn't an issue
 from joblib import dump
 
 # import whatever file I want to test
 file_name = input('What file do you want to test? ')
 
-learning_grades = pd.read_csv(file_name)
+learning_grades = pd.read_csv('csv_clean/' + file_name)
 
 # determine the type of science, triple and combined have different headings
 type_science = input('Is it triple or combined? ')

@@ -9,50 +9,129 @@
 10,3,"Social, Emotional & Mental Health",True,1.0,1.5,1.5
 11,3+,"SEN Support, No Specialist Assessment, Moderate Learning Difficulty",False,0.0,0.0,0.0
 12,2+,Moderate Learning Difficulty,False,1.5,1.5,1.5
+13,5,n,False,4.0,4.5,4.5
 14,4+,"Social, Emotional & Mental Health",False,3.5,3.5,3.5
+16,3,n,False,2.5,2.5,2.5
 17,5-,"Speech, Language and Communication Needs",True,8.5,6.5,6.5
+18,4-,n,False,1.0,1.0,1.0
 21,4,Moderate Learning Difficulty,False,4.0,5.0,5.0
+22,4,n,False,5.0,5.5,5.5
 23,4-,Moderate Learning Difficulty,False,0.0,0.0,0.0
 24,4-,Moderate Learning Difficulty,False,4.5,3.5,3.5
+25,4+,n,False,4.5,6.5,6.5
+27,3,n,True,3.0,1.5,1.5
 28,5+,"Speech, Language and Communication Needs",False,2.5,2.0,2.0
 31,4,Specific Learning Difficulty,False,0.0,2.5,2.5
+32,6,n,False,4.0,5.0,5.0
+34,4,n,False,3.5,5.0,5.0
+35,5+,n,False,5.0,5.5,5.5
+39,7-,n,False,8.5,9.0,9.0
+40,3,n,False,3.0,3.5,3.5
+42,4-,n,False,3.5,4.0,4.0
 43,5+,Moderate Learning Difficulty,False,6.5,7.5,7.5
 44,4+,Moderate Learning Difficulty,False,5.0,6.5,6.5
+45,5,n,False,2.5,3.0,3.0
+46,4+,n,False,4.0,4.0,4.0
 47,3,"Social, Emotional & Mental Health, Speech, Language and Communication Needs, Moderate Learning Difficulty",True,0.0,0.0,0.0
 48,3,"Social, Emotional & Mental Health",False,2.5,1.5,1.5
+49,4-,n,True,4.0,0.0,0.0
+50,5+,n,True,0.0,0.0,0.0
+51,5+,n,False,4.0,4.0,4.0
+53,3,n,True,3.0,2.0,2.0
+54,6+,n,False,7.0,8.5,8.5
+56,4,n,False,3.5,3.5,3.5
 57,3-,Moderate Learning Difficulty,True,1.0,1.0,1.0
 58,3,Moderate Learning Difficulty,True,3.0,1.0,1.0
 59,4-,"Speech, Language and Communication Needs, Moderate Learning Difficulty",False,1.0,3.0,3.0
+62,6-,n,False,4.5,3.5,3.5
+63,4+,n,False,4.0,3.5,3.5
 64,4,Moderate Learning Difficulty,False,3.0,2.5,2.5
+65,7,n,False,7.0,8.5,8.5
 66,3+,Moderate Learning Difficulty,False,3.0,2.0,2.0
+67,5-,n,False,4.5,7.0,7.0
+68,5-,n,False,5.5,6.0,6.0
 69,5-,Autistic Spectrum Disorder,False,2.5,2.5,2.5
+70,5+,n,False,6.0,0.0,0.0
+72,5,n,False,6.5,7.0,7.0
+73,7-,n,False,5.0,7.0,7.0
+74,7,n,False,7.5,8.0,8.0
+75,6-,n,False,5.0,5.5,5.5
+76,5-,n,False,8.0,5.0,5.0
+77,4,n,False,3.0,3.5,3.5
 78,5+,"Social, Emotional & Mental Health, Autistic Spectrum Disorder",False,3.5,0.0,0.0
 80,4-,Moderate Learning Difficulty,False,3.5,2.5,2.5
+81,4+,n,False,3.5,3.0,3.0
+82,8,n,False,8.0,7.5,7.5
+83,4-,n,False,2.0,3.5,3.5
+85,5-,n,False,7.5,6.0,6.0
+86,4,n,False,9.0,6.5,6.5
+87,5-,n,False,2.5,2.5,2.5
 90,4-,Moderate Learning Difficulty,False,1.5,1.0,1.0
+91,6-,n,False,7.0,8.5,8.5
+92,4,n,True,3.0,3.0,3.0
 93,3+,"Hearing Impairment, Social, Emotional & Mental Health",False,2.5,2.5,2.5
 94,4+,Moderate Learning Difficulty,False,4.5,6.0,6.0
+95,3-,n,True,2.5,2.0,2.0
 96,3,Moderate Learning Difficulty,True,3.5,6.0,6.0
+97,6,n,False,0.0,0.0,0.0
+98,6,n,False,6.0,7.0,7.0
+99,4,n,True,3.0,2.0,2.0
 100,4-,"Social, Emotional & Mental Health",True,2.0,3.0,3.0
+101,4-,n,False,4.5,0.0,0.0
 103,6-,"Social, Emotional & Mental Health, Speech, Language and Communication Needs",True,3.0,2.5,2.5
+104,6-,n,False,3.5,7.0,7.0
+105,5,n,True,3.5,3.0,3.0
+106,4,n,True,2.5,1.5,1.5
+108,5,n,False,4.5,4.0,4.0
 109,4,"Speech, Language and Communication Needs",False,0.0,3.0,3.0
+110,6-,n,False,6.0,6.0,6.0
+111,5-,n,True,2.0,1.5,1.5
+113,3,n,False,1.0,1.0,1.0
 114,4+,"Specific Learning Difficulty, Speech, Language and Communication Needs",False,0.0,0.0,0.0
 115,3,"Speech, Language and Communication Needs",False,2.0,2.0,2.0
 116,4,Moderate Learning Difficulty,False,5.0,4.5,4.5
 117,4-,"Speech, Language and Communication Needs",True,3.5,3.0,3.0
 118,3,"Specific Learning Difficulty, Moderate Learning Difficulty",True,1.0,1.5,1.5
+119,5,n,True,5.0,4.0,4.0
 120,3,Specific Learning Difficulty,False,3.5,3.5,3.5
+121,5-,n,False,3.5,3.0,3.0
+122,5,n,False,3.0,3.0,3.0
+123,7-,n,False,4.0,4.0,4.0
+124,5-,n,False,4.5,4.0,4.0
+125,4,n,False,3.0,4.0,4.0
+126,5+,n,False,5.0,5.5,5.5
+127,6-,n,False,4.0,3.5,3.5
+128,6-,n,True,2.5,0.0,0.0
 129,4,Specific Learning Difficulty,False,4.0,3.0,3.0
 130,5+,"Anxiety disorder, Moderate Learning Difficulty",True,0.0,0.0,0.0
+131,6,n,False,4.0,4.5,4.5
 133,4,"Social, Emotional & Mental Health",True,3.0,2.0,2.0
+135,4,n,False,3.0,3.0,3.0
+136,3-,n,True,2.0,1.5,1.5
+137,5,n,True,4.5,5.0,5.0
+139,4+,n,False,5.0,6.5,6.5
+142,4,n,True,3.5,4.5,4.5
 145,5-,"Speech, Language and Communication Needs",True,2.5,2.0,2.0
+146,5,n,False,4.5,4.5,4.5
 147,4+,Moderate Learning Difficulty,False,5.5,6.0,6.0
+148,8-,n,False,8.5,9.0,9.0
+149,5-,n,False,4.5,6.0,6.0
 151,6+,"Social, Emotional & Mental Health",False,4.0,5.5,5.5
+152,5+,n,False,0.0,0.0,0.0
+153,6+,n,False,4.0,4.5,4.5
 154,3-,"Speech, Language and Communication Needs, Moderate Learning Difficulty",False,0.0,0.0,0.0
 155,3+,"Speech, Language and Communication Needs",False,2.0,2.0,2.0
+156,5+,n,True,3.5,3.5,3.5
 157,6-,"Speech, Language and Communication Needs",False,4.0,7.0,7.0
+158,4,n,False,3.5,0.0,0.0
+159,5,n,False,5.0,6.0,6.0
+160,6-,n,False,0.0,0.0,0.0
 161,5-,"Speech, Language and Communication Needs, Moderate Learning Difficulty",True,4.0,4.5,4.5
+162,5+,n,False,3.5,5.5,5.5
+163,5,n,False,1.5,0.0,0.0
 164,3-,"Social, Emotional & Mental Health",False,2.0,0.0,0.0
 165,3+,Moderate Learning Difficulty,False,4.5,2.5,2.5
 166,3-,Moderate Learning Difficulty,True,3.0,3.0,3.0
 167,3,"Moderate Learning Difficulty, Speech, Language and Communication Needs",False,1.5,1.0,1.0
+168,6+,n,True,4.5,4.5,4.5
 169,4,Moderate Learning Difficulty,False,0.0,0.0,0.0
