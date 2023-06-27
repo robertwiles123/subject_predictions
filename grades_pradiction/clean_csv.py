@@ -6,6 +6,7 @@ import df_columns
 # allows user to import either a file full of combined grades with format of 1-1, 2-1, 2-2 or triple with just 1 2 3
 file_name = input('What file do you want cleaned, include file type? ')
 full = pd.read_csv(file_name)
+full.columns = full.columns.str.strip()
 
 # to clean based on triple or combined
 type_science = input('triple or combined? ')
@@ -21,9 +22,15 @@ else:
 # to see what needs to be cleared
 print(just_grades.describe())
 
+just_grades['PP'] = just_grades['PP'].str.replace('Yes', 'True')
+just_grades['PP'] = just_grades['PP'].fillna(False)
+
+just_grades['PP'] = just_grades ['PP'].astype(bool)
+
+just_grades['SEN need(s)'] = just_grades ['SEN need(s)'].fillna("n")
+
 # To see if I can just clean the missing data
 print(just_grades.isna().sum().sort_values(), len(just_grades) * 0.05)
-
 # less then 5% of the data is nan so can be removed
 
 
@@ -42,9 +49,9 @@ just_grades_clean_FFT20['FFT20'] = just_grades_no_nan['FFT20'].str.replace('[^\d
 # display(just_grades_clean_FFT20.describe())
 
 # collect column names to clean one after another
-df_columns = []
+columns_in_df = []
 for col in just_grades_clean_FFT20.columns:
-    df_columns.append(col)
+    columns_in_df.append(col)
 
 clean_grades = just_grades_clean_FFT20.copy()
 
@@ -52,7 +59,7 @@ clean_grades = just_grades_clean_FFT20.copy()
 # When looking through the data it seems that year 10 has 'Ab' to show absance and 'Combined OMCK GRADE term 4' as 'ABS'
 # display(clean_grades.info())
 
-for col in df_columns:
+for col in columns_in_df:
     clean_grades[col] = clean_grades[col].replace({'Ab': np.nan, 'Abs': np.nan})
     clean_grades[col] = clean_grades[col].astype('object')
 
@@ -63,7 +70,7 @@ full_clean_grades = clean_grades.dropna(axis=0)
 print(full_clean_grades.info())
 
 # all the correct possible unique values
-for col in df_columns:
+for col in columns_in_df:
     print(full_clean_grades[col].unique())
 
 if type_science == 'c':
@@ -90,8 +97,8 @@ if type_science == 'c':
     }
 
     # not working with fft20 atm as grades are different then the mapping
-    for col in df_columns:
-        full_clean_grades[col] = full_clean_grades[col].map(grade_mapping)
+    for col in ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']:
+        full_clean_grades.loc[:, col] = full_clean_grades[col].map(grade_mapping)
         
 else:
     def convert_to_int(value):
@@ -103,8 +110,9 @@ else:
             return int(value[:-1])
         else:
             return int(value)
-        
+
     for column in full_clean_grades.columns:
-        full_clean_grades[column] = full_clean_grades[column].map(convert_to_int)
-file_out = input('What is the name of the output file, do not include file type: ')
-full_clean_grades.to_csv(file_out+'.csv')
+        if column not in df_columns.triple_non_grades():
+            full_clean_grades[column] = full_clean_grades[column].map(convert_to_int)
+        
+full_clean_grades.to_csv('clean_' + file_name)

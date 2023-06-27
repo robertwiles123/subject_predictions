@@ -21,7 +21,7 @@ param_grid = {
     'max_depth': [3, 5, None],
     'min_samples_split': [2, 5, 10],
     'min_samples_leaf': [1, 2, 4],
-    'random_state': 142
+    'random_state': [142]
 }
 
 # Create the GridSearchCV object
@@ -39,9 +39,9 @@ print("Best Score: ", grid_search.best_score_)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 if type_science.lower()[0] == 'c':
-    dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=2, min_samples_split=2)
+    dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=1, min_samples_split=5)
 elif type_science.lower()[0] == 't':
-    dtr = DecisionTreeRegressor(random_state=142, max_depth=None, min_samples_leaf=1, min_samples_split=10)
+    dtr = DecisionTreeRegressor(random_state=142, max_depth=3, min_samples_leaf=2, min_samples_split=10)
 else:
     print('No model loaded')
 

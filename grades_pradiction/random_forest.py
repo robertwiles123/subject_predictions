@@ -6,7 +6,7 @@ from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 import matplotlib.pyplot as plt
 from joblib import dump
-# from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv(file_name)
@@ -44,7 +44,7 @@ print("Best Score (Negative MSE):", -grid_search.best_score_)
 if type_science.lower()[0] == 'c':
     rf = RandomForestRegressor(random_state=42, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=200)
 elif type_science.lower()[0] == 't':
-    rf = RandomForestRegressor(bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=5, n_estimators=200, random_state=42)
+    rf = RandomForestRegressor(bootstrap=False, max_depth=10, max_features='log2', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=50, random_state=42)
 else:
     print('No model selected')
     
