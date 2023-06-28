@@ -52,7 +52,30 @@ if type.lower()[0] == 'c':
     for column in df_with_predictions.columns:
         if column not in columns_to_skip:
             df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
-
+            # to return predicted grades back to how they should be, however, not doing original files
+            grade_mapping = {
+                                    0: 'U',
+                                    0.5: 'U',
+                                    1.0: '1-1',
+                                    1.5: '2-1',
+                                    2.0: '2-2',
+                                    2.5: '3-2',
+                                    3.0: '3-3',
+                                    3.5: '4-3',
+                                    4.0: '4-4',
+                                    4.5: '5-4',
+                                    5.0: '5-5',
+                                    5.5: '6-5',
+                                    6.0: '6-6',
+                                    6.5: '7-6',
+                                    7.0: '7-7',
+                                    7.5: '8-7',
+                                    8.0: '8-8',
+                                    8.5: '9-8',
+                                    9.0: '9-9'
+                                }
+            df_with_predictions.loc[:, column] = df_with_predictions[column].map(grade_mapping)
+    pd.set_option('display.max_columns', None)
     print(df_with_predictions)
 elif type.lower()[0] == 't':
     df_with_predictions = pd.DataFrame()
