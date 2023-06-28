@@ -28,13 +28,11 @@ encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# create a linear regression object
 lr = LinearRegression()
 
 # fit the model to the training data
 lr.fit(X_train, y_train)
 
-# make predictions on the test data
 y_pred = lr.predict(X_test)
 
 # evaluate the model performance using mean squred error, root and r squared
