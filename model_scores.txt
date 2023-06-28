@@ -1,29 +1,29 @@
 Combined scores:
     Linear regression:
-        Mean Squared Error (MSE): 1.84
-        Train MSE 6.06
-        testMSE 1.84
-        Root Mean Squared Error (RMSE): 1.36
-        R2 score: 0.6465391959061911
-        Cross-validation scores: [-0.01945711  0.94979507  0.25599016  0.61186407  0.80285818  0.90596952
-        0.85283043 -0.10441001  0.59378675  0.89361743]
+        Mean Squared Error (MSE): 0.73
+        Train MSE 11.65
+        testMSE 0.73
+        Root Mean Squared Error (RMSE): 0.85
+        R2 score: 0.867145054744445
+        Cross-validation scores: [0.93617518 0.89875424 0.91402105 0.87963044 0.95842004 0.94999278
+        0.88085216 0.91187875 0.83182724 0.84459648]
     Descition tree:
-        Train MSE 7.39
-        test MSE 0.19
-        Mean Squared Error (MSE): 0.18634259259259262
-        Root Mean Squared Error (RMSE): 0.4316741741088904
-        R2 Score: 0.964126559714795
-        Cross-validation scores: [ 0.616       0.24345387  1.          0.75242718  0.584563    1.
-        0.20987654 -0.02517986 -0.04434289  1.        ]
+        Train MSE 13.32
+        test MSE 0.06
+        Mean Squared Error (MSE): 0.05995934959349593
+        Root Mean Squared Error (RMSE): 0.2448659829243252
+        R2 Score: 0.989047360318754
+        Cross-validation scores: [1.         0.76538988 0.26919328 0.97539062 1.         0.88325391
+        1.         0.97743056 0.96704225 0.90740008]
     Random Tree:
-        Mean Squared Error (MSE): 2.42
-        Train MSE 5.42
-        testMSE 2.42
-        Root Mean Squared Error (RMSE): 1.55
-        R2 score: 0.5349744048775525
-        Cross-validation scores: [ 0.12942187  0.76022843 -0.22398343  0.49221646  0.72451335  0.82032082
-        0.88544018 -0.50276262  0.43746787  0.8085449 ]
-For combined classes it seems the desctition tree is by far the best model with low MSE and RMSE scores and a high r2. Though the corss val scores do need to be looked at futher. Ultimately the model needs more testing
+        MMean Squared Error (MSE): 1.80
+        Train MSE 9.46
+        testMSE 1.80
+        Root Mean Squared Error (RMSE): 1.34
+        R2 score: 0.6715455073449411
+        Cross-validation scores: [0.74417294 0.70586738 0.62206131 0.69567798 0.67479957 0.74642363
+        0.61666804 0.6590718  0.47239641 0.47617511]
+For the combined science classes it looks like the descition tree is performing slightly better with a high R2 score and low MSE and RMSE the cross val scores are also close. Over fitting does need to be checked for.
 
 Triple scores:
     Linear regression:
