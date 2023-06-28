@@ -1,17 +1,17 @@
 Add ability to add in data as a typed string in use model
 
-Create folder for the various models that are being made and auto input to the use model
+calculate confidence intervals for regression coefficients
 
 create a column of average predictions from models 
 
 Write readme
+Write draft 2 of README
 
 change encoding to not do PP as it is bool
 
 Get futher analysis of data:
     Increase the number of cross-validation folds
     Try other cross-validation strategies such as stratified k-fold or repeated k-fold cross-validation
-    Try other metrics like metrics like precision, recall, or F1 score
     Examine the data more and see if there are any in built corrolations
     Complete an error analysis (unknown)
         From chat GCP:
