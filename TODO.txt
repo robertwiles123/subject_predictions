@@ -7,7 +7,6 @@ create a column of average predictions from models
 Write readme
 Write draft 2 of README
 
-change encoding to not do PP as it is bool
 
 Get futher analysis of data:
     Increase the number of cross-validation folds

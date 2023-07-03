@@ -7,6 +7,8 @@ Combined scores:
         R2 score: 0.867145054744445
         Cross-validation scores: [0.93617518 0.89875424 0.91402105 0.87963044 0.95842004 0.94999278
         0.88085216 0.91187875 0.83182724 0.84459648]
+        Graph analysis:
+            Almost defiently over fitting
     Descition tree:
         Train MSE 13.32
         test MSE 0.06
@@ -15,6 +17,7 @@ Combined scores:
         R2 Score: 0.989047360318754
         Cross-validation scores: [1.         0.76538988 0.26919328 0.97539062 1.         0.88325391
         1.         0.97743056 0.96704225 0.90740008]
+        Highly likely to be overfiting the data
     Random Tree:
         MMean Squared Error (MSE): 1.80
         Train MSE 9.46
@@ -23,7 +26,8 @@ Combined scores:
         R2 score: 0.6715455073449411
         Cross-validation scores: [0.74417294 0.70586738 0.62206131 0.69567798 0.67479957 0.74642363
         0.61666804 0.6590718  0.47239641 0.47617511]
-For the combined science classes it looks like the descition tree is performing slightly better with a high R2 score and low MSE and RMSE the cross val scores are also close. Over fitting does need to be checked for.
+        Slightl overfitting
+    Due to the random tree being the only data that does not fit this is currently the best model, though more data is defiently needed
 
 Triple scores:
     Linear regression:

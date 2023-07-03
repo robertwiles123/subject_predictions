@@ -55,7 +55,6 @@ if type.lower()[0] == 'c':
             # to return predicted grades back to how they should be, however, not doing original files
             grade_mapping = {
                                     0: 'U',
-                                    0.5: 'U',
                                     1.0: '1-1',
                                     1.5: '2-1',
                                     2.0: '2-2',
@@ -75,6 +74,7 @@ if type.lower()[0] == 'c':
                                     9.0: '9-9'
                                 }
             df_with_predictions.loc[:, column] = df_with_predictions[column].map(grade_mapping)
+    # Forces display to print the whole df
     pd.set_option('display.max_columns', None)
     print(df_with_predictions)
 elif type.lower()[0] == 't':
