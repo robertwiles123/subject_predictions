@@ -96,7 +96,6 @@ if type_science == 'c':
         '9-9': 9.0
     }
 
-    # not working with fft20 atm as grades are different then the mapping
     for col in ['Year 10 Combined MOCK GRADE', 'Combined MOCK GRADE term 2', 'Combined MOCK GRADE Term 4']:
         full_clean_grades.loc[:, col] = full_clean_grades[col].map(grade_mapping)
         
