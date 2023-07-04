@@ -1,0 +1,9 @@
+Accross all graphs there seems to be a lot of people on a U. Much more then would be expected
+
+PP graphs:
+    On the bar graphs there seems to be a slit from PP and no PP students. With those that are PP seeming to be achiving worst grades.
+    With the histograms the non PP students seem to be a fairly flat histogram, suggesting their grades have something else behind it. The PP and SEN students both have a right skewed to the data, suggesting they have lower grades
+
+SEN graphs:
+    On the bar graphs they follow the same trend as the PP pupals
+    With the histograms the year 10 data both seem to be slightly right skewed, though this stops for the non SEN students and start to shift to no distribution

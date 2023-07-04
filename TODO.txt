@@ -27,3 +27,8 @@ Get futher analysis of data:
             Feature impact on errors: Assess the impact of different features on the prediction errors. Determine if certain features consistently lead to larger errors or if there are specific combinations of features that result in more accurate predictions. This analysis can help identify areas where feature engineering or data preprocessing might improve the model's performance.
 
             Adjust the model or data: Based on the findings from the error analysis, consider making adjustments to the model or data preprocessing steps. This could involve adding new features, removing irrelevant features, transforming variables, or addressing issues like outliers or missing data. Iteratively refine the model based on the insights gained from error analysis.
+
+
+Add titles and labels to graphs
+
+See how the models work with out the U grades, as this is potentially skewing the data to the right

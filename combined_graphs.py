@@ -76,7 +76,12 @@ ax[2, 1].set_xticklabels(grade_order, rotation=45)
 plt.savefig("combined_graphs/SEN_and_grades.png", )
 """
 
-# 3 bar graphs to show values for scores and how SEN affects
+# break between graphs
+
+"""
+
+#These grades are for PP students
+
 sns.countplot(data=grades, x='Year 10 Combined MOCK GRADE', hue='PP', palette=['blue', 'yellow'], ax=ax[0, 0], order=grade_order)
 sns.countplot(data=grades, x='Combined MOCK GRADE term 2', hue='PP', palette=['blue', 'yellow'], ax=ax[1, 0], order=grade_order)
 sns.countplot(data=grades, x='Combined MOCK GRADE Term 4', hue='PP', palette=['blue', 'yellow'], ax=ax[2, 0], order=grade_order)
@@ -98,3 +103,5 @@ ax[2, 1].set_xticks(range(len(grade_order)))
 ax[2, 1].set_xticklabels(grade_order, rotation=45)
 
 plt.savefig("combined_graphs/PP_and_grades.png")
+"""
+
