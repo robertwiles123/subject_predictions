@@ -85,5 +85,7 @@ Triple scores:
         Cross-validation scores: [-0.05037715  0.74176238  0.67923837  0.01874869  0.79061922  0.00718231
         0.64027193  0.75831872  0.53371571  0.51902234]
 
+I have been treating the data as contius as I transormed it. However, it is porbably best to go back and treat it as the ordinal it actually is.
+
 For combined classes it seems the desctition tree is by far the best model with low MSE and RMSE scores and a high r2. Though the corss val scores do need to be looked at futher. Ultimately the model needs more testing
 It seems he best thing is not the undersampling but the original data with random forest, but there needs to be more samples, as currently not enough. x

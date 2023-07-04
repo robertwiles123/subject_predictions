@@ -41,8 +41,8 @@ grades['SEN bool'] = grades['SEN need(s)'].apply(lambda x: False if x == 'n' els
 # So count plot is ordered from lowest to heighst grade
 grade_order = ['U', '1-1', '2-1', '2-2', '3-2', '3-3', '4-3', '4-4', '5-4', '5-5', '6-5', '6-6', '7-6', '7-7', '8-7', '8-8', '9-8', '9-9']
 
-# create subplots for each 
-
+# create subplots for each
+"""
 # Create a figure and subplots
 fig, ax = plt.subplots(3, 2, figsize=(12, 18))
 
@@ -50,7 +50,7 @@ fig, ax = plt.subplots(3, 2, figsize=(12, 18))
 fig.subplots_adjust(hspace=0.5)
 
 # Graphs bellow are producing a bar and hist plot for SEN and PP against grades at different points of the year
-"""
+
 # 3 bar graphs to show balues for scores and how SEN affects
 sns.countplot(data=grades, x='Year 10 Combined MOCK GRADE', hue='SEN bool', palette=['blue', 'yellow'], ax=ax[0, 0], order=grade_order)
 sns.countplot(data=grades, x='Combined MOCK GRADE term 2', hue='SEN bool', palette=['blue', 'yellow'], ax=ax[1, 0], order=grade_order)
@@ -80,6 +80,12 @@ plt.savefig("combined_graphs/SEN_and_grades.png", )
 
 """
 
+# Create a figure and subplots
+fig, ax = plt.subplots(3, 2, figsize=(12, 18))
+
+# Set spacing between subplots
+fig.subplots_adjust(hspace=0.5)
+
 #These grades are for PP students
 
 sns.countplot(data=grades, x='Year 10 Combined MOCK GRADE', hue='PP', palette=['blue', 'yellow'], ax=ax[0, 0], order=grade_order)
@@ -105,3 +111,27 @@ ax[2, 1].set_xticklabels(grade_order, rotation=45)
 plt.savefig("combined_graphs/PP_and_grades.png")
 """
 
+# scatter plot for examining how the grades affect the grade looking for
+
+# X vaiable stored as list so this allows to grab in in code
+X = df_columns.combined_independent()
+
+# to sort df so that graph is ordered properly
+
+grades_sorted = grades.sort_values(X[0], ascending=True)
+
+sns.lineplot(data=grades, x=X[0], y='Year 10 Combined MOCK GRADE', label='Year 10 mocks')
+
+sns.lineplot(data=grades, x=X[0], y='Combined MOCK GRADE term 2', label='Year 11 mocks')
+
+ax = plt.gca()
+ax.set_xticks(range(len(grade_order)))
+ax.set_xticklabels(grade_order)
+ax.set_yticks(range(len(grade_order)))
+ax.set_yticklabels(grade_order)
+# Reverse the order of the y-axis ticks
+ax.set_ylim(ax.get_ylim()[::-1])
+
+plt.legend()
+
+plt.savefig("combined_graphs/grades_line.png")
