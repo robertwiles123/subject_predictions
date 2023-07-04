@@ -113,6 +113,9 @@ else:
     for column in full_clean_grades.columns:
         if column not in df_columns.triple_non_grades():
             full_clean_grades[column] = full_clean_grades[column].map(convert_to_int)
+
+full_clean_grades['SEN bool'] = full_clean_grades['SEN need(s)'].apply(lambda x: False if x == 'n' else True)
+
 pd.set_option('display.max_columns', None)
 
 full_clean_grades.to_csv('csv_clean/clean_' + file_name)

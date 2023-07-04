@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.utils import resample
 from grades_packages import df_columns
 
-grades_normal = pd.read_csv('csv_clean/clean_combined.csv')
+grades_normal = pd.read_csv('csv_clean/ordinal_clean_combined.csv')
 
 majority_class = pd.DataFrame()
 minority_class = pd.DataFrame()
@@ -27,4 +27,4 @@ undersampled_df = undersampled_df.dropna()
 # Shuffle the DataFrame to randomize the order of samples
 undersampled_df = undersampled_df.sample(frac=1, random_state=42).reset_index(drop=True)
 
-undersampled_df.to_csv('csv_clean/combined_undersample.csv')
+undersampled_df.to_csv('csv_clean/ordinal_combined_undersample.csv')

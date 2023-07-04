@@ -1,4 +1,6 @@
-Create ordinal models as it the data is ordinal
+Collect more data as neural network does not work with this little.
+
+Try a ridge regression as it is good at reducing overfitting but can handle multiple X cases
 
 Add ability to add in data as a typed string in use model
 
