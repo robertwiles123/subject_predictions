@@ -28,6 +28,15 @@ Combined scores:
             Cross-validation scores: [0.74417294 0.70586738 0.62206131 0.69567798 0.67479957 0.74642363
             0.61666804 0.6590718  0.47239641 0.47617511]
             Slightl overfitting
+        Ridge:
+            Mean Squared Error (MSE): 0.74
+            Train MSE 10.39
+            testMSE 0.74
+            Root Mean Squared Error (RMSE): 0.86
+            R2 score: 0.8430296349177056
+            Cross-validation scores: [0.88560348 0.88671117 0.87303427 0.86295647 0.92223356 0.90642829
+            0.82591136 0.86231067 0.76010084 0.78885594]
+            It seems there is a slight over fitting to the data, though it does seem to be the best at the moment
         Due to the random tree being the only data that does not fit this is currently the best model, though more data is defiently needed
     Undersample
         Linear regression:
@@ -57,7 +66,16 @@ Combined scores:
             Cross-validation scores: [0.56517694 0.62979227 0.5874407  0.51666182 0.81590992 0.65021551
             0.49285357 0.67914429 0.68916211 0.68090417]
             Performing slightly worst
+        Ridge:
+            Mean Squared Error (MSE): 0.63
+            Train MSE 8.37
+            testMSE 0.63
+            Root Mean Squared Error (RMSE): 0.79
+            R2 score: 0.8983472997728426
+            Cross-validation scores: [0.7458663  0.83970649 0.85719354 0.79297608 0.91631593 0.82086898
+            0.75118108 0.84689488 0.86702469 0.81774108]
 
+It seems currently the undersampled ridge is performing the best, though still over fitting
 
 Triple scores:
     Linear regression:

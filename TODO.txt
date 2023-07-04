@@ -1,6 +1,8 @@
 Collect more data as neural network does not work with this little.
 
-Try a ridge regression as it is good at reducing overfitting but can handle multiple X cases
+Complete ridge with triple data
+
+Update the model predictor to include ridge model
 
 Add ability to add in data as a typed string in use model
 
