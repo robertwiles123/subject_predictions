@@ -1,3 +1,5 @@
+Create ordinal models as it the data is ordinal
+
 Add ability to add in data as a typed string in use model
 
 calculate confidence intervals for regression coefficients
