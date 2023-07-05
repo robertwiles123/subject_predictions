@@ -5,6 +5,7 @@ from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import  r2_score, mean_squared_error
 import matplotlib.pyplot as plt
+from joblib import dump
 
 # import whatever file I want to test
 file_name = input('What file do you want to test? ')
@@ -66,3 +67,14 @@ plt.legend(loc='lower right')
 plt.ylim([0, 1])
 plt.show()
 plt.savefig("model_graphs/" + file_name + "ridge.png", )
+
+save = input('should it be saved? ')
+if save[0].strip().lower() == 'y':
+    if type_science.lower()[0] == 'c':
+        dump(model, 'combined_models/combined_ridge.joblib')
+        dump(encoder, 'combined_models/combined_ridge_encoding.joblib')
+        print('Model save')
+    else:
+        dump(model, 'triple_models/triple_ridge.joblib')
+        dump(encoder, 'triple_models/triple_ridge.joblib')
+        print('Model save')

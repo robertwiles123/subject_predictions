@@ -75,6 +75,7 @@ Combined scores:
             0.84809774 0.93025941 0.92734545 0.87093712]
         Again the ridge model seems to be doing the best. Although the desition tree seems to have a better score. The learning curve seems to suggest that overfiting is prevalent.
     The under fitted ridge model seems to be performing the best with the current data. Both MSE and RMSE scores are lower with the R2 value being around 3% higher. There is also more consistency with the cross_val_score.
+    The underfitted data is actualyl perfoming better for all models except random forest.
 Triple scores:
     Linear regression:
         Mean Squared Error (MSE): 1.30

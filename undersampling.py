@@ -4,8 +4,9 @@ from grades_packages import df_columns
 
 grades_normal = pd.read_csv('csv_clean/clean_combined.csv')
 
-majority_class = pd.DataFrame()
-minority_class = pd.DataFrame()
+# Create empty DataFrames for majority and minority classes
+majority_class = pd.DataFrame(columns=grades_normal.columns)
+minority_class = pd.DataFrame(columns=grades_normal.columns)
 
 for col in grades_normal.columns:
     if col in df_columns.combined_grades():
@@ -27,4 +28,7 @@ undersampled_df = undersampled_df.dropna()
 # Shuffle the DataFrame to randomize the order of samples
 undersampled_df = undersampled_df.sample(frac=1, random_state=42).reset_index(drop=True)
 
-undersampled_df.to_csv('csv_clean/combined_undersample.csv')
+undersampled_df = undersampled_df.drop("Unnamed: 0", axis=1)
+
+# Save the undersampled DataFrame to CSV without the index column
+undersampled_df.to_csv("csv_clean/combined_undersample.csv")

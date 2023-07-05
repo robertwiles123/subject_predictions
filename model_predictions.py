@@ -7,21 +7,21 @@ data = input('What do you want to predict? ')
 # clean combined dataframe
 type = input('Is the data for combined or triple? ')
 
+
+models_to_predict = ['linear', 'random_forest', 'descition_tree', 'ridge']
 # current models I have, though this will be added to and taken away with more data, with accuracy
 if type.lower()[0] == 'c':
-    combined_models_to_predict = ['combined_linear', 'combined_random_forest', 'combined_descition_tree']
     combined_models_to_predict_dict = {}
-    for s in combined_models_to_predict:
-        model = load('combined_models/' + s + '.joblib')
+    for s in models_to_predict:
+        model = load('combined_models/combined_' + s + '.joblib')
         combined_models_to_predict_dict[s] = model
     # check that the dict of files and models are correct
     print(combined_models_to_predict_dict)
 elif type.lower()[0] == 't':
-    tripe_models_to_predict = ['triple_linear', 'triple_random_forest', 'triple_descition_tree']
     triple_models_to_predict_dict = {}
     # populate a dict of model with the file so can apply them later as neeeded
-    for s in tripe_models_to_predict:
-        model = load('triple_models/' + s + '.joblib')
+    for s in models_to_predict:
+        model = load('triple_models/triple_' + s + '.joblib')
         triple_models_to_predict_dict[s] = model
         # check that the dict of files and models are correct
     print(triple_models_to_predict_dict)
@@ -40,7 +40,7 @@ if type.lower()[0] == 'c':
         if isinstance(data, str):
             print('oops')
         elif isinstance(data, pd.DataFrame):
-                encoder = load('combined_models/' + k + '_encoding.joblib')
+                encoder = load('combined_models/combined_' + k + '_encoding.joblib')
                 encoded_data = encoding.new_data_one_hot(data, encoder)
                 prediction = v.predict(encoded_data)
                 pred_df = pd.DataFrame({k+'_predicted grades': prediction})
@@ -86,7 +86,7 @@ elif type.lower()[0] == 't':
             print('oops')
         elif isinstance(data, pd.DataFrame):
         # Doesn't work, probably because 3 numpy array at a guess
-                encoder = load('triple_models/' + k + '_encoding.joblib')
+                encoder = load('triple_models/triple_' + k + '_encoding.joblib')
                 encoded_data = encoding.new_data_one_hot(data, encoder)
                 prediction = v.predict(encoded_data)
                 outcomes[k] = prediction
