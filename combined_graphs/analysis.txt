@@ -7,3 +7,7 @@ PP graphs:
 SEN graphs:
     On the bar graphs they follow the same trend as the PP pupals
     With the histograms the year 10 data both seem to be slightly right skewed, though this stops for the non SEN students and start to shift to no distribution
+
+
+Line graph:
+    both year 11 and year 10 mocks seem to corrolate well to the final grade achieved. However the year 11 mock seems to have a large spike at 5-5 - 6-5. This could be due to a lower amount around the lowest grades. This could mean more students trying later on, making it a better predictor. 

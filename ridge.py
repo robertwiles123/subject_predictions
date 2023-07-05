@@ -7,16 +7,13 @@ from sklearn.metrics import  r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 
 # import whatever file I want to test
-#file_name = input('What file do you want to test? ')
+file_name = input('What file do you want to test? ')
+learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
 
-learning_grades = pd.read_csv('csv_clean/combined_undersample.csv')
+type_science = input('Is it triple or combined? ')
 
-# determine the type of science, triple and combined have different headings
-# type_science = input('Is it triple or combined? ')
+encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 
-# the label encoder was not effective at creating predicted grades. When chaging to a one hot encoder the model became less effective
-# May be worth adding in new variables and seeing how this affects the data
-encoder, X, y = encoding.one_hot_fit(learning_grades, type='c')
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -26,18 +23,20 @@ model = Ridge(alpha=1.0)  # Adjust the alpha parameter as needed
 model.fit(X_train, y_train)
 
 # Make predictions
-y_pred = model.predict(X_test)
+y_pred_unrounded = model.predict(X_test)
+
+y_pred = np.vectorize(lambda x: round(x * 2) / 2)(y_pred_unrounded)
 
 # evaluate the model performance using mean squred error, root and r squared
-mse = mean_squared_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred_unrounded)
 rmse = np.sqrt(mse)
-r2 = r2_score(y_test, y_pred)
+r2 = r2_score(y_test, y_pred_unrounded)
 
 
-y_train_size = y_pred.shape[0]
+y_train_size = y_pred_unrounded.shape[0]
 print("Mean Squared Error (MSE): {:.2f}".format(mse))
-print('Train MSE {:.2f}'.format(mean_squared_error(y_train[:y_train_size], y_pred)))
-print('testMSE {:.2f}'.format(mean_squared_error(y_test, y_pred)))
+print('Train MSE {:.2f}'.format(mean_squared_error(y_train[:y_train_size], y_pred_unrounded)))
+print('testMSE {:.2f}'.format(mean_squared_error(y_test, y_pred_unrounded)))
 print("Root Mean Squared Error (RMSE): {:.2f}".format(rmse))
 print("R2 score:", r2)
 
@@ -66,4 +65,4 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0, 1])
 plt.show()
-plt.savefig("model_graphs/clean_combined_ridge.png", )
+plt.savefig("model_graphs/" + file_name + "ridge.png", )

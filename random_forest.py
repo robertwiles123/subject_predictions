@@ -51,7 +51,9 @@ else:
 
 rf.fit(X_train, y_train)
 
-y_pred = rf.predict(X_test)
+y_pred_unrounded = rf.predict(X_test)
+
+y_pred = np.vectorize(lambda x: round(x * 2) / 2)(y_pred_unrounded)
 
 mse = mean_squared_error(y_test, y_pred)
 rmse = np.sqrt(mse)

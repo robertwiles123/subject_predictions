@@ -33,7 +33,10 @@ lr = LinearRegression()
 # fit the model to the training data
 lr.fit(X_train, y_train)
 
-y_pred = lr.predict(X_test)
+y_pred_unrounded = lr.predict(X_test)
+
+# Rounding grades back to their original catagorical representations
+y_pred = np.vectorize(lambda x: round(x * 2) / 2)(y_pred_unrounded)
 
 # evaluate the model performance using mean squred error, root and r squared
 mse = mean_squared_error(y_test, y_pred)

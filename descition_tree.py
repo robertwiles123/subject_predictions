@@ -47,7 +47,9 @@ else:
 
 dtr.fit(X_test, y_test)
 
-y_pred = dtr.predict(X_test)
+y_pred_unrounded = dtr.predict(X_test)
+
+y_pred = np.vectorize(lambda x: round(x * 2) / 2)(y_pred_unrounded)
 
 y_train_size = y_pred.shape[0]
 mse = mean_squared_error(y_test, y_pred)
