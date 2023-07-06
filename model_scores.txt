@@ -77,29 +77,30 @@ Combined scores:
     The underfitted data is actualyl perfoming better for all models except random forest.
 Triple scores:
     Linear regression:
-        Mean Squared Error (MSE): 1.30
-        Train MSE 7.13
-        testMSE 1.30
-        Root Mean Squared Error (RMSE): 1.14
-        R2 score: 0.6541592466228594
-        Cross-validation scores: [-0.53817787  0.69909349  0.58265214 -0.72034079  0.82350452 -0.62626739
-        0.631394    0.67569611  0.54709869  0.5952716 ]
+        Mean Squared Error (MSE): 12.79
+        Train MSE 15.09
+        testMSE 12.79
+        Root Mean Squared Error (RMSE): 3.58
+        R2 score: -2.515586194016398
+        Cross-validation scores: [-8.83658744e+00 -6.59105896e+00 -7.02279759e+25 -2.56094078e+02
+        -3.61823943e+01 -1.36722196e+00 -7.53026467e-01 -1.53812461e+00
+        -5.83462539e-01 -1.73537584e+26]
     Desiction tree:
-        Train MSE 9.03
-        test MSE 0.87
-        Mean Squared Error (MSE): 0.87478354978355
-        Root Mean Squared Error (RMSE): 0.9352986420302074
-        R2 Score: 0.7696678880932919
+        Train MSE 9.01
+        test MSE 0.89
+        Mean Squared Error (MSE): 0.8863636363636364
+        Root Mean Squared Error (RMSE): 0.9414688716912718
+        R2 Score: 0.7666014476436341
         Cross-validation scores: [-2.03660839  0.10090326  0.73226033 -1.47034688  0.74822274 -0.02169163
-        0.65006679  0.6729204   0.31349601  0.65911969]
+        0.65006679  0.62011836  0.31349601  0.65911969]
     Random Tree:
-        Mean Squared Error (MSE): 1.27
-        Train MSE 7.09
-        testMSE 1.27
-        Root Mean Squared Error (RMSE): 1.13
-        R2 score: 0.6609789871036807
-        Cross-validation scores: [-0.05037715  0.74176238  0.67923837  0.01874869  0.79061922  0.00718231
-        0.64027193  0.75831872  0.53371571  0.51902234]
+        Mean Squared Error (MSE): 1.17
+        Train MSE 7.27
+        testMSE 1.17
+        Root Mean Squared Error (RMSE): 1.08
+        R2 score: 0.6892667130026106
+        Cross-validation scores: [-0.52870285  0.65738317  0.64536833  0.1368927   0.77138643 -0.06681998
+        0.69876951  0.77084128  0.56903928  0.57490778]
 
 I have been treating the data as contius as I transormed it. However, it is porbably best to go back and treat it as the ordinal it actually is.
 

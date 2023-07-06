@@ -68,10 +68,11 @@ full_clean_grades = clean_grades.dropna(axis=0)
 
 # All the same legth, all objects
 print(full_clean_grades.info())
+full_clean_grades['SEN bool'] = full_clean_grades['SEN need(s)'].apply(lambda x: False if x == 'n' else True)
 
-# all the correct possible unique values
-for col in columns_in_df:
-    print(full_clean_grades[col].unique())
+drop = ['SEN need(s)']
+
+full_clean_grades = full_clean_grades.drop(drop, axis=1)
 
 if type_science == 'c':
     # after working with this data I think converting the grades in to '0' '1' '1.5' '2' would work better
@@ -114,11 +115,6 @@ else:
         if column not in df_columns.triple_non_grades():
             full_clean_grades[column] = full_clean_grades[column].map(convert_to_int)
 
-full_clean_grades['SEN bool'] = full_clean_grades['SEN need(s)'].apply(lambda x: False if x == 'n' else True)
-
-drop = ['SEN need(s)']
-
-full_clean_grades = full_clean_grades.drop(drop, axis=1)
 
 pd.set_option('display.max_columns', None)
 

@@ -31,8 +31,13 @@ lr.fit(X_train, y_train)
 
 y_pred_unrounded = lr.predict(X_test)
 
-# Rounding grades back to their original catagorical representations
-y_pred = np.vectorize(lambda x: round(x * 2) / 2)(y_pred_unrounded)
+if type_science.lower()[0] == 'c':
+    # Rounding grades back to their original catagorical representations
+    y_pred = np.vectorize(lambda x: round(x * 2) / 2)(y_pred_unrounded)
+elif type_science.lower()[0] == 't':
+    y_pred = np.vectorize(lambda x: round(x))(y_pred_unrounded)
+else:
+    print("Incorrect type")
 
 # evaluate the model performance using mean squred error, root and r squared
 mse = mean_squared_error(y_test, y_pred)

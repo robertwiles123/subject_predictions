@@ -15,7 +15,8 @@ type_science = input('Is it triple or combined? ')
 
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 
-y = y.values.ravel()
+if type_science.lower()[0] == 't':
+    y = y.values.ravel()
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
