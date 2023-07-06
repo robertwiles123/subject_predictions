@@ -1,14 +1,13 @@
 Combined scores:
     full sample
         Linear regression:
-           Mean Squared Error (MSE): 0.52
-            Train MSE 12.07
-            testMSE 0.52
-            Root Mean Squared Error (RMSE): 0.72
-            R2 score: 0.9042108122792719
-            Cross-validation scores: [0.97751644 0.95701821 0.95956294 0.88302165 0.98054432 0.9768023
-            Graph analysis:
-                Almost defiently over fitting
+            Mean Squared Error (MSE): 0.45
+            Train MSE 11.65
+            testMSE 0.45
+            Root Mean Squared Error (RMSE): 0.67
+            R2 score: 0.9175767454496061
+            Cross-validation scores: [0.96361803 1.         0.89202263 0.85812158 0.93786991 0.99981362
+            1.         0.90895513 0.96555859 0.88985964]
         Descition tree:
             Train MSE 13.32
             test MSE 0.06

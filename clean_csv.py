@@ -14,9 +14,9 @@ type_science = type_science.lower()[0]
 
 # just checking first letter as currenlt just me using so to help with typo management
 if type_science == 'c':
-    just_grades = full[df_columns.combined_columns()]
+    just_grades = full[df_columns.combined_full_original()]
 elif type_science == 't':
-    just_grades = full[df_columns.triple_columns()]
+    just_grades = full[df_columns.triple_full_original()]
 else:
     print('Neither selected')
 # to see what needs to be cleared
@@ -115,6 +115,10 @@ else:
             full_clean_grades[column] = full_clean_grades[column].map(convert_to_int)
 
 full_clean_grades['SEN bool'] = full_clean_grades['SEN need(s)'].apply(lambda x: False if x == 'n' else True)
+
+drop = ['SEN need(s)']
+
+full_clean_grades = full_clean_grades.drop(drop, axis=1)
 
 pd.set_option('display.max_columns', None)
 

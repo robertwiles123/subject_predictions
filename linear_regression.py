@@ -17,10 +17,6 @@ learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
 # determine the type of science, triple and combined have different headings
 type_science = input('Is it triple or combined? ')
 
-# uses code to return an encoded dataframe as well as an X and y catagory
-# does not predict new grades well, probable as there are grades this could not see
-# learning_grades, X, y = encoding.le_science(learning_grades, type_science)
-
 # the label encoder was not effective at creating predicted grades. When chaging to a one hot encoder the model became less effective
 # May be worth adding in new variables and seeing how this affects the data
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
