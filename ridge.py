@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from grades_packages import encoding
+from grade_packages import encoding
 from sklearn.linear_model import Ridge
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import  r2_score, mean_squared_error

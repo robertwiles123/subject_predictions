@@ -1,7 +1,6 @@
 import pandas as pd
 from joblib import load
-from grades_packages import df_columns
-from grades_packages import encoding
+from grade_packages import df_columns, encoding
 
 data = input('What do you want to predict? ')
 # clean combined dataframe

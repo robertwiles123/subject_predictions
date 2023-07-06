@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from grades_packages import df_columns
+from grade_packages import df_columns
 
 # import csv file
 grades = pd.read_csv('csv_clean/clean_combined.csv')

@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.utils import resample
-from grades_packages import df_columns
+from grade_packages import df_columns
 
 grades_normal = pd.read_csv('csv_clean/clean_combined.csv')
 

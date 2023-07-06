@@ -1,7 +1,7 @@
 # improting and cleaning data
 import numpy as np
 import pandas as pd
-from grades_packages import df_columns
+from grade_packages import df_columns
 
 # allows user to import either a file full of combined grades with format of 1-1, 2-1, 2-2 or triple with just 1 2 3
 file_name = input('What file do you want cleaned, include file type? ')

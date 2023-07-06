@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from grades_packages import encoding
+from grade_packages import encoding
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
 
 combined = pd.read_csv('csv_clean/ordinal_clean_combined.csv')

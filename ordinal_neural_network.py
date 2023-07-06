@@ -7,7 +7,7 @@ from skorch import NeuralNetClassifier
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from grades_packages import encoding
+from grade_packages import encoding
 import numpy as np
 
 # Define the architecture of the Ordinal Neural Network
