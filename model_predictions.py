@@ -40,7 +40,7 @@ if type.lower()[0] == 'c':
             print('oops')
         elif isinstance(data, pd.DataFrame):
                 encoder = load('combined_models/combined_' + k + '_encoding.joblib')
-                encoded_data = encoding.new_data_one_hot(data, encoder)
+                encoded_data = encoding.new_data_one_hot(data, encoder, type)
                 prediction = v.predict(encoded_data)
                 prediction = prediction.ravel()
                 pred_df = pd.DataFrame({k+'_predicted grades': prediction})
@@ -51,7 +51,6 @@ if type.lower()[0] == 'c':
     columns_to_skip = data.columns
     for column in df_with_predictions.columns:
         if column not in columns_to_skip:
-            print(column)
             df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
             # to return predicted grades back to how they should be, however, not doing original files
             grade_mapping = {
@@ -88,7 +87,8 @@ elif type.lower()[0] == 't':
         elif isinstance(data, pd.DataFrame):
         # Doesn't work, probably because 3 numpy array at a guess
                 encoder = load('triple_models/triple_' + k + '_encoding.joblib')
-                encoded_data = encoding.new_data_one_hot(data, encoder)
+                encoded_data = encoding.new_data_one_hot(data, encoder, type)
+                print(encoded_data)
                 prediction = v.predict(encoded_data)
                 outcomes[k] = prediction
         #need to take the dict and change in to a dataframe

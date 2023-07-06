@@ -75,5 +75,5 @@ if save[0].strip().lower() == 'y':
         print('Model save')
     else:
         dump(model, 'triple_models/triple_ridge.joblib')
-        dump(encoder, 'triple_models/triple_ridge.joblib')
+        dump(encoder, 'triple_models/triple_ridge_encoding.joblib')
         print('Model save')
