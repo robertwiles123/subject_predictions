@@ -7,7 +7,6 @@ from sklearn.metrics import  r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 from joblib import dump
 
-# import whatever file I want to test
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
 
@@ -66,7 +65,7 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0, 1])
 plt.show()
-plt.savefig("model_graphs/" + file_name + "ridge.png", )
+plt.savefig("model_graphs/" + file_name + "_ridge.png", )
 
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':

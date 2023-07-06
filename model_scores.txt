@@ -101,6 +101,15 @@ Triple scores:
         R2 score: 0.6892667130026106
         Cross-validation scores: [-0.52870285  0.65738317  0.64536833  0.1368927   0.77138643 -0.06681998
         0.69876951  0.77084128  0.56903928  0.57490778]
+    Ridge:
+        Mean Squared Error (MSE): 1.62
+        Train MSE 10.09
+        testMSE 1.62
+        Root Mean Squared Error (RMSE): 1.27
+        R2 score: 0.6057414800732545
+        Cross-validation scores: [-0.59554786  0.6513534   0.56871245 -0.83030488  0.81423953 -0.62501275
+        0.62107563  0.66777364  0.513296    0.61409629]
+    It looks like the desiction tree is performing best out of these models. however there is a major issue with all of them, and that is none are fitting the data well.
 
 I have been treating the data as contius as I transormed it. However, it is porbably best to go back and treat it as the ordinal it actually is.
 
