@@ -42,14 +42,16 @@ if type.lower()[0] == 'c':
                 encoder = load('combined_models/combined_' + k + '_encoding.joblib')
                 encoded_data = encoding.new_data_one_hot(data, encoder)
                 prediction = v.predict(encoded_data)
+                prediction = prediction.ravel()
                 pred_df = pd.DataFrame({k+'_predicted grades': prediction})
                 outcomes[k] = prediction
         else:
                 print('Error')
     df_with_predictions = data.assign(**outcomes)
-    columns_to_skip = df_columns.combined_columns()
+    columns_to_skip = data.columns
     for column in df_with_predictions.columns:
         if column not in columns_to_skip:
+            print(column)
             df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
             # to return predicted grades back to how they should be, however, not doing original files
             grade_mapping = {
