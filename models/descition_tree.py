@@ -9,7 +9,7 @@ from joblib import dump
 # from sklearn.model_selection import GridSearchCV
 
 file_name = input('What file do you want to test? ')
-learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
+learning_grades = pd.read_csv('../csv_clean/' + file_name + '.csv')
 
 type_science = input('Is it triple or combined? ')
 
@@ -85,15 +85,15 @@ plt.xscale('log')
 plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.show()
-plt.savefig("model_graphs/" + file_name + "_descition.png", )
+plt.savefig("../model_graphs/" + file_name + "_descition.png", )
 
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
-        dump(dtr, 'combined_models/combined_descition_tree.joblib')
-        dump(encoder, 'combined_models/combined_descition_tree_encoding.joblib')
+        dump(dtr, '../combined_models/combined_descition_tree.joblib')
+        dump(encoder, '../combined_models/combined_descition_tree_encoding.joblib')
         print('Model save')
     else:
-        dump(dtr, 'triple_models/triple_descition_tree.joblib')
-        dump(encoder, 'triple_models/triple_descition_tree_encoding.joblib')
+        dump(dtr, '../triple_models/triple_descition_tree.joblib')
+        dump(encoder, '../triple_models/triple_descition_tree_encoding.joblib')
         print('Model save')

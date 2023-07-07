@@ -14,7 +14,7 @@ from joblib import dump
 # import whatever file I want to test
 file_name = input('What file do you want to test? ')
 
-learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
+learning_grades = pd.read_csv('../csv_clean/' + file_name + '.csv')
 
 # determine the type of science, triple and combined have different headings
 type_science = input('Is it triple or combined? ')
@@ -79,16 +79,16 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0.99, 1.01])
 plt.show()
-plt.savefig("model_graphs/" + file_name + "_linear.png", )
+plt.savefig("../model_graphs/" + file_name + "_linear.png", )
 
 # if data is good give option to save and name to save
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
-        dump(lr, 'combined_models/combined_linear.joblib')
-        dump(encoder, 'combined_models/combined_linear_encoding.joblib')
+        dump(lr, '../combined_models/combined_linear.joblib')
+        dump(encoder, '../combined_models/combined_linear_encoding.joblib')
         print('Model save')
     else:
-        dump(lr, 'triple_models/triple_linear.joblib')
-        dump(encoder, 'triple_models/triple_linear_encoding.joblib')
+        dump(lr, '../triple_models/triple_linear.joblib')
+        dump(encoder, '../triple_models/triple_linear_encoding.joblib')
         print('Model save')

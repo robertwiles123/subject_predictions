@@ -23,7 +23,7 @@ class OrdinalNeuralNetwork(nn.Module):
         return x
 
 # Load the data and split into features and target
-data = pd.read_csv('csv_clean/ordinal_combined_undersample.csv')
+data = pd.read_csv('../csv_clean/ordinal_combined_undersample.csv')
 X_ordinal, y = encoding.ordinal_encoder_combined(data)
 
 # convert bool to np array

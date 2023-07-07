@@ -22,10 +22,6 @@ else:
 # to see what needs to be cleared
 print(just_grades.describe())
 
-just_grades['PP'] = just_grades['PP'].str.replace('Yes', 'True')
-just_grades['PP'] = just_grades['PP'].fillna(False)
-
-just_grades['PP'] = just_grades ['PP'].astype(bool)
 
 just_grades['SEN need(s)'] = just_grades ['SEN need(s)'].fillna("n")
 
@@ -117,6 +113,14 @@ else:
 
 
 pd.set_option('display.max_columns', None)
+
+full_clean_grades['PP'] = full_clean_grades['PP'].str.replace('Yes', 'True')
+full_clean_grades['PP'] = full_clean_grades['PP'].str.replace('No', 'False')
+full_clean_grades['PP'] = full_clean_grades['PP'].fillna(False)
+
+full_clean_grades['PP'] = full_clean_grades ['PP'].astype(bool)
+
+print(full_clean_grades.info())
 
 full_clean_grades.to_csv('csv_clean/clean_' + file_name)
 print('CSV saved')

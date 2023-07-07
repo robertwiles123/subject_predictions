@@ -1,5 +1,5 @@
 import pandas as pd
-from grade_packages import df_columns
+import df_columns
 from sklearn.preprocessing import OneHotEncoder
 
 def one_hot_fit(df, type):

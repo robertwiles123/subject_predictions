@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from grade_packages import encoding
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
 
-combined = pd.read_csv('csv_clean/ordinal_clean_combined.csv')
+combined = pd.read_csv('../csv_clean/ordinal_clean_combined.csv')
 
 X_ordinal, y = encoding.ordinal_encoder_combined(combined)
 
@@ -40,5 +40,5 @@ print("F1-Score:", f1)
                                                     
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
-    dump(model, 'ordinal_combined_models/logistic_combined_.joblib')
+    dump(model, '../ordinal_combined_models/logistic_combined_.joblib')
     print('Model save')

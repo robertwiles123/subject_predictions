@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from joblib import dump
 
 file_name = input('What file do you want to test? ')
-learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
+learning_grades = pd.read_csv('../csv_clean/' + file_name + '.csv')
 
 type_science = input('Is it triple or combined? ')
 
@@ -65,15 +65,15 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0, 1])
 plt.show()
-plt.savefig("model_graphs/" + file_name + "_ridge.png", )
+plt.savefig("../model_graphs/" + file_name + "_ridge.png", )
 
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
-        dump(model, 'combined_models/combined_ridge.joblib')
-        dump(encoder, 'combined_models/combined_ridge_encoding.joblib')
+        dump(model, '../combined_models/combined_ridge.joblib')
+        dump(encoder, '../combined_models/combined_ridge_encoding.joblib')
         print('Model save')
     else:
-        dump(model, 'triple_models/triple_ridge.joblib')
-        dump(encoder, 'triple_models/triple_ridge_encoding.joblib')
+        dump(model, '../triple_models/triple_ridge.joblib')
+        dump(encoder, '../triple_models/triple_ridge_encoding.joblib')
         print('Model save')

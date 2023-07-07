@@ -35,9 +35,6 @@ for column in grades.columns:
 
 print(grades.columns)
 
-# create a bool for SEN to examine if SEN affects grades
-grades['SEN bool'] = grades['SEN need(s)'].apply(lambda x: False if x == 'n' else True)
-
 # So count plot is ordered from lowest to heighst grade
 grade_order = ['U', '1-1', '2-1', '2-2', '3-2', '3-3', '4-3', '4-4', '5-4', '5-5', '6-5', '6-6', '7-6', '7-7', '8-7', '8-8', '9-8', '9-9']
 

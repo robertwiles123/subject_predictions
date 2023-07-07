@@ -1,4 +1,4 @@
-from grade_packages import encoding
+import encoding
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
@@ -9,7 +9,7 @@ from joblib import dump
 # from sklearn.model_selection import GridSearchCV
 
 file_name = input('What file do you want to test? ')
-learning_grades = pd.read_csv('csv_clean/' + file_name + '.csv')
+learning_grades = pd.read_csv('../csv_clean/' + file_name + '.csv')
 
 type_science = input('Is it triple or combined? ')
 
@@ -94,17 +94,17 @@ plt.xlabel('Number of training samples')
 plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.show()
-plt.savefig("model_graphs/" + file_name + "_random.png", )
+plt.savefig("../model_graphs/" + file_name + "_random.png", )
 
 # It seems the model is good for making predictions if there are enough data points. I will continue to work on this if there is more data avalible
 
 save = input('should it be saved? ')
 if save[0].strip().lower() == 'y':
     if type_science.lower()[0] == 'c':
-        dump(rf, 'combined_models/combined_random_forest.joblib')
-        dump(encoder, 'combined_models/combined_random_forest_encoding.joblib')
+        dump(rf, '../combined_models/combined_random_forest.joblib')
+        dump(encoder, '../combined_models/combined_random_forest_encoding.joblib')
         print('Model save')
     else:
-        dump(rf, 'triple_models/triple_random_forest.joblib')
-        dump(encoder, 'triple_models/triple_random_forest_encoding.joblib')
+        dump(rf, '../triple_models/triple_random_forest.joblib')
+        dump(encoder, '../triple_models/triple_random_forest_encoding.joblib')
         print('Model save')
