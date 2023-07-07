@@ -6,6 +6,8 @@ from grade_packages import df_columns
 # import csv file
 grades = pd.read_csv('csv_clean/clean_combined.csv')
 
+grades_original = grades.copy()
+
 # Converts grades back from numaric
 for column in grades.columns:
         if column not in df_columns.combined_bool():
@@ -32,7 +34,6 @@ for column in grades.columns:
                                             }
 
             grades.loc[:, column] = grades[column].map(grade_mapping)
-
 
 # So count plot is ordered from lowest to heighst grade
 grade_order = ['U', '1-1', '2-1', '2-2', '3-2', '3-3', '4-3', '4-4', '5-4', '5-5', '6-5', '6-6', '7-6', '7-7', '8-7', '8-8', '9-8', '9-9']
@@ -112,24 +113,36 @@ plt.close(fig)
 # scatter plot for examining how the grades affect the grade looking for
 
 # X vaiable stored as list so this allows to grab in in code
-X = df_columns.combined_independent()
 
 # to sort df so that graph is ordered properly
 
-grades_sorted = grades.sort_values(X[0], ascending=True)
 
-sns.lineplot(data=grades, x=X[0], y='Year 10 Combined MOCK GRADE', label='Year 10 mocks')
+fig, (ax1, ax2)= plt.subplots(1, 2, figsize=(16, 8))
 
-sns.lineplot(data=grades, x=X[0], y='Combined MOCK GRADE term 2', label='Year 11 mocks')
+sns.lineplot(data=grades_original, x='Combined MOCK GRADE Term 4', y='Year 10 Combined MOCK GRADE', label='Year 10 mocks', c='blue', errorbar=('ci',95), ax=ax1)
 
-ax = plt.gca()
-ax.set_xticks(range(len(grade_order)))
-ax.set_xticklabels(grade_order)
-ax.set_yticks(range(len(grade_order)))
-ax.set_yticklabels(grade_order)
-# Reverse the order of the y-axis ticks
-ax.set_ylim(ax.get_ylim()[::-1])
+sns.lineplot(data=grades_original, x='Combined MOCK GRADE Term 4', y='Combined MOCK GRADE term 2', label='Year 11 mocks', c='red', errorbar=('ci',95), ax=ax2)
 
-plt.legend()
+ticks = range(10)
+tick_labels = [str(i) for i in ticks]
+
+ax1.set_xticks(ticks)
+ax1.set_xticklabels(tick_labels)
+
+ax2.set_xticks(ticks)
+ax2.set_xticklabels(tick_labels)
+
+ax1.set_yticks(ticks)
+ax1.set_xticklabels(tick_labels)
+
+ax2.set_yticks(ticks)
+ax2.set_xticklabels(tick_labels)
+
+ax1.set_xlabel('Combined MOCK GRADE Term 4')
+ax2.set_xlabel('Combined MOCK GRADE Term 4')
+
+# Set the y-axis label
+ax1.set_ylabel('Year 10 Combined MOCK GRADE')
+ax2.set_ylabel('Combined MOCK GRADE term 2')
 
 plt.savefig("combined_graphs/grades_line.png")

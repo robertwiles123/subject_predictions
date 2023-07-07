@@ -16,8 +16,12 @@ for col in grades_normal.columns:
         majority_class[col] = grades_normal[col]
         minority_class[col] = grades_normal[col]
 
-# Undersample the majority class to match the number of samples in the minority class
-undersampled_majority = resample(majority_class, replace=False, n_samples=len(minority_class), random_state=42)
+
+# Calculate the desired number of samples from the majority class
+undersample_size = 130
+
+# Undersample the majority class to the desired size
+undersampled_majority = resample(majority_class, replace=False, n_samples=undersample_size, random_state=86)
 
 # Combine the undersampled majority class with the original minority class
 undersampled_df = pd.concat([undersampled_majority, minority_class])
