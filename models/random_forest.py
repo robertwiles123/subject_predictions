@@ -15,11 +15,12 @@ type_science = input('Is it triple or combined? ')
 
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 
-if type_science.lower()[0] == 't':
+if type_science.lower()[0] == 'c':
     y = y.values.ravel()
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
 """
 param_grid = {
     'max_depth': [3, 5, 7, 10],
@@ -43,11 +44,12 @@ grid_search.fit(X_train, y_train)
 print("Best hyperparameters:")
 print(grid_search.best_params_)
 print("Best Score (Negative MSE):", -grid_search.best_score_)
+
 """
 if type_science.lower()[0] == 'c':
-    rf = RandomForestRegressor(random_state=42, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=200)
+    rf = RandomForestRegressor(random_state=42, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=100)
 elif type_science.lower()[0] == 't':
-    rf = RandomForestRegressor(bootstrap=False, max_depth=10, max_features='log2', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=50, random_state=42)
+    rf = RandomForestRegressor(bootstrap=False, max_depth=7, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=5, n_estimators=50, random_state=42)
 else:
     print('No model selected')
     

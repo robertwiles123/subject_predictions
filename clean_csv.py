@@ -5,7 +5,7 @@ from grade_packages import df_columns
 
 # allows user to import either a file full of combined grades with format of 1-1, 2-1, 2-2 or triple with just 1 2 3
 file_name = input('What file do you want cleaned, include file type? ')
-full = pd.read_csv('csv_dirty/' + file_name)
+full = pd.read_csv('csv_dirty/' + file_name + '.csv')
 full.columns = full.columns.str.strip()
 
 # to clean based on triple or combined
@@ -33,10 +33,29 @@ print(just_grades.isna().sum().sort_values(), len(just_grades) * 0.05)
 # 17 FFT20 there should only be 8 for values 1-9 inclusive
 # display(pd.unique(just_grades['FFT20']))
 
-just_grades_no_nan = just_grades.dropna(axis=0)
-just_grades_clean_FFT20 = just_grades_no_nan.copy()
-just_grades_clean_FFT20['FFT20'] = just_grades_no_nan['FFT20'].str.replace('[^\d]', '')
+# Too many PP so those with nan relaced with false as this is the more likely
+just_grades.loc[:, 'PP'] = just_grades['PP'].fillna('False')
 
+#FFT20 also has to many nan, being replaced with median
+# Remove the "+" and "-" characters from the "FFT20" column
+just_grades.loc[:, 'FFT20'] = just_grades['FFT20'].str.replace('[+-]', '', regex=True)
+
+# Convert the "FFT20" column to numeric type
+just_grades.loc[:, 'FFT20'] = pd.to_numeric(just_grades['FFT20'], errors='coerce')
+
+# Calculate the median of the non-NaN values
+median_value = np.nanmedian(just_grades['FFT20'])
+
+# Create a copy of the 'FFT20' column
+fft20_column = just_grades['FFT20'].copy()
+
+# Replace the NaN values in the copied column with the median
+fft20_column.fillna(median_value, inplace=True)
+
+# Update the original 'FFT20' column with the values from the copied column
+just_grades.loc[:, 'FFT20'] = fft20_column
+
+just_grades_clean_FFT20 = just_grades.copy()
 
 # data has been cleaned and simplified to allow greater comparison
 # display(pd.unique(just_grades_clean_FFT20['FFT20']))
@@ -66,9 +85,8 @@ full_clean_grades = clean_grades.dropna(axis=0)
 print(full_clean_grades.info())
 full_clean_grades['SEN bool'] = full_clean_grades['SEN need(s)'].apply(lambda x: False if x == 'n' else True)
 
-drop = ['SEN need(s)']
 
-full_clean_grades = full_clean_grades.drop(drop, axis=1)
+full_clean_grades = full_clean_grades.drop('SEN need(s)', axis=1)
 
 if type_science == 'c':
     # after working with this data I think converting the grades in to '0' '1' '1.5' '2' would work better
@@ -121,6 +139,7 @@ full_clean_grades['PP'] = full_clean_grades['PP'].fillna(False)
 full_clean_grades['PP'] = full_clean_grades ['PP'].astype(bool)
 
 print(full_clean_grades.info())
+print(len(full_clean_grades))
 
-full_clean_grades.to_csv('csv_clean/clean_' + file_name)
+full_clean_grades.to_csv('csv_clean/clean_' + file_name + '.csv')
 print('CSV saved')

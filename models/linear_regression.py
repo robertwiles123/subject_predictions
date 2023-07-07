@@ -77,7 +77,6 @@ plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, alpha=
 plt.xlabel('Number of training samples')
 plt.ylabel('Score')
 plt.legend(loc='lower right')
-plt.ylim([0.99, 1.01])
 plt.show()
 plt.savefig("../model_graphs/" + file_name + "_linear.png", )
 

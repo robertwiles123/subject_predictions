@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.utils import resample
-from grade_packages import df_columns
+import df_columns
 
 grades_normal = pd.read_csv('csv_clean/clean_combined.csv')
 
@@ -9,7 +9,7 @@ majority_class = pd.DataFrame(columns=grades_normal.columns)
 minority_class = pd.DataFrame(columns=grades_normal.columns)
 
 for col in grades_normal.columns:
-    if col in df_columns.combined_grades():
+    if col in df_columns.combined_full_clean():
         majority_class[col] = grades_normal.loc[grades_normal[col] != 0, col]
         minority_class[col] = grades_normal.loc[grades_normal[col] == 0, col]
     else:
@@ -32,3 +32,5 @@ undersampled_df = undersampled_df.drop("Unnamed: 0", axis=1)
 
 # Save the undersampled DataFrame to CSV without the index column
 undersampled_df.to_csv("csv_clean/combined_undersample.csv")
+
+print('CSV saved')

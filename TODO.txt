@@ -48,3 +48,5 @@ for i in range(num_variables):
     print(f"R-squared: {r2:.4f}")
     print()
 
+
+Change cleaning of triple CSV to take meadian grade along row

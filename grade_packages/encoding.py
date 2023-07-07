@@ -32,9 +32,9 @@ def one_hot_fit(df, type):
         X_encoded = encoder.fit_transform(X)
         encoded_names = encoder.get_feature_names_out(X.columns)
         # Convert the encoded X matrix to a DataFrame
-        X_encoded_df = pd.DataFrame(X_encoded.toarray(), columns=encoded_names)
+        X_encoded_df = pd.DataFrame(X_encoded.toarray(), columns=encoded_names)   
         # Rejoin the bool_data DataFrame with X_encoded_df
-        X_with_bool = pd.concat([X_encoded_df, bool_data], axis=1)#
+        X_with_bool = pd.concat([X_encoded_df, bool_data], axis=1)
         return encoder, X_with_bool, y
     else:
         print('No correct type chosen')
