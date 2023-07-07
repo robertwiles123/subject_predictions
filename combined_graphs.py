@@ -8,7 +8,7 @@ grades = pd.read_csv('csv_clean/clean_combined.csv')
 
 # Converts grades back from numaric
 for column in grades.columns:
-        if column in df_columns.combined_grades():
+        if column not in df_columns.combined_bool():
             # to return predicted grades back to how they should be, however, not doing original files
             grade_mapping = {
                                                 0: 'U',
@@ -33,13 +33,13 @@ for column in grades.columns:
 
             grades.loc[:, column] = grades[column].map(grade_mapping)
 
-print(grades.columns)
 
 # So count plot is ordered from lowest to heighst grade
 grade_order = ['U', '1-1', '2-1', '2-2', '3-2', '3-3', '4-3', '4-4', '5-4', '5-5', '6-5', '6-6', '7-6', '7-7', '8-7', '8-8', '9-8', '9-9']
 
 # create subplots for each
-"""
+
+
 # Create a figure and subplots
 fig, ax = plt.subplots(3, 2, figsize=(12, 18))
 
@@ -71,11 +71,11 @@ ax[2, 1].set_xticks(range(len(grade_order)))
 ax[2, 1].set_xticklabels(grade_order, rotation=45)
 
 plt.savefig("combined_graphs/SEN_and_grades.png", )
-"""
+
+plt.close(fig)
 
 # break between graphs
 
-"""
 
 # Create a figure and subplots
 fig, ax = plt.subplots(3, 2, figsize=(12, 18))
@@ -106,7 +106,8 @@ ax[2, 1].set_xticks(range(len(grade_order)))
 ax[2, 1].set_xticklabels(grade_order, rotation=45)
 
 plt.savefig("combined_graphs/PP_and_grades.png")
-"""
+
+plt.close(fig)
 
 # scatter plot for examining how the grades affect the grade looking for
 

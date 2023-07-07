@@ -6,86 +6,88 @@ Combined scores:
             testMSE 0.39
             Root Mean Squared Error (RMSE): 0.62
             R2 score: 0.9314378365857896
-            Cross-validation scores: [1.         1.         1.         0.90074947 1.         1.
-            1.         1.         0.95547078 1.        ]
+            Cross-validation scores: [1.         1.         1.         0.90074947 0.99986351 1.
+            1.         1.         0.95576157 1.        ]
         Descition tree:
-            Train MSE 11.14
-            test MSE 0.02
-            Mean Squared Error (MSE): 0.015625
-            Root Mean Squared Error (RMSE): 0.125
-            R2 Score: 0.9972204528345591
-            Cross-validation scores: [1.         1.         0.5644125  0.83314021 0.98569001 0.8638245
-            0.98720409 1.         0.94489368 1.        ]
+            Train MSE 11.15
+            test MSE 0.01
+            Mean Squared Error (MSE): 0.005208333333333333
+            Root Mean Squared Error (RMSE): 0.07216878364870322
+            R2 Score: 0.9990734842781863
+            Cross-validation scores: [1.         1.         0.65772502 0.83314021 0.98569001 0.82077815
+            0.5859245  1.         0.94489368 1.        ]
             Highly likely to be overfiting the data
         Random Tree:
-            Mean Squared Error (MSE): 1.20
-            Train MSE 8.26
-            testMSE 1.20
-            Root Mean Squared Error (RMSE): 1.10
-            R2 score: 0.7859748682610458
-            Cross-validation scores: [0.73075055 0.89577861 0.90447291 0.8660237  0.82639256 0.6994955
-            0.81155502 0.73342173 0.89129675 0.78394521]
+            Mean Squared Error (MSE): 1.30
+            Train MSE 7.94
+            testMSE 1.30
+            Root Mean Squared Error (RMSE): 1.14
+            R2 score: 0.7683710695465864
+            Cross-validation scores: [0.7161357  0.91192163 0.89357314 0.86600918 0.82521453 0.63680382
+            0.83884498 0.71517956 0.88979118 0.76926142]
             Slightl overfitting
         Ridge:
-            Mean Squared Error (MSE): 0.38
-            Train MSE 8.67
-            testMSE 0.38
-            Root Mean Squared Error (RMSE): 0.61
-            R2 score: 0.9272243976763666
-            Cross-validation scores: [0.96962972 0.97493219 0.96936382 0.91918793 0.97197707 0.94988362
-            0.91383667 0.95542087 0.95875803 0.95829968]
+            Mean Squared Error (MSE): 0.35
+            Train MSE 8.62
+            testMSE 0.35
+            Root Mean Squared Error (RMSE): 0.59
+            R2 score: 0.9315719703988837
+            Cross-validation scores: [0.97128375 0.97456324 0.96958919 0.91950439 0.97511406 0.93983366
+            0.91572908 0.95340922 0.96153049 0.95703908]
             It seems there is a slight over fitting to the data, though it does seem to be the best at the moment
         Out of these the Ridge seems to be performing the best. Due to the lowest MSE and a relatively low RMSE. It also has a predictive power of 90.58%. The cross value scores are also extremely close. It is likely slightly over fitting, though this will imporve with data.
     Undersample
         Linear regression:
-           Mean Squared Error (MSE): 2.12
-            Train MSE 4.58
-            testMSE 2.12
-            Root Mean Squared Error (RMSE): 1.45
-            R2 score: 0.5648204503956178
-            Cross-validation scores: [1.         0.43023256 0.38222631 1.         0.43025103 0.90853957
-            0.86432154 0.81990332 0.89024638 0.12936345]
+            Mean Squared Error (MSE): 17.65 
+            Train MSE 21.54
+            testMSE 17.65
+            Root Mean Squared Error (RMSE): 4.20
+            R2 score: -2.4240207011419024
+            Cross-validation scores: [-1.26861601e+00 -1.61590792e+25 -1.24668370e+25 -1.27320886e+21
+            1.41134594e-01 -2.28536504e+24 -3.02817679e+26 -3.81029901e+25
+            -3.47538830e+26 -1.37993319e+25]
             Performs slightly better then normal sample, though still over fitting
         Desition tree:
-            Train MSE 8.63
-            test MSE 0.06
-            Mean Squared Error (MSE): 0.057692307692307696
-            Root Mean Squared Error (RMSE): 0.2401922307076307
-            R2 Score: 0.9881314668289713
-            Cross-validation scores: [ 1.          0.05813953 -4.7172471   1.         -0.8957346   1.
-            0.48194444 -0.54166667  0.76811594  0.44134078]
+            Train MSE 8.14
+            test MSE 1.41
+            Mean Squared Error (MSE): 1.4131944444444444
+            Root Mean Squared Error (RMSE): 1.1887785514739255
+            R2 Score: 0.7252335154512716
+            Cross-validation scores: [-0.16952407 -0.18379459  0.6482011   0.4565039   0.28657168  0.6172269
+            0.50209611  0.44750202  0.19892199  0.49614228]
             Probably still overfitting
         Random forest:
-            Mean Squared Error (MSE): 1.66
-            Train MSE 6.52
-            testMSE 1.66
-            Root Mean Squared Error (RMSE): 1.29
-            R2 score: 0.7222992489890236
-            Cross-validation scores: [0.66915965 0.7087335  0.73878312 0.56545941 0.89243459 0.77650406
-            0.63370123 0.80101886 0.76730621 0.75112647]
+            Mean Squared Error (MSE): 1.83
+            Train MSE 5.53
+            testMSE 1.83
+            Root Mean Squared Error (RMSE): 1.35
+            R2 score: 0.6439463993861233
+            Cross-validation scores: [0.38377491 0.08229344 0.7030751  0.66697879 0.52642986 0.73061179
+            0.48372431 0.77668538 0.57555467 0.74878417]
             Performing slightly worst
         Ridge:
-            Mean Squared Error (MSE): 1.04
-            Train MSE 5.72
-            testMSE 1.04
-            Root Mean Squared Error (RMSE): 1.02
-            R2 score: 0.7560963889369905
-            Cross-validation scores: [0.89140401 0.32459098 0.4048227  0.67154455 0.73401462 0.8204537
-            0.83410539 0.78783865 0.78002585 0.29732677]
+            Mean Squared Error (MSE): 1.77
+            Train MSE 5.33
+            testMSE 1.77
+            Root Mean Squared Error (RMSE): 1.33
+            R2 score: 0.6541799488463925
+            Cross-validation scores: [0.35919365 0.05013318 0.68471382 0.1581849  0.42954551 0.63029909
+            0.63633737 0.7944209  0.53173806 0.70659017]
         Again the ridge model seems to be doing the best. Although the desition tree seems to have a better score. The learning curve seems to suggest that overfiting is prevalent.
     The under fitted ridge model seems to be performing the best with the current data. Both MSE and RMSE scores are lower with the R2 value being around 3% higher. There is also more consistency with the cross_val_score.
     The underfitted data is actualyl perfoming better for all models except random forest.
 Triple scores:
     Linear regression:
-        Mean Squared Error (MSE): 15.46
-        Train MSE 21.82
-        testMSE 15.46
-        Root Mean Squared Error (RMSE): 3.93
-        R2 score: -1.9896104941342043
-        Cross-validation scores: [-6.95847828e-01 -1.93177110e+25 -1.28275687e+25 -2.56938712e+21
-        8.24032699e-02 -1.54381260e+24 -5.62633621e+26 -1.42333872e+26
-        -3.13365612e+26 -5.75637604e+24]
-    Desiction tree:
+        Mean Squared Error (MSE): 17.65 
+        Train MSE 21.54
+        testMSE 17.65
+        Root Mean Squared Error (RMSE): 4.20
+        R2 score: -2.4240207011419024
+        Cross-validation scores: [-1.26861601e+00 -1.61590792e+25 -1.24668370e+25 -1.27320886e+21
+        1.41134594e-01 -2.28536504e+24 -3.02817679e+26 -3.81029901e+25
+        -3.47538830e+26 -1.37993319e+25]
+        Performs slightly better then normal sample, though still over fitting
+    Desition tree:
         Train MSE 8.14
         test MSE 1.41
         Mean Squared Error (MSE): 1.4131944444444444
@@ -93,24 +95,27 @@ Triple scores:
         R2 Score: 0.7252335154512716
         Cross-validation scores: [-0.16952407 -0.18379459  0.6482011   0.4565039   0.28657168  0.6172269
         0.50209611  0.44750202  0.19892199  0.49614228]
-    Random Tree:
+        Probably still overfitting
+    Random forest:
         Mean Squared Error (MSE): 1.83
-        Train MSE 5.57
+        Train MSE 5.53
         testMSE 1.83
         Root Mean Squared Error (RMSE): 1.35
-        R2 score: 0.6439108033865943
-        Cross-validation scores: [0.40069982 0.07949228 0.70385961 0.67208998 0.56008206 0.72871076
-        0.50609319 0.79342724 0.5320797  0.75618508]
+        R2 score: 0.6439463993861233
+        Cross-validation scores: [0.38377491 0.08229344 0.7030751  0.66697879 0.52642986 0.73061179
+        0.48372431 0.77668538 0.57555467 0.74878417]
+        Performing slightly worst
     Ridge:
-        Mean Squared Error (MSE): 1.78
-        Train MSE 5.30
-        testMSE 1.78
+        Mean Squared Error (MSE): 1.77
+        Train MSE 5.33
+        testMSE 1.77
         Root Mean Squared Error (RMSE): 1.33
-        R2 score: 0.6516945193811264
-        Cross-validation scores: [0.33785095 0.06324304 0.68062985 0.27460752 0.45466926 0.63227518
-        0.63503371 0.79128846 0.53778518 0.70243698]
+        R2 score: 0.6541799488463925
+        Cross-validation scores: [0.35919365 0.05013318 0.68471382 0.1581849  0.42954551 0.63029909
+        0.63633737 0.7944209  0.53173806 0.70659017]
+        Again the ridge model seems to be doing the best. Altho
     It looks like the desiction tree is performing best out of these models. however there is a major issue with all of them, and that is none are fitting the data well.
-
+    When the triple tested with test data it is inconsistent as it has not seen a lot of data.
 I have been treating the data as contius as I transormed it. However, it is porbably best to go back and treat it as the ordinal it actually is.
 
 For combined classes it seems the desctition tree is by far the best model with low MSE and RMSE scores and a high r2. Though the corss val scores do need to be looked at futher. Ultimately the model needs more testing

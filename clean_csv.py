@@ -134,9 +134,10 @@ pd.set_option('display.max_columns', None)
 
 full_clean_grades['PP'] = full_clean_grades['PP'].str.replace('Yes', 'True')
 full_clean_grades['PP'] = full_clean_grades['PP'].str.replace('No', 'False')
+full_clean_grades['PP'] = full_clean_grades['PP'].map({'True': True, 'False': False})
 full_clean_grades['PP'] = full_clean_grades['PP'].fillna(False)
+print(full_clean_grades['PP'].value_counts())
 
-full_clean_grades['PP'] = full_clean_grades ['PP'].astype(bool)
 
 print(full_clean_grades.info())
 print(len(full_clean_grades))

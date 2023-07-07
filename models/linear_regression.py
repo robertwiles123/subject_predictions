@@ -5,8 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
-
-from grade_packages import encoding
+import encoding
 
 # using joblib as it is more secure and will be predicting data based on GDPR and as all within sklearn the compatability isn't an issue
 from joblib import dump

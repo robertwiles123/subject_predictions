@@ -4,7 +4,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
-from grade_packages import encoding
+import encoding
 from joblib import dump
 # from sklearn.model_selection import GridSearchCV
 
