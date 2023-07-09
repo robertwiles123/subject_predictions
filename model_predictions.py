@@ -49,6 +49,9 @@ if type.lower()[0] == 'c':
                 print('Error')
     df_with_predictions = data.assign(**outcomes)
     columns_to_skip = data.columns
+   # Create the average column
+    df_with_predictions['Average prediction'] = df_with_predictions.loc[:, df_with_predictions.columns.difference(columns_to_skip)].mean(axis=1)
+
     for column in df_with_predictions.columns:
         if column not in columns_to_skip:
             df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x * 2) / 2)
@@ -80,7 +83,6 @@ if type.lower()[0] == 'c':
 elif type.lower()[0] == 't':
     df_with_predictions = pd.DataFrame()
     for k, v in triple_models_to_predict_dict.items():
-        print(k, v)
         # currently does not work, as I do not have enough training data and have missing encoudings. This happens with one shot encouding as well
         if isinstance(data, str):
             print('oops')
@@ -88,7 +90,6 @@ elif type.lower()[0] == 't':
         # Doesn't work, probably because 3 numpy array at a guess
                 encoder = load('triple_models/triple_' + k + '_encoding.joblib')
                 encoded_data = encoding.new_data_one_hot(data, encoder, type)
-                print(encoded_data)
                 prediction = v.predict(encoded_data)
                 outcomes[k] = prediction
         #need to take the dict and change in to a dataframe
@@ -98,7 +99,9 @@ elif type.lower()[0] == 't':
         for i in range(value.shape[1]):
             col_name = f"{key}_{names[i]}"  # Create column name using the key and index
             df_with_predictions[col_name] = value[:, i]  # Add the predicted output column to the dataframe
-    # To round columns that where predicted    
+    #averages with triple data
+    columns_to_skip = data.columns 
+    df_with_predictions['Average prediction'] = df_with_predictions.loc[:, df_with_predictions.columns.difference(columns_to_skip)].mean(axis=1)  
     for column in df_with_predictions.columns:
         df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x))
     print(df_with_predictions)
