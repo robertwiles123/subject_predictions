@@ -3,3 +3,5 @@ For SEN students they do seem to not have this right skew and for it to be lower
 This shows that SEN is definetly something to consider for machine learning
 
 There are no PP students and therefore this is dropped from analysis.
+
+A breif analysis of the graphs seems to cshow most of the grades have a linear relatiopnship with the others. 

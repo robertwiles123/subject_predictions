@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from grade_packages import df_columns
+import itertools
 
 # import csv file
 grades = pd.read_csv('csv_clean/clean_triple.csv')
@@ -37,27 +38,38 @@ plt.savefig("triple_graphs/SEN_and_grades.png", )
 # break between graphs
 
 """
-# scatter plot for examining how the grades affect the grade looking for
 
-# X vaiable stored as list so this allows to grab in in code
-X = df_columns.combined_independent()
+#Grades vsv grades
+y_variations = df_columns.triple_grades()  # Replace y1, y2, y3 with your actual Y column variations
+x_variations = df_columns.triple_independent()  # Replace x1, x2 with your actual X column variations
 
-# to sort df so that graph is ordered properly
+num_rows = len(y_variations)
+num_cols = len(x_variations)
+fig, axes = plt.subplots(num_rows, num_cols, figsize=(12, 10))
 
-grades_sorted = grades.sort_values(X[0], ascending=True)
+# Generate all combinations
+combinations = list(itertools.product(y_variations, x_variations))
 
-sns.lineplot(data=grades, x=X[0], y='Year 10 Combined MOCK GRADE', label='Year 10 mocks')
+# Create line plots
+for i, (y, x) in enumerate(combinations):
+    row = i // num_cols
+    col = i % num_cols
+    ax = axes[row, col]
 
-sns.lineplot(data=grades, x=X[0], y='Combined MOCK GRADE term 2', label='Year 11 mocks')
+    # Plot the line on the respective subplot
+    sns.lineplot(data=grades, x=x, y=y, ax=ax)
 
-ax = plt.gca()
-ax.set_xticks(range(len(grade_order)))
-ax.set_xticklabels(grade_order)
-ax.set_yticks(range(len(grade_order)))
-ax.set_yticklabels(grade_order)
-# Reverse the order of the y-axis ticks
-ax.set_ylim(ax.get_ylim()[::-1])
+    # Set title for the subplot
+    ax.set_title(f'Combination {i+1}')
 
-plt.legend()
+# Remove empty subplots if the number of combinations is less than the grid size
+if len(combinations) < (num_rows * num_cols):
+    for i in range(len(combinations), num_rows * num_cols):
+        row = i // num_cols
+        col = i % num_cols
+        fig.delaxes(axes[row, col])
 
-plt.savefig("triple_graphs/grades_line.png")
+# Adjust spacing between subplots
+plt.subplots_adjust(wspace=0.4)
+
+plt.savefig("triple_graphs/ind_grades_vs_dep_grades.png", )

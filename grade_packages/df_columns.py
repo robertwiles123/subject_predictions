@@ -25,6 +25,9 @@ def triple_non_grades():
 def triple_bool():
     return ['PP', 'SEN bool']
 
+def triple_grades():
+    return ["year 10 bio grade", "year 10 chem grade", "year 10 phys grade", "year 11 paper 1 bio grade", "year 11 paper 1 chem grade", "year 11 paper 1 phys grade"]
+
 def triple_independent():
     return ["year 11 paper 2 bio grade", "year 11 paper 2 chem grade", "year 11 paper 2 phys grade"]
 
