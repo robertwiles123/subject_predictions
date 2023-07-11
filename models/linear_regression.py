@@ -1,11 +1,13 @@
 # As the model is only accurate after about 20 samples, and due to the high R2 score there is a possiblity of over fitting I will also run a linear regression
 import pandas as pd
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression # RidgeCV
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import r2_score, mean_squared_error
 import matplotlib.pyplot as plt
-import encoding
+from grade_packages import encoding
+# import re
+
 
 # using joblib as it is more secure and will be predicting data based on GDPR and as all within sklearn the compatability isn't an issue
 from joblib import dump
@@ -21,6 +23,52 @@ type_science = input('Is it triple or combined? ')
 # the label encoder was not effective at creating predicted grades. When chaging to a one hot encoder the model became less effective
 # May be worth adding in new variables and seeing how this affects the data
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
+
+# code that confirmed that each of the variables are useful for combined classes
+
+ridge_cv = RidgeCV()
+
+# code to determine if any features aren't needed
+"""
+feature_scores = {}
+for column in X.columns:
+    X_array = X[[column]]
+    scores = cross_val_score(ridge_cv, X_array, y, scoring='neg_mean_squared_error', cv=5)
+    feature_scores[column] = np.mean(scores)
+
+# New dictionary to store combined categories and average MSE scores
+new_dict = {}
+
+# Regular expression patterns
+pattern_year = re.compile(r'^Year 10 Combined MOCK GRADE_')
+pattern_combined = re.compile(r'^Combined MOCK GRADE term 2_')
+pattern_fft = re.compile(r'^FFT20_')
+
+# Combine similar categories and calculate average MSE scores
+for feature, mse in feature_scores.items():
+    if pattern_year.match(feature):
+        category = 'Year 10 Combined MOCK GRADE'
+    elif pattern_combined.match(feature):
+        category = 'Combined MOCK GRADE term 2'
+    elif pattern_fft.match(feature):
+        category = 'FFT20'
+    else:
+        category = 'SEN bool'  # Default category
+        
+    if category not in new_dict:
+        new_dict[category] = []
+    
+    new_dict[category].append(mse)
+
+# Calculate average MSE scores for each category
+for category, scores in new_dict.items():
+    average_mse = sum(scores) / len(scores)
+    new_dict[category] = average_mse
+
+# Print the new dictionary with combined categories and average MSE scores
+for category, average_mse in new_dict.items():
+    print(f"Category: {category}, Average MSE Score: {average_mse}")
+"""
 
 # split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
@@ -90,3 +138,4 @@ if save[0].strip().lower() == 'y':
         dump(lr, '../triple_models/triple_linear.joblib')
         dump(encoder, '../triple_models/triple_linear_encoding.joblib')
         print('Model save')
+

@@ -1,12 +1,12 @@
 import pandas as pd
 import numpy as np
 from grade_packages import encoding
-from sklearn.linear_model import Ridge, RidgeCV
+from sklearn.linear_model import Ridge # RidgeCV
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import  r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 from joblib import dump
-import re
+# import re
 
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv('../csv_clean/' + file_name + '.csv')
