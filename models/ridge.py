@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
 from grade_packages import encoding
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import Ridge, RidgeCV
 from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
 from sklearn.metrics import  r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 from joblib import dump
+import re
 
 file_name = input('What file do you want to test? ')
 learning_grades = pd.read_csv('../csv_clean/' + file_name + '.csv')
@@ -14,6 +15,52 @@ type_science = input('Is it triple or combined? ')
 
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 
+# code that confirmed that each of the variables are useful for combined classes
+"""
+ridge_cv = RidgeCV()
+
+# code to determine if any features aren't needed
+feature_scores = {}
+for column in X.columns:
+    X_array = X[[column]]
+    scores = cross_val_score(ridge_cv, X_array, y, scoring='neg_mean_squared_error', cv=5)
+    feature_scores[column] = np.mean(scores)
+
+# New dictionary to store combined categories and average MSE scores
+new_dict = {}
+
+# Regular expression patterns
+pattern_year = re.compile(r'^Year 10 Combined MOCK GRADE_')
+pattern_combined = re.compile(r'^Combined MOCK GRADE term 2_')
+pattern_fft = re.compile(r'^FFT20_')
+
+# Combine similar categories and calculate average MSE scores
+for feature, mse in feature_scores.items():
+    if pattern_year.match(feature):
+        category = 'Year 10 Combined MOCK GRADE'
+    elif pattern_combined.match(feature):
+        category = 'Combined MOCK GRADE term 2'
+    elif pattern_fft.match(feature):
+        category = 'FFT20'
+    else:
+        category = 'SEN bool'  # Default category
+        
+    if category not in new_dict:
+        new_dict[category] = []
+    
+    new_dict[category].append(mse)
+
+# Calculate average MSE scores for each category
+for category, scores in new_dict.items():
+    average_mse = sum(scores) / len(scores)
+    new_dict[category] = average_mse
+
+# Print the new dictionary with combined categories and average MSE scores
+for category, average_mse in new_dict.items():
+    print(f"Category: {category}, Average MSE Score: {average_mse}")
+"""
+
+# code to run when complete
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
