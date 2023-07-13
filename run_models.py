@@ -33,10 +33,14 @@ else:
     file_name = 'triple'
 
 for model in training_models:
+    print(f"Scored for {model}:")
+    print()
     module_name = 'models.' + model
     module = importlib.import_module(module_name)
     function_to_call = getattr(module, model)
     function_to_call(X, y, X_train, X_test, y_train, y_test, type_science, encoder, file_name)
+    print()
+    print()
 
 print('All models complete')
     

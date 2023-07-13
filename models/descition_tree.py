@@ -55,6 +55,7 @@ def descition_tree(X, y, X_train, X_test, y_train, y_test, type_science, encoder
     plt.legend(loc='lower right')
     plt.show()
     plt.savefig("model_graphs/" + file_name + "_descition.png", )
+    plt.clf()
 
     save = input('should it be saved? ')
     if save[0].strip().lower() == 'y':

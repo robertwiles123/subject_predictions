@@ -88,6 +88,7 @@ def random_forest(X, y, X_train, X_test, y_train, y_test, type_science, encoder,
     plt.legend(loc='lower right')
     plt.show()
     plt.savefig("model_graphs/" + file_name + "_random.png", )
+    plt.clf()
 
     # It seems the model is good for making predictions if there are enough data points. I will continue to work on this if there is more data avalible
 

@@ -61,6 +61,7 @@ def linear_regression(X, y, X_train, X_test, y_train, y_test, type_science, enco
     plt.legend(loc='lower right')
     plt.show()
     plt.savefig("model_graphs/" + file_name + "_linear.png", )
+    plt.clf()
 
     # if data is good give option to save and name to save
     save = input('should it be saved? ')

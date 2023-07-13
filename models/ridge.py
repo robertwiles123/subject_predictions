@@ -1,8 +1,6 @@
-import pandas as pd
 import numpy as np
-from grade_packages import encoding
 from sklearn.linear_model import Ridge # RidgeCV
-from sklearn.model_selection import train_test_split, KFold, cross_val_score, learning_curve
+from sklearn.model_selection import KFold, cross_val_score, learning_curve
 from sklearn.metrics import  r2_score, mean_squared_error
 import matplotlib.pyplot as plt
 from joblib import dump
@@ -56,6 +54,7 @@ def ridge(X, y, X_train, X_test, y_train, y_test, type_science, encoder, file_na
     plt.ylim([0, 1])
     plt.show()
     plt.savefig("model_graphs/" + file_name + "_ridge.png", )
+    plt.clf()
 
     save = input('should it be saved? ')
     if save[0].strip().lower() == 'y':
