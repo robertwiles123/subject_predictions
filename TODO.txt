@@ -1,10 +1,8 @@
-Collect more data as neural network does not work with this little.
+Collect more data for each model which are not perfomring as well as liked
 
 Add ability to add in data as a typed string in use model
 
 calculate confidence intervals for regression coefficients
-
-create a column of average predictions from models 
 
 Get futher analysis of data:
     Increase the number of cross-validation folds
@@ -48,5 +46,4 @@ for i in range(num_variables):
     print(f"R-squared: {r2:.4f}")
     print()
 
-
-Change cleaning of triple CSV to take meadian grade along row
+change column headings for triple
