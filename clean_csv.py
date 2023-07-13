@@ -138,6 +138,16 @@ full_clean_grades['PP'] = full_clean_grades['PP'].map({'True': True, 'False': Fa
 full_clean_grades['PP'] = full_clean_grades['PP'].fillna(False)
 print(full_clean_grades['PP'].value_counts())
 
+# changing names to be easier to read and use
+if type_science == 'c':
+    new_columns = {
+        'Year 10 Combined MOCK GRADE': 'Mock 1',
+        'Combined MOCK GRADE term 2': 'Mock 2',
+        'Combined MOCK GRADE Term 4': 'Mock 3'
+    }
+
+    full_clean_grades = full_clean_grades.rename(columns=new_columns)
+    print('RENAMED')
 
 print(full_clean_grades.info())
 print(len(full_clean_grades))
