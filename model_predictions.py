@@ -3,6 +3,7 @@ from joblib import load
 from grade_packages import df_columns, encoding
 
 data = input('What do you want to predict? ')
+file = data
 # clean combined dataframe
 type = input('Is the data for combined or triple? ')
 
@@ -106,8 +107,13 @@ elif type.lower()[0] == 't':
         df_with_predictions[column] = df_with_predictions[column].apply(lambda x: round(x))
     print(df_with_predictions)
         
-    
 
+save = input('Should these results be saved? ')
+if save.lower()[0] == 'y':
+     df_with_predictions.to_csv('prediction_' + file)
+     print('File saved')
+
+print('File finished')
 
 
          
