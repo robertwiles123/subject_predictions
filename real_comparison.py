@@ -1,3 +1,6 @@
+# this file is untested and just to start writing code between real and comparison
+# have lost places from real to predictions due to missing data. Will have to drop these
+
 import pandas as pd
 from sklearn.metrics import mean_absolute_error
 

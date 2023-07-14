@@ -5,7 +5,7 @@ from grade_packages import df_columns
 import itertools
 
 # import csv file
-grades = pd.read_csv('csv_clean/clean_triple.csv')
+grades = pd.read_csv('../csv_clean/clean_triple.csv')
 
 print(grades.columns)
 

@@ -30,7 +30,7 @@ else:
     
 
 if data.endswith('.csv'):
-    data = pd.read_csv(data)
+    data = pd.read_csv('test_csv/' + data)
 
 
 outcomes = {}
@@ -110,7 +110,7 @@ elif type.lower()[0] == 't':
 
 save = input('Should these results be saved? ')
 if save.lower()[0] == 'y':
-     df_with_predictions.to_csv('prediction_' + file)
+     df_with_predictions.to_csv('test_csv/prediction_' + file)
      print('File saved')
 
 print('File finished')

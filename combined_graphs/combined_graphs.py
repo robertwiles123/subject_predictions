@@ -4,7 +4,7 @@ import seaborn as sns
 from grade_packages import df_columns
 
 # import csv file
-grades = pd.read_csv('csv_clean/clean_combined.csv')
+grades = pd.read_csv('../csv_clean/clean_combined.csv')
 
 grades_original = grades.copy()
 

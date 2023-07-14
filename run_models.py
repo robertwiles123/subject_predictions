@@ -23,7 +23,7 @@ while True:
 encoder, X, y = encoding.one_hot_fit(learning_grades, type_science)
 
 # split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=54)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=54)
 
 training_models = ['linear_regression', 'descition_tree', 'random_forest', 'ridge']
 
