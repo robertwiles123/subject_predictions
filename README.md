@@ -1,36 +1,36 @@
-Machine Learning Model Training and Testing
-This repository contains code for training and testing machine learning models to predict two types of grades: Science Combined Classes and Science Triple. The code is designed to clean the input data, train the models, generate predictions, and evaluate their performance.
+Grade Prediction Project
+This project aims to predict grades using machine learning models. It involves cleaning a CSV file, training several machine learning models, and making predictions based on those models.
 
-Files and Folders
-1. clean_csv.py
-This file is responsible for cleaning the input data for both Science Triple and Science Combined Classes. It preprocesses the data to ensure it is suitable for training the machine learning models.
+Usage Instructions
+Prepare the CSV File:
 
-2. model_predictions.py
-Running this script generates a Pandas DataFrame containing predicted grades from multiple models. The code implements various machine learning models to train and generate predictions.
+For a combined science class, ensure the CSV file has the following columns and correct headings:
+",FFT20,PP,Mock 1,Mock 2,Mock 3,SEN bool"
+For triple science, ensure the CSV file has the following columns and correct headings:
+",FFT20,PP,year 10 bio grade,year 10 chem grade,year 10 phys grade,year 11 paper 1 bio grade,year 11 paper 1 chem grade,year 11 paper 1 phys grade,year 11 paper 2 bio grade,year 11 paper 2 chem grade,year 11 paper 2 phys grade,SEN bool"
+The CSV file should be cleaned, without any missing data.
+Place the CSV file in csv_clean folder.
+Run the Prediction Script:
 
-3. grades_packages folder
-This folder contains code modules used in various other packages related to grades prediction. It may include helper functions, preprocessing utilities, and custom model architectures.
+Execute the "predictions.py" script.
+Provide the name of the CSV file when prompted.
+Enter the desired name for the output CSV file when prompted.
+Usage Example
+bash
+Copy code
+$ python predictions.py
+Enter the name of the CSV file: grades.csv
+Enter the name of the output file: predicted_grades.csv
+The script will load the specified CSV file, perform predictions using the trained machine learning models, and save the predicted grades in a new CSV file named "predicted_grades.csv".
 
-4. model_scores.txt
-This text file provides a record of the scores achieved by different models during evaluation, along with brief thoughts or observations on their performance. It serves as a reference for comparing the effectiveness of different models.
+Restrictions
+This code is intended for personal use only. The author does not grant permission for anyone else to use or contribute to this code without explicit authorization.
 
-5. TODO.txt
-This file outlines the remaining tasks or improvements that need to be addressed in the codebase. It serves as a reminder for future development and enhancements.
+For any inquiries or issues related to this code, please contact the author directly.
 
-Usage
-To train and test the machine learning models, follow these steps:
+Disclaimer
+This project is provided as-is and without warranty. The author is not responsible for any inaccuracies or errors in the predictions made by the machine learning models. Use the predicted grades at your own discretion.
 
-Ensure that the necessary dependencies and libraries are installed. Refer to the requirements.txt file for the list of required packages.
 
-Execute the clean_csv.py script to clean the input data for Science Triple and Science Combined Classes.
 
-Run the model_predictions.py script to make predictions based on trained models.
-
-Evaluate the performance of the models using the generated predictions and compare the scores in the model_scores.txt file.
-
-Contributing
-This is a personal project and therefore is not taking controbuters at the moment.
-
-License
-All rights reserved. This code is proprietary and confidential. No part of this code may be reproduced, distributed, or transmitted in any form or by any means without the prior written permission of the author or organization. 
 
