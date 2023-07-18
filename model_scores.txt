@@ -1,37 +1,37 @@
 Combined scores:
     full sample
         Linear regression:
-            Mean Squared Error (MSE): 0.39
-            Train MSE 11.26
-            testMSE 0.39
-            Root Mean Squared Error (RMSE): 0.62
-            R2 score: 0.9314378365857896
+            Mean Squared Error (MSE): 0.25
+            Train MSE 9.39
+            testMSE 0.25
+            Root Mean Squared Error (RMSE): 0.50
+            R2 score: 0.9541362475926009
             Cross-validation scores: [1.         1.         1.         0.90074947 0.99986351 1.
             1.         1.         0.95576157 1.        ]
         Descition tree:
-            Train MSE 11.15
-            test MSE 0.01
-            Mean Squared Error (MSE): 0.005208333333333333
-            Root Mean Squared Error (RMSE): 0.07216878364870322
-            R2 Score: 0.9990734842781863
+            Train MSE 8.48
+            test MSE 0.63
+            Mean Squared Error (MSE): 0.6328125
+            Root Mean Squared Error (RMSE): 0.795495128834866
+            R2 Score: 0.883907376718771
             Cross-validation scores: [1.         1.         0.65772502 0.83314021 0.98569001 0.82077815
             0.5859245  1.         0.94489368 1.        ]
             Highly likely to be overfiting the data
         Random Tree:
-            Mean Squared Error (MSE): 1.30
-            Train MSE 7.94
-            testMSE 1.30
-            Root Mean Squared Error (RMSE): 1.14
-            R2 score: 0.7683710695465864
+            Mean Squared Error (MSE): 1.12
+            Train MSE 8.01
+            testMSE 1.12
+            Root Mean Squared Error (RMSE): 1.06
+            R2 score: 0.7950463564294352
             Cross-validation scores: [0.7161357  0.91192163 0.89357314 0.86600918 0.82521453 0.63680382
             0.83884498 0.71517956 0.88979118 0.76926142]
             Slightl overfitting
         Ridge:
-            Mean Squared Error (MSE): 0.35
-            Train MSE 8.62
-            testMSE 0.35
-            Root Mean Squared Error (RMSE): 0.59
-            R2 score: 0.9315719703988837
+            Mean Squared Error (MSE): 0.41
+            Train MSE 8.43
+            testMSE 0.41
+            Root Mean Squared Error (RMSE): 0.64
+            R2 score: 0.9250338136959968
             Cross-validation scores: [0.97128375 0.97456324 0.96958919 0.91950439 0.97511406 0.93983366
             0.91572908 0.95340922 0.96153049 0.95703908]
             It seems there is a slight over fitting to the data, though it does seem to be the best at the moment
