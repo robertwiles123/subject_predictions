@@ -7,8 +7,9 @@ file = data
 # clean combined dataframe
 type = input('Is the data for combined or triple? ')
 
-
-models_to_predict = ['linear', 'random_forest', 'descition_tree', 'ridge']
+# unused models due to definete innacceracies.
+#  'random_forest' 'descition_tree'
+models_to_predict = ['linear', 'ridge']
 # current models I have, though this will be added to and taken away with more data, with accuracy
 if type.lower()[0] == 'c':
     combined_models_to_predict_dict = {}
