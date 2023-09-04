@@ -1,4 +1,6 @@
 import pandas as pd
+import re
+import os
 
 ap1 = pd.read_excel('Y11 2122 Ap1 MLG P8.xlsx', header=1)
 ap2 = pd.read_excel('Y11 2122 Ap2 MLG P8.xlsx', header=1)
@@ -27,3 +29,39 @@ columns_to_drop = ['gender_ap1', 'gender_ap2', 'rm_scaled_score_ap1', 'rm_scaled
 # Drop the specified columns from the DataFrame
 full.drop(columns=columns_to_drop, inplace=True)
 
+#subjects in dataframe
+subjects = ['english_language', 'english_literature', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
+
+subjects = ['english_language', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
+
+# Create a dictionary to store DataFrames
+subject_dataframes = {}
+
+# Loop through subjects and create DataFrames
+for subject in subjects:
+    # Create regex pattern for the subject
+    subject_pattern = f'{subject}.*'
+    
+    # Select columns using regex pattern and add common columns
+    columns_to_select = ['upn', 'rm_scaled_score_real', 'estimate_real', 'actual_real'] + [col for col in full.columns if re.search(subject_pattern, col)]
+    
+    # Create the DataFrame for the subject
+    subject_df = full[columns_to_select]
+    
+    # Add the subject DataFrame to the dictionary with a key based on the subject
+    subject_dataframes[subject] = subject_df
+
+# Access individual DataFrames dynamically by subject name
+for subject in subjects:
+    globals()[f'{subject}_df'] = subject_dataframes[subject]
+
+
+# Define the output directory where CSV files will be saved
+output_directory = '/workspaces/grade_pradiction/grades_split_dirty'
+
+# Loop through the DataFrames and save each as a CSV file
+for subject in subjects:
+    df = globals()[f'{subject}_df']
+    file_name = f'{subject}_df_2122.csv'
+    file_path = os.path.join(output_directory, file_name)
+    df.to_csv(file_path, index=False)
