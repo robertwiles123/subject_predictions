@@ -21,6 +21,15 @@ for root, dirs, files in os.walk(folder_path):
                 df = pd.read_csv(csv_path)
                 #remove NA 
                 df.dropna(inplace=True)
+                # Replace 'U' with '0' in all columns except 'gender_ap2'
+                columns_to_replace = df.columns.difference(['gender_ap2', 'upn'])
+                try:
+                    df[columns_to_replace] = df[columns_to_replace].replace(['U','u'], '0')
+                    # Convert non-'gender_ap2' columns to integers
+                    df[columns_to_replace] = df[columns_to_replace].astype(int)
+                except ValueError:
+                    continue
+                    
                 # Annoce those removed
                 print(subject)
                 print(len(df))
