@@ -46,8 +46,6 @@ full.drop(columns=columns_to_drop, inplace=True)
 #subjects in dataframe
 subjects = ['english_language', 'english_literature', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
 
-subjects = ['english_language', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
-
 # Create a dictionary to store DataFrames
 subject_dataframes = {}
 
@@ -71,11 +69,11 @@ for subject in subjects:
 
 
 # Define the output directory where CSV files will be saved
-output_directory = '/workspaces/grade_pradiction/grades_split_dirty'
+output_directory = '/workspaces/subject_predictions/grades_split_dirty'
 
 # Loop through the DataFrames and save each as a CSV file
 for subject in subjects:
     df = globals()[f'{subject}_df']
-    file_name = f'{subject}_df_2122.csv'
+    file_name = f'{subject}_2122.csv'
     file_path = os.path.join(output_directory, file_name)
     df.to_csv(file_path, index=False)

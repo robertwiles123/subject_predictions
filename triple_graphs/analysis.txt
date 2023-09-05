@@ -1,7 +1,0 @@
-The SEN graphs show a clear right skewed data for non SEN students with the histographs for both the X and y variables. Due to this being a nature of the data it does not seem appropriate to undersample the data for non SEN students. 
-For SEN students they do seem to not have this right skew and for it to be lower over all.
-This shows that SEN is definetly something to consider for machine learning
-
-There are no PP students and therefore this is dropped from analysis.
-
-A breif analysis of the graphs seems to cshow most of the grades have a linear relatiopnship with the others. 
