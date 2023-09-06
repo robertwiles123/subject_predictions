@@ -31,7 +31,6 @@ for root, dirs, files in os.walk(folder_path):
             subject = file.split(year)[0]           
             # Check if the subject is in the list of subjects
             if subject in subjects:
-                print(subject)
                # Read the CSV file
                 csv_path = os.path.join(root, file)
                 df = pd.read_csv(csv_path)
