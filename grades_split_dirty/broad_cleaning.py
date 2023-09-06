@@ -19,6 +19,14 @@ for root, dirs, files in os.walk(folder_path):
                 # Read the CSV file
                 csv_path = os.path.join(root, file)
                 df = pd.read_csv(csv_path)
+                regex_pattern = f'^{subject}.*_ap[12]$'
+
+                # Filter the DataFrame based on the regex pattern
+                filtered_columns = df.filter(regex=regex_pattern)
+
+                # Fill missing values based on the regex pattern
+                for col in filtered_columns.columns:
+                    df[col].fillna(df[col.replace('ap1', 'ap2').replace('ap2', 'ap1')], inplace=True)
                 #remove NA 
                 df.dropna(inplace=True)
                 # Replace 'U' with '0' in all columns except 'gender_ap2'

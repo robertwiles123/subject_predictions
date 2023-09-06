@@ -10,7 +10,7 @@ import re
 subjects = ['english_language', 'english_literature', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
 
 # Specify the folder path where the CSV files are located
-folder_path = "/workspaces/subject_predictions/grades_split_dirty"
+folder_path = "/workspaces/subject_predictions/grades_full_clean"
 
 # Iterate through CSV files in the folder
 for root, dirs, files in os.walk(folder_path):

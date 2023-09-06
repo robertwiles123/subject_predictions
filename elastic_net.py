@@ -6,7 +6,7 @@ Though none are doing amazing
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import ElasticNet
 from sklearn.metrics import mean_squared_error, r2_score
 import re
 import numpy as np
@@ -55,9 +55,9 @@ for root, dirs, files in os.walk(folder_path):
                 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
                 # Print the shapes of X_train and y_train for debugging
-                ridge_model = Ridge(alpha=0.5)      
-                ridge_model.fit(X_train, y_train)
-                y_pred = ridge_model.predict(X_test)
+                elastic_net_model = ElasticNet(alpha=1.0, l1_ratio=0.5, random_state=7)  
+                elastic_net_model.fit(X_train, y_train)
+                y_pred = elastic_net_model.predict(X_test)
                 y_pred = np.round(y_pred)
 
                 # Calculate Mean Squared Error (MSE)
@@ -82,10 +82,10 @@ for root, dirs, files in os.walk(folder_path):
                 for i, (train_index, test_index) in enumerate(kf.split(X)):
                     
                     # Fit the model on the training data
-                    ridge_model.fit(X_train, y_train)
+                    elastic_net_model.fit(X_train, y_train)
                     
                     # Make predictions on the test data
-                    y_pred = ridge_model.predict(X_test)
+                    y_pred = elastic_net_model.predict(X_test)
                     
                     # Calculate the Mean Squared Error for this fold
                     mse = mean_squared_error(y_test, y_pred)
