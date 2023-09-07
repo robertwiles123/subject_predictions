@@ -78,7 +78,7 @@ for root, dirs, files in os.walk(folder_path):
 
                 mse_scores = []
 
-                # Perform cross-validation
+                # Perform crdoss-validation
                 for i, (train_index, test_index) in enumerate(kf.split(X)):
                     
                     # Fit the model on the training data

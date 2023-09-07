@@ -33,11 +33,13 @@ for root, dirs, files in os.walk(folder_path):
                 columns_to_replace = df.columns.difference(['gender_ap2', 'upn'])
                 try:
                     df[columns_to_replace] = df[columns_to_replace].replace(['U','u'], '0')
-                    # Convert non-'gender_ap2' columns to integers
                     df[columns_to_replace] = df[columns_to_replace].astype(int)
+                    # Convert non-'gender_ap2' columns to integers
                 except ValueError:
                     continue
-                    
+
+
+                print(df.dtypes)
                 # Annoce those removed
                 print(subject)
                 print(len(df))
