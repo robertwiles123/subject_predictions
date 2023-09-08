@@ -1,6 +1,8 @@
 # All but science double are giving the right amount out. Science double is missing any end 
 import os
 import pandas as pd
+year = input('What year to be cleaned? ')
+year = '_'+year
 
 # Define a list of subjects
 subjects = ['english_language', 'english_literature', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
@@ -11,9 +13,9 @@ folder_path = "/workspaces/subject_predictions/grades_split_dirty"
 # Iterate through CSV files in the folder
 for root, dirs, files in os.walk(folder_path):
     for file in files:
-        if file.endswith(".csv") and "_2122" in file:
+        if file.endswith(".csv") and year in file:
             # Extract the subject name from the file name
-            subject = file.split("_2122")[0]           
+            subject = file.split(year)[0]           
             # Check if the subject is in the list of subjects
             if subject in subjects:
                 # Read the CSV file
@@ -38,16 +40,19 @@ for root, dirs, files in os.walk(folder_path):
                 except ValueError:
                     continue
 
-
-                print(df.dtypes)
-                # Annoce those removed
-                print(subject)
-                print(len(df))
                 #Save files
-                file_name = f'{subject}_2122.csv'
-                output_directory = '/workspaces/subject_predictions/grades_full_clean'
-                file_path = os.path.join(output_directory, file_name)
-                df.to_csv(file_path, index=False)
-                print('File saved')
+                if year == '_2122':
+                    file_name = f'{subject}{year}.csv'
+                    output_directory = '/workspaces/subject_predictions/grades_full_clean'
+                    file_path = os.path.join(output_directory, file_name)
+                    df.to_csv(file_path, index=False)
+                    print('File saved')
+                elif year == '_2223':
+                    file_name = f'{subject}{year}.csv'
+                    output_directory = '/workspaces/subject_predictions/to_be_predicted'
+                    file_path = os.path.join(output_directory, file_name)
+                    df.to_csv(file_path, index=False)
+                    print('File saved')
+
                 
 

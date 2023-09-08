@@ -41,7 +41,7 @@ for root, dirs, files in os.walk(folder_path):
                 categorical_columns = [col for col in df.columns if col != 'upn']
                 
                 # Use pandas get_dummies to perform one-hot encoding
-                data_encoded = pd.get_dummies(df, columns=categorical_columns, drop_first=True) 
+                data_encoded = pd.get_dummies(df, columns=categorical_columns, drop_first=True, handle_unknown='ignore') 
                 # Construct the regex pattern
                 regex_pattern = f'^.*{subject}.*_real.*$'
 
