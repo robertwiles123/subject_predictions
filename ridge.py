@@ -5,7 +5,7 @@ Though none are doing amazing
 """
 import os
 import pandas as pd
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error, r2_score
 import re
@@ -60,6 +60,8 @@ for root, dirs, files in os.walk(folder_path):
                 ridge_model.fit(X_train, y_train)
                 y_pred = ridge_model.predict(X_test)
                 y_pred = np.round(y_pred)
+
+                
 
                 # Calculate Mean Squared Error (MSE)
                 mse = mean_squared_error(y_test, y_pred)
