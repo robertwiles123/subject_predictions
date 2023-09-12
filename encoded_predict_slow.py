@@ -1,5 +1,5 @@
-# Work with predicting and encoding any subject that has numerical grades
-# change the subject on line 13 for now
+# Work with predicting and encoding any subject that has numerical grades automated
+# change the subject on line 26 for now
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
@@ -9,138 +9,156 @@ import matplotlib.pyplot as plt
 import re
 
 # Define subject and year here
+subjects = ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'maths', 'music_studies', 'physics', 'spanish']
 
-subject = 'spanish'
-year_model = '2122'
-year_prediction = '2223'
+"""
+Removed subjects
+d_&_t_product_design
+d_&_t_textiles_technology
+ict_btec
+music_tech_grade
+pearson_btec_sport
+product_design
+"""
 
-# regex for none standard grade endings
+for topic in subjects:
 
-regex_pattern = re.compile(rf'{subject}.*_real$')
+    subject = topic
+    year_model = '2122'
+    year_prediction = '2223'
 
-# Load the data for the model
-subject_model = subject + '_' + year_model + '.csv'
-predictor = pd.read_csv('grades_full_clean/' + subject_model)
+    # regex for none standard grade endings
 
-# Load the data for prediction
-subject_prediction = subject + '_' + year_prediction + '.csv'
-prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
+    regex_pattern = re.compile(rf'{subject}.*_real$')
 
-gender_encoded = pd.get_dummies(predictor['gender_ap2'], prefix='Gender')
+    # Load the data for the model
+    subject_model = subject + '_' + year_model + '.csv'
+    predictor = pd.read_csv('grades_full_clean/' + subject_model)
 
-# Concatenate the encoded gender columns with the original DataFrame
-predictor_final = pd.concat([predictor, gender_encoded], axis=1)
+    # Load the data for prediction
+    subject_prediction = subject + '_' + year_prediction + '.csv'
+    prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
 
-# Drop the original "Gender" column if needed
-predictor_final.drop(columns=['gender_ap2'], inplace=True)
+    gender_encoded = pd.get_dummies(predictor['gender_ap2'], prefix='Gender')
 
-X = predictor_final.drop(columns=['upn'] + [col for col in predictor_final.columns if regex_pattern.match(col)])
+    # Concatenate the encoded gender columns with the original DataFrame
+    predictor_final = pd.concat([predictor, gender_encoded], axis=1)
 
-y_column_pattern = subject + '_.*_real$'
+    # Drop the original "Gender" column if needed
+    predictor_final.drop(columns=['gender_ap2'], inplace=True)
 
-y = predictor_final.filter(regex=y_column_pattern)
+    X = predictor_final.drop(columns=['upn'] + [col for col in predictor_final.columns if regex_pattern.match(col)])
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
+    y_column_pattern = subject + '_.*_real$'
 
-model = Ridge(alpha=1)      
+    y = predictor_final.filter(regex=y_column_pattern)
 
-model.fit(X_train, y_train)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
-y_pred = model.predict(X_test)
+    model = Ridge(alpha=1)      
 
-y_pred_rounded = np.round(y_pred)
+    model.fit(X_train, y_train)
 
-y_pred_true = y_pred_rounded.astype(int)
+    y_pred = model.predict(X_test)
 
-mse = mean_squared_error(y_test, y_pred_true)
+    y_pred_rounded = np.round(y_pred)
 
-# Calculate Root Mean Squared Error (RMSE)
-rmse = mean_squared_error(y_test, y_pred_true, squared=False)
+    y_pred_true = y_pred_rounded.astype(int)
 
-# Calculate R-squared (R2) score
-r2 = r2_score(y_test, y_pred_true)
+    mse = mean_squared_error(y_test, y_pred_true)
 
-kf = KFold(n_splits=5, shuffle=True, random_state=68)
+    # Calculate Root Mean Squared Error (RMSE)
+    rmse = mean_squared_error(y_test, y_pred_true, squared=False)
 
-scores = cross_val_score(model, X, y, cv=kf, scoring='r2')
-# the cross-validated scores are very similar, reducing the chance that the model is overfitted
+    # Calculate R-squared (R2) score
+    r2 = r2_score(y_test, y_pred_true)
 
-cross_val_mean = np.mean(scores)
+    kf = KFold(n_splits=5, shuffle=True, random_state=68)
 
-print(f"Mean Squared Error (MSE): {mse:.2f}")
-print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
-print(f"R-squared (R2) Score: {r2:.2f}")
-print('Cross-validation scores:', scores)
-print(f'Mean cross validation scores: {cross_val_mean}')
+    scores = cross_val_score(model, X, y, cv=kf, scoring='r2')
+    # the cross-validated scores are very similar, reducing the chance that the model is overfitted
 
-# dict to save scores
-scores_dict = {
-    'subject': subject,
-    'MSE': mse,
-    'RMSE': rmse,
-    'R2': r2,
-    'Cross-validation': scores,
-    'Mean cross validation': cross_val_mean
-}
-# load excel sheet
-scores_df = pd.read_csv('model_scores/scores.csv')
+    scores.sort()
 
-# Create a mask to filter out rows with the same subject
-mask = scores_df['subject'] != subject
+    cross_val_mean = np.mean(scores)
 
-# Remove rows with the same subject from scores_df
-scores_df = scores_df[mask]
+    print(f"Mean Squared Error (MSE): {mse:.2f}")
+    print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
+    print(f"R-squared (R2) Score: {r2:.2f}")
+    print('Cross-validation scores:', scores)
+    print(f'Mean cross validation scores: {cross_val_mean}')
 
-new_scores_df = pd.DataFrame([scores_dict])
+    # dict to save scores
+    scores_dict = {
+        'subject': subject,
+        'MSE': mse,
+        'RMSE': rmse,
+        'R2': r2,
+        'Cross-validation': scores,
+        'Mean cross validation': cross_val_mean
+    }
+    # load excel sheet
+    scores_df = pd.read_csv('model_scores/scores.csv')
 
-# update excel sheet will make copy of same suject if there
-scores_df = pd.concat([scores_df, new_scores_df], ignore_index=True)
+    # Create a mask to filter out rows with the same subject
+    mask = scores_df['subject'] != subject
 
-scores_df.reset_index(drop=True, inplace=True)
+    # Remove rows with the same subject from scores_df
+    scores_df = scores_df[mask]
 
-scores_df.to_csv('model_scores/scores.csv', index=False, float_format='%.3f')
+    new_scores_df = pd.DataFrame([scores_dict])
 
-print('Scores updated in scores.xlsx')
+    # update excel sheet will make copy of same suject if there
+    scores_df = pd.concat([scores_df, new_scores_df], ignore_index=True)
 
-train_sizes, train_scores, test_scores = learning_curve(model, X, y, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
-                                                            
-train_mean = np.mean(train_scores, axis=1)
-train_std = np.std(train_scores, axis=1)
-test_mean = np.mean(test_scores, axis=1)
-test_std = np.std(test_scores, axis=1)
-plt.plot(train_sizes, train_mean, color='blue', marker='o', markersize=5, label='training score')
-plt.fill_between(train_sizes, train_mean + train_std, train_mean - train_std, alpha=0.15, color='blue')
-plt.plot(train_sizes, test_mean, color='green', linestyle='--', marker='s', markersize=5, label='test score')
-plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, alpha=0.15, color='green')
-plt.xlabel('Number of training samples')
-plt.ylabel('Score')
-plt.legend(loc='lower right')
-plt.ylim([0, 1])
-plt.show()
-plt.savefig("model_scores/" + subject + "_ridge.png", )
-plt.clf()
-print('Graph saved')
+    scores_df.reset_index(drop=True, inplace=True)
 
-prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
+    # Sort the DataFrame by the "subject" column
+    scores_df = scores_df.sort_values(by='subject')
 
-prediction.rename(columns={'actual_ap2': 'actual_real',
-                           'estimate_ap2': 'estimate_real'}, inplace=True)
+    scores_df.to_csv('model_scores/scores.csv', index=False, float_format='%.3f')
 
-gender_encoded_prediction = pd.get_dummies(prediction['gender_ap2'], prefix='Gender')
+    print('Scores updated in scores.xlsx')
 
-# Concatenate the encoded gender columns with the original DataFrame
-prediction_final = pd.concat([prediction, gender_encoded_prediction], axis=1)
+    train_sizes, train_scores, test_scores = learning_curve(model, X, y, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
+                                                                
+    train_mean = np.mean(train_scores, axis=1)
+    train_std = np.std(train_scores, axis=1)
+    test_mean = np.mean(test_scores, axis=1)
+    test_std = np.std(test_scores, axis=1)
+    plt.plot(train_sizes, train_mean, color='blue', marker='o', markersize=5, label='training score')
+    plt.fill_between(train_sizes, train_mean + train_std, train_mean - train_std, alpha=0.15, color='blue')
+    plt.plot(train_sizes, test_mean, color='green', linestyle='--', marker='s', markersize=5, label='test score')
+    plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, alpha=0.15, color='green')
+    plt.xlabel('Number of training samples')
+    plt.ylabel('Score')
+    plt.legend(loc='lower right')
+    plt.ylim([0, 1])
+    plt.show()
+    plt.savefig("model_scores/" + subject + "_ridge.png", )
+    plt.clf()
+    print('Graph saved')
 
-# Drop the original "Gender" column if needed
-prediction_final.drop(columns=['gender_ap2'], inplace=True)
+    prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
 
-X_prediction = prediction_final.drop(columns=['upn'])
+    prediction.rename(columns={'actual_ap2': 'actual_real',
+                            'estimate_ap2': 'estimate_real'}, inplace=True)
 
-y_prediction =model.predict(X_prediction)
+    gender_encoded_prediction = pd.get_dummies(prediction['gender_ap2'], prefix='Gender')
 
-y_prediction_rounded = np.round(y_prediction)
+    # Concatenate the encoded gender columns with the original DataFrame
+    prediction_final = pd.concat([prediction, gender_encoded_prediction], axis=1)
 
-subject_prediction_column_name = subject + '_prediction'
-prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
-prediction.to_csv('predicted/' + subject + '_' + year_prediction + '_prediction.csv')
-print('Prediction saved')
+    # Drop the original "Gender" column if needed
+    prediction_final.drop(columns=['gender_ap2'], inplace=True)
+
+    X_prediction = prediction_final.drop(columns=['upn'])
+
+    y_prediction =model.predict(X_prediction)
+
+    y_prediction_rounded = np.round(y_prediction)
+
+    subject_prediction_column_name = subject + '_prediction'
+    prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
+    prediction.to_csv('predicted/' + subject + '_' + year_prediction + '_prediction.csv')
+    print(f'{subject} Prediction saved')
