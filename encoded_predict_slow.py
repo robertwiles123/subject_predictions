@@ -1,18 +1,30 @@
-# This is to test importing, encoding and predicting of just Enlgish. 
-# Change subject and X y on liness 11, 24, 26
-# Change prediction subject and X on lines 48, 55
+# Work with predicting and encoding any subject that has numerical grades
+# change the subject on line 13 for now
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
 from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error, r2_score
 import matplotlib.pyplot as plt
+import re
 
-subject = 'english_language'
+# Define subject and year here
 
-subject_full = subject+'_2122.csv'
+subject = 'spanish'
+year_model = '2122'
+year_prediction = '2223'
 
-predictor = pd.read_csv('grades_full_clean/' + subject_full)
+# regex for none standard grade endings
+
+regex_pattern = re.compile(rf'{subject}.*_real$')
+
+# Load the data for the model
+subject_model = subject + '_' + year_model + '.csv'
+predictor = pd.read_csv('grades_full_clean/' + subject_model)
+
+# Load the data for prediction
+subject_prediction = subject + '_' + year_prediction + '.csv'
+prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
 
 gender_encoded = pd.get_dummies(predictor['gender_ap2'], prefix='Gender')
 
@@ -22,9 +34,11 @@ predictor_final = pd.concat([predictor, gender_encoded], axis=1)
 # Drop the original "Gender" column if needed
 predictor_final.drop(columns=['gender_ap2'], inplace=True)
 
-X = predictor_final.drop(columns=['upn', 'english_language_gcse_level_1/2_real'])
+X = predictor_final.drop(columns=['upn'] + [col for col in predictor_final.columns if regex_pattern.match(col)])
 
-y = predictor_final['english_language_gcse_level_1/2_real']
+y_column_pattern = subject + '_.*_real$'
+
+y = predictor_final.filter(regex=y_column_pattern)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
@@ -51,10 +65,42 @@ kf = KFold(n_splits=5, shuffle=True, random_state=68)
 scores = cross_val_score(model, X, y, cv=kf, scoring='r2')
 # the cross-validated scores are very similar, reducing the chance that the model is overfitted
 
+cross_val_mean = np.mean(scores)
+
 print(f"Mean Squared Error (MSE): {mse:.2f}")
 print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
 print(f"R-squared (R2) Score: {r2:.2f}")
 print('Cross-validation scores:', scores)
+print(f'Mean cross validation scores: {cross_val_mean}')
+
+# dict to save scores
+scores_dict = {
+    'subject': subject,
+    'MSE': mse,
+    'RMSE': rmse,
+    'R2': r2,
+    'Cross-validation': scores,
+    'Mean cross validation': cross_val_mean
+}
+# load excel sheet
+scores_df = pd.read_csv('model_scores/scores.csv')
+
+# Create a mask to filter out rows with the same subject
+mask = scores_df['subject'] != subject
+
+# Remove rows with the same subject from scores_df
+scores_df = scores_df[mask]
+
+new_scores_df = pd.DataFrame([scores_dict])
+
+# update excel sheet will make copy of same suject if there
+scores_df = pd.concat([scores_df, new_scores_df], ignore_index=True)
+
+scores_df.reset_index(drop=True, inplace=True)
+
+scores_df.to_csv('model_scores/scores.csv', index=False, float_format='%.3f')
+
+print('Scores updated in scores.xlsx')
 
 train_sizes, train_scores, test_scores = learning_curve(model, X, y, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
                                                             
@@ -71,11 +117,9 @@ plt.ylabel('Score')
 plt.legend(loc='lower right')
 plt.ylim([0, 1])
 plt.show()
-plt.savefig("overfit_graph/" + subject + "_ridge.png", )
+plt.savefig("model_scores/" + subject + "_ridge.png", )
 plt.clf()
 print('Graph saved')
-
-subject_prediction = subject + '_2223.csv'
 
 prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
 
@@ -98,6 +142,5 @@ y_prediction_rounded = np.round(y_prediction)
 
 subject_prediction_column_name = subject + '_prediction'
 prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
-
-prediction.to_csv('predicted/'+subject+'_2223_prediction.csv')
+prediction.to_csv('predicted/' + subject + '_' + year_prediction + '_prediction.csv')
 print('Prediction saved')

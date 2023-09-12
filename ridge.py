@@ -36,23 +36,47 @@ for root, dirs, files in os.walk(folder_path):
                # Read the CSV file
                 csv_path = os.path.join(root, file)
                 df = pd.read_csv(csv_path)
-                df_unchanged = df.copy()
-                # List of categorical columns to be one-hot encoded (excluding 'UPN')
-                categorical_columns = [col for col in df.columns if col != 'upn']
-                
-                # Use pandas get_dummies to perform one-hot encoding
-                data_encoded = pd.get_dummies(df, columns=categorical_columns, drop_first=True, handle_unknown='ignore') 
-                # Construct the regex pattern
-                regex_pattern = f'^.*{subject}.*_real.*$'
 
-                matching_columns = data_encoded.columns
+                columns_to_encode = []
 
-                y_columns = [col for col in matching_columns if re.match(regex_pattern, col)]
-                # Filter the DataFrame based on the selected columns
-                y = data_encoded[y_columns]
+                for column in df.columns:
+                    if column != 'upn' and not pd.api.types.is_integer_dtype(df[column]) and not pd.api.types.is_float_dtype(df[column]):
+                        columns_to_encode.append(column)
+                print(f'columns to encode {columns_to_encode}')
 
-                # Define the features (X)
-                X = data_encoded.drop(columns=['upn'] + y.columns.tolist())
+                df_encoded = pd.DataFrame()
+
+                for column in columns_to_encode:
+                    if column == 'gender_ap2':
+                        prefix = 'Gender'
+                    else:
+                        prefix = f'{subject}_{column.split("_")[2]}'  # Extract the number from the column name
+                    
+                    encoded_column = pd.get_dummies(df[column], prefix=prefix)
+                    df_encoded = pd.concat([df_encoded, encoded_column], axis=1)
+
+                # Concatenate the encoded gender columns with the original DataFrame
+                df_final = pd.concat([df, df_encoded], axis=1)
+
+                # Drop the original "Gender" column if needed
+                df_final.drop(columns=columns_to_encode, inplace=True)
+
+                pattern = rf'^{subject}.*real$'
+
+                # Use the filter method to drop columns matching the pattern
+                columns_to_drop = df_final.filter(regex=pattern)
+
+                columns_to_drop_list = columns_to_drop.columns.tolist()
+
+                columns_to_drop_list.append('upn')
+
+                print(f'columns to drop {columns_to_drop_list}')
+
+                print(f'Final columns{df_final.columns}')
+
+                X = df_final.drop(columns=columns_to_drop_list)
+
+                y = df_final[columns_to_drop.columns]
                 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
                 # Print the shapes of X_train and y_train for debugging

@@ -40,19 +40,27 @@ for root, dirs, files in os.walk(folder_path):
                 except ValueError:
                     continue
 
+                for column in df.columns:
+                    if column != 'upn':
+                        try:
+                            df[column] = df[column].astype(int)
+                        except ValueError:
+                            # If the conversion to int raises a ValueError, skip to the next column
+                            pass
+
                 #Save files
                 if year == '_2122':
                     file_name = f'{subject}{year}.csv'
                     output_directory = '/workspaces/subject_predictions/grades_full_clean'
                     file_path = os.path.join(output_directory, file_name)
                     df.to_csv(file_path, index=False)
-                    print('File saved')
+                    print(f'{subject} saved')
                 elif year == '_2223':
                     file_name = f'{subject}{year}.csv'
                     output_directory = '/workspaces/subject_predictions/to_be_predicted'
                     file_path = os.path.join(output_directory, file_name)
                     df.to_csv(file_path, index=False)
-                    print('File saved')
+                    print(f'{subject} saved')
 
                 
 
