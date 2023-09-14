@@ -82,6 +82,7 @@ for topic in subjects:
 
     cross_val_mean = np.mean(scores)
 
+    print(f'{subject} scores:')
     print(f"Mean Squared Error (MSE): {mse:.2f}")
     print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
     print(f"R-squared (R2) Score: {r2:.2f}")
