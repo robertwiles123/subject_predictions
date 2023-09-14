@@ -4,13 +4,14 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
 from sklearn.linear_model import Ridge
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
 
+model_name = 'ridge'
+
 # Define subject and year here
 subjects = ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'maths', 'music_studies', 'physics', 'spanish']
-
 """
 Removed subjects
 d_&_t_product_design
@@ -82,9 +83,12 @@ for topic in subjects:
 
     cross_val_mean = np.mean(scores)
 
+    mae = mean_absolute_error(y_test, y_pred)
+
     print(f'{subject} scores:')
     print(f"Mean Squared Error (MSE): {mse:.2f}")
     print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
+    print("Mean Absolute Error:", mae)
     print(f"R-squared (R2) Score: {r2:.2f}")
     print('Cross-validation scores:', scores)
     print(f'Mean cross validation scores: {cross_val_mean}')
@@ -95,11 +99,12 @@ for topic in subjects:
         'MSE': mse,
         'RMSE': rmse,
         'R2': r2,
+        'Mean Absolute Error': mae,
         'Cross-validation': scores,
         'Mean cross validation': cross_val_mean
     }
     # load excel sheet
-    scores_df = pd.read_csv('model_scores/scores.csv')
+    scores_df = pd.read_csv(f'{model_name}_scores/scores.csv')
 
     # Create a mask to filter out rows with the same subject
     mask = scores_df['subject'] != subject
@@ -117,7 +122,7 @@ for topic in subjects:
     # Sort the DataFrame by the "subject" column
     scores_df = scores_df.sort_values(by='subject')
 
-    scores_df.to_csv('model_scores/scores.csv', index=False, float_format='%.3f')
+    scores_df.to_csv(f'{model_name}_scores/scores.csv', index=False, float_format='%.3f')
 
     print('Scores updated in scores.xlsx')
 
@@ -136,7 +141,7 @@ for topic in subjects:
     plt.legend(loc='lower right')
     plt.ylim([0, 1])
     plt.show()
-    plt.savefig("model_scores/" + subject + "_ridge.png", )
+    plt.savefig(f"{model_name}_scores/" + subject + "_ridge.png", )
     plt.clf()
     print('Graph saved')
 
@@ -161,5 +166,5 @@ for topic in subjects:
 
     subject_prediction_column_name = subject + '_prediction'
     prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
-    prediction.to_csv('predicted/' + subject + '_' + year_prediction + '_prediction.csv')
+    prediction.to_csv(f'{model_name}_predicted/' + subject + '_' + year_prediction + '_prediction.csv')
     print(f'{subject} Prediction saved')

@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-df = pd.read_csv('model_scores/scores.csv')
+model = 'ridge'
+
+df = pd.read_csv(f'{model}_scores/scores.csv')
 
 # Extract subject names, MSE, and RMSE values from the DataFrame
 subjects = df['subject']
@@ -37,7 +39,7 @@ ax.legend()
 
 
 plt.subplots_adjust(bottom=0.5, top=1)
-plt.savefig('analysis_graphs/MSE&RMSE by subject')
+plt.savefig(f'analysis_graphs/{model} MSE&RMSE by subject')
 
 print('Figure saved')
 plt.clf
@@ -66,7 +68,7 @@ ax.set_title('R2 Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
-plt.savefig('analysis_graphs/ R2 by subject')
+plt.savefig(f'analysis_graphs/{model} R2 by subject')
 print('Fig2 saved')
 
 plt.clf
@@ -95,7 +97,7 @@ ax.set_title('Mean cross validation Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
-plt.savefig('analysis_graphs/ MCVS by subject')
+plt.savefig(f'analysis_graphs/{model} MCVS by subject')
 print('Fig3 saved')
 
 plt.clf
@@ -120,6 +122,6 @@ plt.xticks(rotation=45)
 plt.ylim(-1, 1)
 
 plt.tight_layout()
-plt.savefig('analysis_graphs/ cross-val range by subject')
+plt.savefig(f'analysis_graphs/{model} cross-val range by subject')
 print('Fig4 saved')
 plt.clf
