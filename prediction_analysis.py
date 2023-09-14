@@ -117,8 +117,9 @@ plt.title('Cross-validation Scores by Subject with Error Bars')
 plt.xlabel('Subject')
 plt.ylabel('Cross-validation Score')
 plt.xticks(rotation=45)
-plt.show()
+plt.ylim(-1, 1)
 
 plt.tight_layout()
 plt.savefig('analysis_graphs/ cross-val range by subject')
 print('Fig4 saved')
+plt.clf
