@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-model = 'ridge'
+model = 'random_forest'
 
 df = pd.read_csv(f'{model}_scores/scores.csv')
 
@@ -119,7 +119,7 @@ plt.title('Cross-validation Scores by Subject with Error Bars')
 plt.xlabel('Subject')
 plt.ylabel('Cross-validation Score')
 plt.xticks(rotation=45)
-plt.ylim(-1, 1)
+plt.ylim(0, 1)
 
 plt.tight_layout()
 plt.savefig(f'analysis_graphs/{model} cross-val range by subject')
