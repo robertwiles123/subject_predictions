@@ -9,6 +9,7 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
 
+# change model that is being used. Also update line 66
 model_name = 'linear_regression'
 
 # Define subject and year here
@@ -24,13 +25,12 @@ product_design
 """
 
 for topic in subjects:
-
+    # change as supdate to years
     subject = topic
     year_model = '2122'
     year_prediction = '2223'
 
     # regex for none standard grade endings
-
     regex_pattern = re.compile(rf'{subject}.*_real$')
 
     # Load the data for the model
@@ -41,6 +41,7 @@ for topic in subjects:
     subject_prediction = subject + '_' + year_prediction + '.csv'
     prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
 
+    # encode gender
     gender_encoded = pd.get_dummies(predictor['gender_ap2'], prefix='Gender')
 
     # Concatenate the encoded gender columns with the original DataFrame
@@ -49,22 +50,29 @@ for topic in subjects:
     # Drop the original "Gender" column if needed
     predictor_final.drop(columns=['gender_ap2'], inplace=True)
 
+    # assign X
     X = predictor_final.drop(columns=['upn'] + [col for col in predictor_final.columns if regex_pattern.match(col)])
 
+    # assign patter that is needed for this subject
     y_column_pattern = subject + '_.*_real$'
 
+    # assin y based on pattern
     y = predictor_final.filter(regex=y_column_pattern)
 
+    # spit data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
+    # asign model
     model = LinearRegression()
 
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
 
+    # as y can only be whole number round predictions to whole
     y_pred_rounded = np.round(y_pred)
 
+    # change to int
     y_pred_true = y_pred_rounded.astype(int)
 
     mse = mean_squared_error(y_test, y_pred_true)
@@ -127,6 +135,8 @@ for topic in subjects:
 
     print('Scores updated in scores.xlsx')
 
+    # create leanring curve graph
+
     train_sizes, train_scores, test_scores = learning_curve(model, X, y, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
                                                                 
     train_mean = np.mean(train_scores, axis=1)
@@ -146,6 +156,7 @@ for topic in subjects:
     plt.clf()
     print('Graph saved')
 
+    # load in dataframe to predict
     prediction = pd.read_csv('to_be_predicted/' + subject_prediction)
 
     prediction.rename(columns={'actual_ap2': 'actual_real',
@@ -165,6 +176,7 @@ for topic in subjects:
 
     y_prediction_rounded = np.round(y_prediction)
 
+    # save prediction
     subject_prediction_column_name = subject + '_prediction'
     prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
     prediction.to_csv(f'{model_name}_predicted/' + subject + '_' + year_prediction + '_prediction.csv')

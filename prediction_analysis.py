@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
+# Update to change model imported and same saved
 model = 'linear_regression'
 
+# load in dataframe from the model name
 df = pd.read_csv(f'{model}_scores/scores.csv')
 
 # Extract subject names, MSE, and RMSE values from the DataFrame
@@ -42,6 +44,7 @@ plt.show()
 plt.savefig(f'analysis_graphs/{model}_MSE_RMSE_by_subject.png')
 
 print('Figure saved')
+# clear plt for next graph
 plt.clf
 
 # Extract subject names and R2 scores from the DataFrame
@@ -102,6 +105,7 @@ print('Fig3 saved')
 
 plt.clf
 
+# extract a string of numbers in to floats
 def extract_and_convert(s):
     s = s.strip('[]')  # Remove square brackets
     values = [float(x) for x in s.split()]  # Convert the space-separated values to floats
