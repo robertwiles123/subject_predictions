@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-model = 'random_forest'
+model = 'linear_regression'
 
 df = pd.read_csv(f'{model}_scores/scores.csv')
 
@@ -34,7 +34,7 @@ ax.set_xticklabels(subjects, rotation=45, ha='right')
 # Add labels, title, and legend
 ax.set_xlabel('Subjects')
 ax.set_ylabel('Error Values')
-ax.set_title('MSE and RMSE by Subject')
+ax.set_title(f'{model}MSE and RMSE by Subject')
 ax.legend()
 
 
@@ -64,7 +64,7 @@ ax.set_xticklabels(subjects, rotation=45, ha='right')
 # Add labels, title, and ylabel
 ax.set_xlabel('Subjects')
 ax.set_ylabel('R2 Score')
-ax.set_title('R2 Score by Subject')
+ax.set_title(f'{model} R2 Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
@@ -93,7 +93,7 @@ ax.set_xticklabels(subjects, rotation=45, ha='right')
 # Add labels, title, and ylabel
 ax.set_xlabel('Subjects')
 ax.set_ylabel('Mean cross validation Score')
-ax.set_title('Mean cross validation Score by Subject')
+ax.set_title(f'{model} mean cross validation Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
