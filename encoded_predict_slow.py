@@ -3,13 +3,13 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import LinearRegression
 #from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
 
-model_name = 'ridge'
+model_name = 'linear_regression'
 
 # Define subject and year here
 subjects = ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'maths', 'music_studies', 'physics', 'spanish']
@@ -57,7 +57,7 @@ for topic in subjects:
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
-    model = Ridge(alpha=1)
+    model = LinearRegression()
 
     model.fit(X_train, y_train)
 
@@ -203,6 +203,7 @@ for topic in subjects:
 
     # Visualize the errors, for example, in a scatter plot
     plt.scatter(incorrect_y_test, incorrect_y_pred, label='Incorrect Predictions', color='red')
+    plt.title(f'{model_name.capitalize()} {subject} wrong predictions')
     plt.xlabel('True Values')
     plt.ylabel('Predicted Values')
     plt.legend()

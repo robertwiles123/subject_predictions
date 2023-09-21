@@ -3,4 +3,6 @@ Add in additiional data when it arriaves
 Data will need to be encoded. Some to binary some to one hot encoder or other
 When new data obtained new models to be completed
 Examine data to obtain best model for each subject
-make more explicite predictions based on these
+Make more explicite predictions based on these
+Compare prediction to real grades
+

@@ -12,34 +12,34 @@ subjects = df['subject']
 mse_values = df['MSE']
 rmse_values = df['RMSE']
 
-# Create an array of indices for the x-axis
-x = range(len(subjects))
+# Create a figure with a larger size
+plt.figure(figsize=(10, 6))
 
-# Set bar width
-bar_width = 0.35
-
-# Create the bar chart
-fig, ax = plt.subplots()
+# Create an axis
+ax = plt.subplot(111)
 
 # Plot MSE bars in blue
-mse_bars = ax.bar(x, mse_values, bar_width, label='MSE', color='blue')
+mse_bars = ax.bar(np.arange(len(subjects)), mse_values, label='MSE', color='blue')
 
 # Plot RMSE bars in red
-rmse_bars = ax.bar([i + bar_width for i in x], rmse_values, bar_width, label='RMSE', color='red')
+rmse_bars = ax.bar(np.arange(len(subjects)) + 0.4, rmse_values, label='RMSE', color='red')
 
 # Set the x-axis labels to be the subject names
-ax.set_xticks([i + bar_width/2 for i in x])
+ax.set_xticks(np.arange(len(subjects)) + 0.2)
 ax.set_xticklabels(subjects, rotation=45, ha='right')
 
 # Add labels, title, and legend
 ax.set_xlabel('Subjects')
 ax.set_ylabel('Error Values')
-ax.set_title(f'{model}MSE and RMSE by Subject')
+ax.set_title(f'{model.capitalize()} MSE and RMSE by Subject')
 ax.legend()
 
+# Show the plot
+plt.tight_layout()
+plt.show()
 
-plt.subplots_adjust(bottom=0.5, top=1)
-plt.savefig(f'analysis_graphs/{model} MSE&RMSE by subject')
+# Save the plot with the title and file extension
+plt.savefig(f'analysis_graphs/{model}_MSE_RMSE_by_subject.png')
 
 print('Figure saved')
 plt.clf
@@ -64,11 +64,11 @@ ax.set_xticklabels(subjects, rotation=45, ha='right')
 # Add labels, title, and ylabel
 ax.set_xlabel('Subjects')
 ax.set_ylabel('R2 Score')
-ax.set_title(f'{model} R2 Score by Subject')
+ax.set_title(f'{model.capitalize()} R2 Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
-plt.savefig(f'analysis_graphs/{model} R2 by subject')
+plt.savefig(f'analysis_graphs/{model} R2 by subject.png')
 print('Fig2 saved')
 
 plt.clf
@@ -93,11 +93,11 @@ ax.set_xticklabels(subjects, rotation=45, ha='right')
 # Add labels, title, and ylabel
 ax.set_xlabel('Subjects')
 ax.set_ylabel('Mean cross validation Score')
-ax.set_title(f'{model} mean cross validation Score by Subject')
+ax.set_title(f'{model.capitalize()} mean cross validation Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
-plt.savefig(f'analysis_graphs/{model} MCVS by subject')
+plt.savefig(f'analysis_graphs/{model} MCVS by subject.png')
 print('Fig3 saved')
 
 plt.clf
@@ -115,13 +115,13 @@ df = df.explode('Cross-validation')
 
 plt.figure(figsize=(10, 6))
 sns.barplot(x='subject', y='Cross-validation', data=df, estimator=np.mean, errorbar="sd")
-plt.title('Cross-validation Scores by Subject with Error Bars')
+plt.title(f'{model.capitalize()} Cross-validation Scores by Subject with Error Bars')
 plt.xlabel('Subject')
 plt.ylabel('Cross-validation Score')
 plt.xticks(rotation=45)
 plt.ylim(0, 1)
 
 plt.tight_layout()
-plt.savefig(f'analysis_graphs/{model} cross-val range by subject')
+plt.savefig(f'analysis_graphs/{model} cross-val range by subject.png')
 print('Fig4 saved')
 plt.clf
