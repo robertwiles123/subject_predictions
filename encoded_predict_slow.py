@@ -3,13 +3,13 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-#from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import Ridge
+#from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
 
-model_name = 'random_forest'
+model_name = 'ridge'
 
 # Define subject and year here
 subjects = ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'maths', 'music_studies', 'physics', 'spanish']
@@ -57,7 +57,7 @@ for topic in subjects:
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
-    model = RandomForestRegressor(random_state=86, bootstrap=False, max_depth=10, max_features='sqrt', max_samples=None, min_samples_leaf=1, min_samples_split=2, n_estimators=100)    
+    model = Ridge(alpha=1)
 
     model.fit(X_train, y_train)
 
@@ -142,7 +142,7 @@ for topic in subjects:
     plt.legend(loc='lower right')
     plt.ylim([0, 1])
     plt.show()
-    plt.savefig(f"{model_name}_scores/" + subject + "_ridge.png", )
+    plt.savefig(f"{model_name}_scores/{subject}_{model}.png", )
     plt.clf()
     print('Graph saved')
 
@@ -169,3 +169,42 @@ for topic in subjects:
     prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
     prediction.to_csv(f'{model_name}_predicted/' + subject + '_' + year_prediction + '_prediction.csv')
     print(f'{subject} Prediction saved')
+
+
+    # Graphs that shows all predicted errors
+
+    # Convert y_test to a NumPy array
+    y_test_array = y_test.to_numpy()
+
+    # Calculate the residuals (the differences between true and predicted values)
+    residuals = y_test_array - y_pred_true
+
+    # Calculate the absolute errors (useful for visualization)
+    absolute_errors = np.abs(residuals)
+
+    # Find the indices of the data points where the model made incorrect predictions (absolute error > 0)
+    incorrect_indices = np.where(absolute_errors > 0)
+
+    # Extract the corresponding values from y_test_array and y_pred_true for incorrect predictions
+    incorrect_y_test = y_test_array[incorrect_indices]
+    incorrect_y_pred = y_pred_true[incorrect_indices]
+
+    # Now, you have the true and predicted values for all data points where the model made incorrect predictions.
+    # You can use these values for visualization or further analysis.
+    try:
+        # Adjust the axis increments (both axis increase by 1)
+        plt.xticks(np.arange(min(incorrect_y_test), max(incorrect_y_test)+1, 1))
+        plt.yticks(np.arange(min(incorrect_y_pred), max(incorrect_y_pred)+1, 1))
+    except ValueError:
+        continue
+
+    # Make grid lines visible
+    plt.grid(True)
+
+    # Visualize the errors, for example, in a scatter plot
+    plt.scatter(incorrect_y_test, incorrect_y_pred, label='Incorrect Predictions', color='red')
+    plt.xlabel('True Values')
+    plt.ylabel('Predicted Values')
+    plt.legend()
+    plt.savefig(f'error_graphs/{subject}_{model_name}.png')
+    print('Errors saved')
