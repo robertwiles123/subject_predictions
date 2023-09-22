@@ -27,15 +27,14 @@ product_design
 for topic in subjects:
     # change as supdate to years
     subject = topic
-    year_model = '2122'
     year_prediction = '2223'
 
     # regex for none standard grade endings
     regex_pattern = re.compile(rf'{subject}.*_real$')
 
     # Load the data for the model
-    subject_model = subject + '_' + year_model + '.csv'
-    predictor = pd.read_csv('grades_full_clean/' + subject_model)
+    subject_model = subject + '.csv'
+    predictor = pd.read_csv('prediction_csvs/' + subject_model)
 
     # Load the data for prediction
     subject_prediction = subject + '_' + year_prediction + '.csv'
