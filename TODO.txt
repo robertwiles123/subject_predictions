@@ -1,4 +1,8 @@
-Recreate the prediction dataframe to be yearless and just a basic "build models" csv
+Split encoded_predict to an encoder and a predictor 
+
+Move the subjects in to a seperate file and import so only have to update in one place
+
+Create a file that runs encoder and analysis if wanting to do both
 
 Add in additiional data when it arriaves
 Data will need to be encoded. Some to binary some to one hot encoder or other
