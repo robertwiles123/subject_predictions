@@ -73,7 +73,7 @@ for root, dirs, files in os.walk(folder_path):
                     print(f'{subject} saved')
                 elif year == '_2223':
                     file_name = f'{subject}{year}.csv'
-                    output_directory = '/workspaces/subject_predictions/to_be_predicted'
+                    output_directory = '/workspace/subject_predictions/to_be_predicted'
                     file_path = os.path.join(output_directory, file_name)
                     df.to_csv(file_path, index=False)
                     print(f'{subject} saved')

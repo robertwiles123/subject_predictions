@@ -1,6 +1,6 @@
-Improve full split and broad clean 
+Improve full split and broad clean's if else statements, that is a lot of the same stuff copied and pasted
 
-Create a file that runs encoder and analysis if wanting to do both
+Encode btec with onehotencoder to handle missing catagories
 
 Add in additiional data when it arriaves
 Data will need to be encoded. Some to binary some to one hot encoder or other
