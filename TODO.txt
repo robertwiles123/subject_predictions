@@ -1,6 +1,6 @@
-Split encoded_predict to an encoder and a predictor 
-
 Move the subjects in to a seperate file and import so only have to update in one place
+
+Improve full split and broad clean 
 
 Create a file that runs encoder and analysis if wanting to do both
 

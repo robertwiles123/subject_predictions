@@ -2,11 +2,16 @@
 import os
 import pandas as pd
 import numpy as np
+import sys
+# import folder needed for following imports
+sys.path.append('/workspace/subject_predictions') 
+import subject_list
+
 year = input('What year to be cleaned? ')
 year = '_'+year
 
 # Define a list of subjects
-subjects = ['art_&design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'd&t_product_design', 'd&_t_textiles_technology', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'ict_btec', 'maths', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'physics', 'product_design', 'science_double', 'spanish']
+subjects = subject_list.full_subjects()
 
 # Specify the folder path where the CSV files are located
 folder_path = "/workspace/subject_predictions/grades_split_dirty"

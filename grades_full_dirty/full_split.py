@@ -1,6 +1,10 @@
 import pandas as pd
 import re
 import os
+import sys
+# import folder needed for following imports
+sys.path.append('/workspace/subject_predictions') 
+import subject_list
 
 type = input('Create models or predictions? Input p or m: ')
 
@@ -47,7 +51,7 @@ if type == 'm':
     full.drop(columns=columns_to_drop, inplace=True)
 
     #subjects in dataframe
-    subjects = ['english_language', 'english_literature', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
+    subjects = subject_list.full_subjects()
 
     # Create a dictionary to store DataFrames
     subject_dataframes = {}
@@ -72,9 +76,9 @@ if type == 'm':
 
 
     # Define the output directory where CSV files will be saved
-    output_directory = '/workspaces/subject_predictions/grades_split_dirty'
-
+    output_directory = '/workspace/subject_predictions/grades_split_dirty'
     # Loop through the DataFrames and save each as a CSV file
+
     for subject in subjects:
         final = globals()[f'{subject}_df']
         file_name = f'{subject}_2122.csv'
@@ -108,7 +112,7 @@ elif type == 'p':
     full.drop(columns=columns_to_drop, inplace=True)
 
     #subjects in dataframe
-    subjects = ['english_language', 'english_literature', 'maths', 'biology', 'chemistry', 'computer_science', 'french_language', 'geography', 'german', 'history', 'physics', 'science_double', 'spanish', 'art_&_design', 'business_studies', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'food_technology', 'ict_btec', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'product_design']
+    subjects = subject_list.full_subjects()
 
     # Create a dictionary to store DataFrames
     subject_dataframes = {}
@@ -133,7 +137,7 @@ elif type == 'p':
 
 
     # Define the output directory where CSV files will be saved
-    output_directory = '/workspaces/subject_predictions/grades_split_dirty'
+    output_directory = '/workspace/subject_predictions/grades_split_dirty'
 
     # Loop through the DataFrames and save each as a CSV file
     for subject in subjects:

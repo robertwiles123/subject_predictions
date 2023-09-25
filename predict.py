@@ -7,13 +7,15 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
 import joblib
+import subject_list
+
 
 # change model that is being used. Also update line 66
 model_name = 'linear_regression'
 year_prediction = '2223'
 
 # Define subject and year here
-subjects = ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'maths', 'music_studies', 'physics', 'spanish']
+subjects = subject_list.prediction_subjects()
 """
 Removed subjects
 d_&_t_product_design
