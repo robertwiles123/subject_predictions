@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 # Update to change model imported and same saved
-model = 'linear_regression'
+model = 'ridge'
 
 # load in dataframe from the model name
 df = pd.read_csv(f'{model}_scores/scores.csv')
@@ -20,14 +20,17 @@ plt.figure(figsize=(10, 6))
 # Create an axis
 ax = plt.subplot(111)
 
-# Plot MSE bars in blue
-mse_bars = ax.bar(np.arange(len(subjects)), mse_values, label='MSE', color='blue')
+# Width of each bar
+bar_width = 0.4
 
-# Plot RMSE bars in red
-rmse_bars = ax.bar(np.arange(len(subjects)) + 0.4, rmse_values, label='RMSE', color='red')
+# Plot MSE bars in blue
+mse_bars = ax.bar(np.arange(len(subjects)), mse_values, width=bar_width, label='MSE', color='blue')
+
+# Plot RMSE bars in red, adjust the x-positions
+rmse_bars = ax.bar(np.arange(len(subjects)) + bar_width, rmse_values, width=bar_width, label='RMSE', color='red')
 
 # Set the x-axis labels to be the subject names
-ax.set_xticks(np.arange(len(subjects)) + 0.2)
+ax.set_xticks(np.arange(len(subjects)) + bar_width / 2)
 ax.set_xticklabels(subjects, rotation=45, ha='right')
 
 # Add labels, title, and legend
@@ -36,9 +39,9 @@ ax.set_ylabel('Error Values')
 ax.set_title(f'{model.capitalize()} MSE and RMSE by Subject')
 ax.legend()
 
+
 # Show the plot
 plt.tight_layout()
-plt.show()
 
 # Save the plot with the title and file extension
 plt.savefig(f'analysis_graphs/{model}_MSE_RMSE_by_subject.png')
