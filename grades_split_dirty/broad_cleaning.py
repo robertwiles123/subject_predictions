@@ -65,9 +65,9 @@ for root, dirs, files in os.walk(folder_path):
                             continue
 
                 #Save files
-                if year == '_2122':
+                if year == '_model':
                     file_name = f'{subject}.csv'
-                    output_directory = '/workspace/subject_predictions/prediction_csvs'
+                    output_directory = '/workspace/subject_predictions/model_csvs'
                     file_path = os.path.join(output_directory, file_name)
                     df.to_csv(file_path, index=False)
                     print(f'{subject} saved')
