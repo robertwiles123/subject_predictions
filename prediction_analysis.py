@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 # Update to change model imported and same saved
-model = 'ridge'
+model = 'random_forest'
 
 # load in dataframe from the model name
 df = pd.read_csv(f'{model}_scores/scores.csv')
