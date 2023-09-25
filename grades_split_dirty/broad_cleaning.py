@@ -7,7 +7,8 @@ import sys
 sys.path.append('/workspace/subject_predictions') 
 import subject_list
 
-year = input('What year to be cleaned? ')
+# will need to update so loads in multiple models if model selected and join them together
+year = input('Input year of prediction or model')
 year = '_'+year
 
 # Define a list of subjects

@@ -81,7 +81,7 @@ if type == 'm':
 
     for subject in subjects:
         final = globals()[f'{subject}_df']
-        file_name = f'{subject}_2122.csv'
+        file_name = f'{subject}_model.csv'
         file_path = os.path.join(output_directory, file_name)
         final.to_csv(file_path, index=False)
     print('Files saved')
