@@ -9,7 +9,8 @@ import re
 import joblib
 import subject_list
 
-model_name = 'linear_regression'
+model_name = subject_list.get_model_name(globals())
+
 year_prediction = '2223'
 
 # Define subject and year here

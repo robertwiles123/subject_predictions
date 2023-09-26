@@ -10,7 +10,7 @@ import joblib
 import subject_list
 
 # change model that is being used. Also update line 52
-model_name = 'linear_regression'
+model_name = subject_list.get_model_name(globals())
 
 
 # Define subject and year here

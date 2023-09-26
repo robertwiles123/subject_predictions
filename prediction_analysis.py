@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 # Update to change model imported and same saved
-model = 'random_forest'
+model = 'linear_regression'
 
 # load in dataframe from the model name
 df = pd.read_csv(f'{model}_scores/scores.csv')
