@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
 # from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
@@ -65,7 +65,7 @@ for topic in subjects:
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
     # asign model
-    model = LinearRegression()
+    model = subject_list.get_models(globals())
     for column in X.columns:
         if 'M1' in X[column].values:
             print(f"'M1' found in column: {column}")

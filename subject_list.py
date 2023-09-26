@@ -23,3 +23,14 @@ def get_model_name(x):
     elif 'Ridge' in x:
         return 'ridge'    
 
+def get_models(x):
+    # Check if RandomForestRegressor is imported, if yes, return 'random_forest', otherwise return 'linear_regression'
+    if 'RandomForestRegressor' in x:
+        from sklearn.ensemble import RandomForestRegressor
+        return RandomForestRegressor(random_state=25)
+    elif 'LinearRegression' in x:
+        from sklearn.linear_model import LinearRegression
+        return LinearRegression()
+    elif 'Ridge' in x:
+        from sklearn.linear_model import Ridge
+        return Ridge(alpha=1)   

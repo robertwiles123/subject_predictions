@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 
 # Update to change model imported and same saved
-model = 'linear_regression'
+model = 'ridge'
 
 # load in dataframe from the model name
 df = pd.read_csv(f'{model}_scores/scores.csv')
@@ -15,7 +15,7 @@ mse_values = df['MSE']
 rmse_values = df['RMSE']
 
 # Create a figure with a larger size
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(15, 10))
 
 # Create an axis
 ax = plt.subplot(111)
@@ -42,6 +42,7 @@ ax.legend()
 
 # Show the plot
 plt.tight_layout()
+plt.grid(True, linestyle='--', alpha=0.6)
 
 # Save the plot with the title and file extension
 plt.savefig(f'analysis_graphs/{model}_MSE_RMSE_by_subject.png')
@@ -58,7 +59,7 @@ r2_scores = df['R2']
 x = range(len(subjects))
 
 # Create the bar chart for R2 scores
-fig, ax = plt.subplots(figsize=(12, 6))  # Adjust the figsize as needed
+fig, ax = plt.subplots(figsize=(16, 10))  # Adjust the figsize as needed
 
 # Plot R2 scores in a single color (e.g., blue)
 r2_bars = ax.bar(x, r2_scores, color='blue')
@@ -74,6 +75,7 @@ ax.set_title(f'{model.capitalize()} R2 Score by Subject')
 
 # Adjust the layout
 plt.tight_layout()
+plt.grid(True, linestyle='--', alpha=0.6)
 plt.savefig(f'analysis_graphs/{model} R2 by subject.png')
 print('Fig2 saved')
 
@@ -87,7 +89,7 @@ r2_scores = df['Mean cross validation']
 x = range(len(subjects))
 
 # Create the bar chart for MCVS scores
-fig, ax = plt.subplots(figsize=(12, 6))  # Adjust the figsize as needed
+fig, ax = plt.subplots(figsize=(15, 10))  # Adjust the figsize as needed
 
 # Plot MCSV scores in a single color (e.g., blue)
 r2_bars = ax.bar(x, r2_scores, color='blue')
@@ -102,6 +104,7 @@ ax.set_ylabel('Mean cross validation Score')
 ax.set_title(f'{model.capitalize()} mean cross validation Score by Subject')
 
 # Adjust the layout
+plt.grid(True, linestyle='--', alpha=0.6)
 plt.tight_layout()
 plt.savefig(f'analysis_graphs/{model} MCVS by subject.png')
 print('Fig3 saved')
@@ -120,7 +123,7 @@ df['Cross-validation'] = df['Cross-validation'].apply(extract_and_convert)
 # Explode the "Cross-validation" column to create separate rows for each value
 df = df.explode('Cross-validation')
 
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(15, 10))
 sns.barplot(x='subject', y='Cross-validation', data=df, estimator=np.mean, errorbar="sd")
 plt.title(f'{model.capitalize()} Cross-validation Scores by Subject with Error Bars')
 plt.xlabel('Subject')
@@ -129,6 +132,8 @@ plt.xticks(rotation=45)
 plt.ylim(0, 1)
 
 plt.tight_layout()
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.yticks(np.arange(0, 1.1, 0.1))
 plt.savefig(f'analysis_graphs/{model} cross-val range by subject.png')
 print('Fig4 saved')
 plt.clf

@@ -1,6 +1,6 @@
 Improve full split and broad clean's if else statements, that is a lot of the same stuff copied and pasted
 
-Encode btec with onehotencoder to handle missing catagories
+Create script to remove all csv's for to_be_predicted ready for next years. 
 
 Add in additiional data when it arriaves
 Data will need to be encoded. Some to binary some to one hot encoder or other
@@ -8,3 +8,6 @@ When new data obtained new models to be completed
 Examine data to obtain best model for each subject
 Make more explicite predictions based on these
 Compare prediction to real grades
+
+CPU INTENSIVE - create a param grid to test which random forest to do with each subject
+    this will need to be saved and stored in a csv file theat can then be imported and used with each catagory
