@@ -11,3 +11,20 @@ Compare prediction to real grades
 
 CPU INTENSIVE - create a param grid to test which random forest to do with each subject
     this will need to be saved and stored in a csv file theat can then be imported and used with each catagory
+    done in stages as too instensive to do in a day, stored to latter add.
+Completed:
+    Best hyperparameters for art_&_design:
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': 0.5, 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 0.5924440900787458
+
+    Best hyperparameters for biology:
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 0.48403927345176323
+
+    Best hyperparameters for business_studies:
+    {'bootstrap': False, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 0.7442070735700131
+
+    Best hyperparameters for chemistry:
+    {'bootstrap': False, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 0.7678747663441043

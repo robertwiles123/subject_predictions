@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-from sklearn.linear_model import Ridge
-# from sklearn.ensemble import RandomForestRegressor
+# from sklearn.linear_model import Ridge
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
@@ -16,10 +16,7 @@ model_name = subject_list.get_model_name(globals())
 # Define subject and year here
 subjects = subject_list.prediction_subjects()
 
-for topic in subjects:
-    # change as supdate to years
-    subject = topic
-
+for subject in subjects:
     print(f'{subject} scores:')
 
     # regex for none standard grade endings
@@ -61,6 +58,9 @@ for topic in subjects:
     # assin y based on pattern
     y = encoded_columns.filter(regex=y_column_pattern)
 
+    if model_name == 'random_forest':
+        y = y.values.ravel()
+
     # spit data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
@@ -70,7 +70,6 @@ for topic in subjects:
         if 'M1' in X[column].values:
             print(f"'M1' found in column: {column}")
     model.fit(X_train, y_train)
-
     y_pred = model.predict(X_test)
 
     # as y can only be whole number round predictions to whole

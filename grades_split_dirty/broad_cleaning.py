@@ -63,7 +63,8 @@ for root, dirs, files in os.walk(folder_path):
                         except ValueError:
                             # If the conversion to int raises a ValueError, skip to the next column
                             continue
-
+                if subject == 'science_double':
+                    df.drop(columns='science_double_2nd_mark_real', inplace=True)
                 #Save files
                 if year == '_model':
                     file_name = f'{subject}.csv'
