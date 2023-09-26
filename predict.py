@@ -15,7 +15,6 @@ year_prediction = '2223'
 # Define subject and year here
 subjects = subject_list.prediction_subjects()
 
-
 for topic in subjects:
     subject = topic
     model = joblib.load(f'models/{subject}_{model_name}.pkl')
@@ -27,38 +26,45 @@ for topic in subjects:
     prediction.rename(columns={'actual_ap2': 'actual_real',
                             'estimate_ap2': 'estimate_real'}, inplace=True)
 
-    if 'btec' in subject or 'tech_' in subject:
-        btec_pattern = pattern = rf'{subject}.*_(ap1|ap2|real)'
-        columns_to_encode = [col for col in prediction.columns if re.match(btec_pattern, col)]
+    encoded_columns = pd.DataFrame()
 
-        for col in columns_to_encode:
-            encoded_column = pd.get_dummies(prediction[col], prefix=col)
-            prediction = pd.concat([prediction, encoded_column], axis=1)
-            prediction.drop(columns=[col], inplace=True)
+    for col in prediction.columns:
+        if 'btec' in subject or 'tech_' in subject:
+            grade_mapping = subject_list.grades_mapped()
+            if re.match(rf'{subject}.*_(ap1|ap2)', col):
+                encoded_columns[col] = prediction[col].map(grade_mapping)
+        if col == 'gender_ap2':
+            # Use pd.get_dummies for the gender column
+            gender_encoded = pd.get_dummies(prediction[col], prefix=col)
+            encoded_columns = pd.concat([encoded_columns, gender_encoded], axis=1)
+        else:
+            # Keep non-matching columns as they are
+            if col not in encoded_columns.columns:
+                encoded_columns = pd.concat([encoded_columns, prediction[[col]]], axis=1)
 
-    gender_encoded_prediction = pd.get_dummies(prediction['gender_ap2'], prefix='Gender')
 
-    # Concatenate the encoded gender columns with the original DataFrame
-    prediction_final = pd.concat([prediction, gender_encoded_prediction], axis=1)
+    X_prediction = encoded_columns.drop(columns=['upn'])
 
-    
-
-    # Drop the original "Gender" column if needed
-    prediction_final.drop(columns=['gender_ap2'], inplace=True)
-
-    X_prediction = prediction_final.drop(columns=['upn'])
-
-    y_prediction =model.predict(X_prediction)
+    y_prediction = model.predict(X_prediction)
 
     y_prediction_rounded = np.round(y_prediction)
 
     # save prediction
     subject_prediction_column_name = subject + '_prediction'
+    if 'btec' in subject or 'tech_' in subject:
+        original_mapping = subject_list.grades_mapped()
+        reverse_mapping = {v: k for k, v in original_mapping.items()}
+        y_prediction_rounded = y_prediction_rounded.astype(int)
+        y_prediction_rounded = y_prediction_rounded.flatten()
+        y_pred_btec = [reverse_mapping[value] for value in y_prediction_rounded]
+        prediction[subject_prediction_column_name] = y_pred_btec
+    else:
+        try:
+            prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
+        except ValueError:
+            prediction[subject_prediction_column_name] = y_prediction_rounded[:, 0].astype(int)
 
-    try:
-        prediction[subject_prediction_column_name] = y_prediction_rounded.astype(int)
-    except ValueError:
-        prediction[subject_prediction_column_name] = y_prediction_rounded[:, 0].astype(int)
+    
 
 
     prediction.to_csv(f'{model_name}_predicted/' + subject + '_' + year_prediction + '_prediction.csv')

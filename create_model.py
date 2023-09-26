@@ -36,17 +36,7 @@ for topic in subjects:
 
     for col in predictor.columns:
         if 'btec' in subject or 'tech_' in subject:
-            grade_mapping = {
-                            '0': 0,
-                            'P1': 1,
-                            'P2': 2,
-                            'M1': 3,
-                            'M2': 4,
-                            'D1': 5,
-                            'D2': 6,
-                            'D*1': 7,
-                            'D*2': 8
-                        }
+            grade_mapping = subject_list.grades_mapped()
             if re.match(rf'{subject}.*_(ap1|ap2|real)', col):
                 encoded_columns[col] = predictor[col].map(grade_mapping)
         if col == 'gender_ap2':
@@ -57,8 +47,6 @@ for topic in subjects:
             # Keep non-matching columns as they are
             if col not in encoded_columns.columns:
                 encoded_columns = pd.concat([encoded_columns, predictor[[col]]], axis=1)
-
-    print(encoded_columns.head())
 
     X = encoded_columns.drop(columns=[col for col in encoded_columns.columns if isinstance(col, str) and regex_pattern.match(col) and col != fr'{subject}.*_real'])
 
