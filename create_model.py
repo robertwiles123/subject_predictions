@@ -23,7 +23,7 @@ for topic in subjects:
     print(f'{subject} scores:')
 
     # regex for none standard grade endings
-    regex_pattern = re.compile(rf'{subject}.*_real$')
+    regex_pattern = re.compile(rf'{subject}.*_real')
 
     # Load the data for the model
     subject_model = subject + '.csv'
@@ -31,42 +31,56 @@ for topic in subjects:
 
     predictor.drop(columns=['upn'], inplace=True)
 
+    # Create an empty DataFrame to store the encoded columns
+    encoded_columns = pd.DataFrame()
+
+    for col in predictor.columns:
+        if 'btec' in subject or 'tech_' in subject:
+            grade_mapping = {
+                            '0': 0,
+                            'P1': 1,
+                            'P2': 2,
+                            'M1': 3,
+                            'M2': 4,
+                            'D1': 5,
+                            'D2': 6,
+                            'D*1': 7,
+                            'D*2': 8
+                        }
+            if re.match(rf'{subject}.*_(ap1|ap2|real)', col):
+                encoded_columns[col] = predictor[col].map(grade_mapping)
+        if col == 'gender_ap2':
+            # Use pd.get_dummies for the gender column
+            gender_encoded = pd.get_dummies(predictor[col], prefix=col)
+            encoded_columns = pd.concat([encoded_columns, gender_encoded], axis=1)
+        else:
+            # Keep non-matching columns as they are
+            if col not in encoded_columns.columns:
+                encoded_columns = pd.concat([encoded_columns, predictor[[col]]], axis=1)
+
+    print(encoded_columns.head())
+
+    X = encoded_columns.drop(columns=[col for col in encoded_columns.columns if isinstance(col, str) and regex_pattern.match(col) and col != fr'{subject}.*_real'])
+
+    X.columns = X.columns.astype(str)
+
     if 'btec' in subject or 'tech_' in subject:
-        btec_pattern = pattern = rf'{subject}.*_(ap1|ap2|real)'
-        columns_to_encode = [col for col in predictor.columns if re.match(btec_pattern, col)]
-
-        for col in columns_to_encode:
-            encoded_column = pd.get_dummies(predictor[col], prefix=col)
-            predictor = pd.concat([predictor, encoded_column], axis=1)
-            predictor.drop(columns=[col], inplace=True)
-
-    # encode gender
-    gender_encoded = pd.get_dummies(predictor['gender_ap2'], prefix='Gender')
-
-    # Concatenate the encoded gender columns with the original DataFrame
-    predictor_final = pd.concat([predictor, gender_encoded], axis=1)
-
-    # Drop the original "Gender" column if needed
-    predictor_final.drop(columns=['gender_ap2'], inplace=True)
-
-    # assign X
-    X = predictor_final.drop(columns=[col for col in predictor_final.columns if regex_pattern.match(col)])
-
-    if 'btec' in subject or 'tech' in subject:
         y_column_pattern = subject + '.*_real.*$'
     else:
         # assign patter that is needed for this subject
         y_column_pattern = subject + '.*_real$'
     
     # assin y based on pattern
-    y = predictor_final.filter(regex=y_column_pattern)
+    y = encoded_columns.filter(regex=y_column_pattern)
 
     # spit data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
     # asign model
     model = LinearRegression()
-
+    for column in X.columns:
+        if 'M1' in X[column].values:
+            print(f"'M1' found in column: {column}")
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
