@@ -1,4 +1,28 @@
-There seems to be no statistical differnce between ridge and linear regression
+This is being done partly to practice statistical analysis and as a rough proof of concept that it is worth pursuing this futher to stake holders
 
-There is  siginificant different with a lot of the random forest values. It is currently not reccommended to use
-    
+For ridge vs random forest:
+               metric   T-test   Wilcox
+                  MSE 0.079442 0.052596
+                 RMSE 0.086960 0.042858
+                   R2 0.053594 0.093409
+Mean cross validation 0.333000 0.032894
+  Mean Absolute Error 0.067346 0.006649
+
+
+    RMSE: ridge=0.7807, random forest=0.9266
+    Mean cross validation: ridge=0.6264, random forest=0.6005
+    Mean Absolute Error: ridge=0.6136, random foret=0.7196
+
+    It can be seen that there is some siginificant differences with RMSE MCV and MAE with the ridge outperforming on each metric. This is only foudn in the wilcoxon
+
+ridge vs linear:
+               metric   T-test   Wilcox
+                  MSE 0.135833 0.067889
+                 RMSE 0.122660 0.067889
+                   R2 0.147506 0.067889
+Mean cross validation 0.117371 0.012771
+  Mean Absolute Error 0.601445 0.506226
+
+    Mean cross validation: ridge=0.6264, linear=0.6098
+
+    The ridge is potentially slightly better on average then that of the linear model

@@ -4,19 +4,22 @@ import pandas as pd
 
 # Load the data from the CSV files into DataFrames
 ridge_df = pd.read_csv('/workspace/subject_predictions/ridge_scores/scores.csv')
-# linear_df = pd.read_csv('/workspace/subject_predictions/linear_regression_scores/scores.csv')
+linear_df = pd.read_csv('/workspace/subject_predictions/linear_regression_scores/scores.csv')
 random_forest_df = pd.read_csv('/workspace/subject_predictions/random_forest_scores/scores.csv')
 
+df1 = ridge_df
+df2 = linear_df
+
+metric_names = ['MSE', 'RMSE', 'R2', 'Mean cross validation', 'Mean Absolute Error']
+
 # Extract the performance metrics as NumPy arrays
-#linear_regression_metrics = linear_df[['MSE', 'RMSE', 'R2', 'Mean cross validation', 'Mean Absolute Error']].values
-ridge_regression_metrics = ridge_df[['MSE', 'RMSE', 'R2', 'Mean cross validation', 'Mean Absolute Error']].values
-random_forest__metrics = random_forest_df[['MSE', 'RMSE', 'R2', 'Mean cross validation', 'Mean Absolute Error']].values
+df1_metrics = df1[metric_names].values
+df2_metrics = df2[metric_names].values
 
 # Calculate the differences in performance metrics
-differences = ridge_regression_metrics - random_forest__metrics
+differences = df1_metrics - df2_metrics
 
 zeros_array = np.zeros(differences.shape)
-
 
 # Paired t-test
 t_statistic, p_value_t = stats.ttest_rel(differences, zeros_array)
@@ -24,5 +27,19 @@ t_statistic, p_value_t = stats.ttest_rel(differences, zeros_array)
 # Wilcoxon signed-rank test
 w_statistic, p_value_w = stats.wilcoxon(differences, zero_method='wilcox')
 
-print(f"Paired t-test p-value: {p_value_t}")
-print(f"Wilcoxon signed-rank test p-value: {p_value_w}")
+results_df = pd.DataFrame({'metric': metric_names, 'T-test': p_value_t, 'Wilcox': p_value_w})
+
+print(results_df.to_string(index=False))
+
+# Define a significance level
+alpha = 0.05
+
+# Select metrics where either Wilcoxon signed-rank test or paired t-test p-value is below alpha
+selected_metrics = [metric for i, metric in enumerate(metric_names) if p_value_w[i] < alpha or p_value_t[i] < alpha]
+
+# Calculate the average performance scores for selected metrics
+average_scores = np.mean(df1_metrics[:, [i for i, metric in enumerate(metric_names) if metric in selected_metrics]], axis=1)
+
+# Report individual metrics and their averages
+for metric in selected_metrics:
+    print(f"{metric}: df1={df1_metrics[:, metric_names.index(metric)].mean():.4f}, df2={df2_metrics[:, metric_names.index(metric)].mean():.4f}")
