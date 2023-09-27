@@ -3,8 +3,6 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 from sklearn.model_selection import KFold, cross_val_score, learning_curve
-import matplotlib.pyplot as plt
-from joblib import dump
 from sklearn.model_selection import GridSearchCV
 import subject_list
 import re
@@ -94,6 +92,7 @@ for subject in subjects:
 # Save the DataFrame to a CSV file
 results_df.to_csv('/workspace/subject_predictions/models/params.csv', index=False)
 print('Saved')
+
 
 
 

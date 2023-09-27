@@ -1,6 +1,12 @@
 Improve full split and broad clean's if else statements, that is a lot of the same stuff copied and pasted
 
+chang the saved model to just X and y rather then train to allow more data
+
 Create script to remove all csv's for to_be_predicted ready for next years. 
+
+get removed subjects working with models
+    d_&_t_product_design
+    d_&_t_textiles_technology
 
 Add in additiional data when it arriaves
 Data will need to be encoded. Some to binary some to one hot encoder or other
@@ -28,3 +34,74 @@ Completed:
     Best hyperparameters for chemistry:
     {'bootstrap': False, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 50, 'random_state': 42}
     Best Score (Negative MSE): 0.7678747663441043
+
+    Best hyperparameters for computer_science:
+    {'bootstrap': False, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 0.9812678619350633
+
+    Best hyperparameters for drama:
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': 0.8, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 1.0029405257534316
+
+    Best hyperparameters for english_language:
+    {'bootstrap': False, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 0.7718004331393481
+
+    Best hyperparameters for english_literature:
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': 0.5, 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 0.8585674682701019
+
+    Best hyperparameters for food_technology:
+    {'bootstrap': False, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 0.8929529698601663
+
+    Best hyperparameters for french_language:
+    {'bootstrap': False, 'max_depth': 3, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 1.368847346522735
+
+    Best hyperparameters for geography:
+    {'bootstrap': True, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 1.0195456739779774
+
+    Best hyperparameters for german:
+    {'bootstrap': True, 'max_depth': 3, 'max_features': 'sqrt', 'max_samples': 0.8, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 1.1198911555555557
+
+    Best hyperparameters for history:
+    {'bootstrap': True, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': 0.8, 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 0.7873950820514333
+
+    Best hyperparameters for ict_btec:
+    {'bootstrap': False, 'max_depth': 3, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 10, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 1.9538948112867771#
+
+    Best hyperparameters for maths:
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 100, 'random_state': 42}
+    Best Score (Negative MSE): 0.3469783456718389
+
+    Best hyperparameters for music_studies:
+    {'bootstrap': True, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': 0.8, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 1.182981666666667
+
+    Best hyperparameters for music_tech_grade:
+    {'bootstrap': False, 'max_depth': 3, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 4, 'min_samples_split': 2, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 1.4201781906309043#
+    
+    Best hyperparameters for pearson_btec_sport:
+    {'bootstrap': False, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 0.41270860220005784
+
+    Best hyperparameters for physics:
+    {'bootstrap': True, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 2, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 0.7968247416743971
+
+    Best hyperparameters for product_design:
+    {'bootstrap': True, 'max_depth': 7, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 0.8449891666666668
+
+    Best hyperparameters for science_double:
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'log2', 'max_samples': None, 'min_samples_leaf': 2, 'min_samples_split': 5, 'n_estimators': 200, 'random_state': 42}
+    Best Score (Negative MSE): 0.3338139297176303
+
+    {'bootstrap': True, 'max_depth': 5, 'max_features': 'sqrt', 'max_samples': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'n_estimators': 50, 'random_state': 42}
+    Best Score (Negative MSE): 1.3722024016399186

@@ -159,6 +159,8 @@ for subject in subjects:
     plt.clf()
     print('Graph saved')
 
+    model.fit(X, y)
+
     # To save the created model
     joblib.dump(model, f'models/{subject}_{model_name}.pkl')
 
