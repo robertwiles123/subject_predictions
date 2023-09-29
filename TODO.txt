@@ -15,3 +15,7 @@ When new data obtained new models to be completed
 Examine data to obtain best model for each subject
 Make more explicite predictions based on these
 Compare prediction to real grades
+
+Create_teacher_scores not working with combined computer_science, nor Btec (ecnode it same as in model)
+
+Compare the scores of teacher to ridge
