@@ -14,7 +14,7 @@ model_name = subject_list.get_model_name(globals())
 
 
 # Define subject and year here
-subjects = subject_list.prediction_subjects()
+subjects = subject_list.removed_subjects()
 
 for subject in subjects:
     print(f'{subject} scores:')
@@ -162,6 +162,7 @@ for subject in subjects:
     plt.clf()
     print('Graph saved')
 
+    # refit full model
     model.fit(X, y)
 
     # To save the created model

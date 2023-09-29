@@ -48,3 +48,8 @@ def get_models(x, name = None):
     elif 'Ridge' in x:
         from sklearn.linear_model import Ridge
         return Ridge(alpha=1)   
+
+
+# for testing why they don't work
+def removed_subjects():
+    return ['d_&_t_product_design', 'd_&_t_textiles_technology']
