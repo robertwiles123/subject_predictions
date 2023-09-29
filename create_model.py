@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-# from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import Ridge
+# from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
@@ -14,7 +14,7 @@ model_name = subject_list.get_model_name(globals())
 
 
 # Define subject and year here
-subjects = subject_list.removed_subjects()
+subjects = subject_list.prediction_subjects()
 
 for subject in subjects:
     print(f'{subject} scores:')

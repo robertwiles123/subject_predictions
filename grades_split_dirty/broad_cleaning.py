@@ -65,8 +65,10 @@ for root, dirs, files in os.walk(folder_path):
                             continue
                 if subject == 'science_double':
                     df.drop(columns='science_double_2nd_mark_real', inplace=True)
+
                 #Save files
-                if year == '_model':
+                if year[1].lower() == 'm':
+                    year = '_model'
                     file_name = f'{subject}.csv'
                     output_directory = '/workspace/subject_predictions/model_csvs'
                     file_path = os.path.join(output_directory, file_name)
