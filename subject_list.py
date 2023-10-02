@@ -23,7 +23,9 @@ def get_model_name(x):
     elif 'LinearRegression' in x:
         return 'linear_regression'
     elif 'Ridge' in x:
-        return 'ridge'    
+        return 'ridge'  
+    elif 'xgb':
+        return 'xgb'  
 
 def get_models(x, name = None):
     # Check if RandomForestRegressor is imported, if yes, return 'random_forest', otherwise return 'linear_regression'
@@ -47,7 +49,10 @@ def get_models(x, name = None):
         return LinearRegression()
     elif 'Ridge' in x:
         from sklearn.linear_model import Ridge
-        return Ridge(alpha=1)   
+        return Ridge(alpha=1)  
+    elif 'xgb' in x:
+        import xgboost as xgb
+        return xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)
 
 
 # for testing why they don't work

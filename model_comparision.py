@@ -4,12 +4,13 @@ import pandas as pd
 
 # Load the data from the CSV files into DataFrames
 ridge_df = pd.read_csv('/workspaces/subject_predictions/ridge_scores/scores.csv')
-#linear_df = pd.read_csv('/workspaces/subject_predictions/linear_regression_scores/scores.csv')
-random_forest_df = pd.read_csv('/workspaces/subject_predictions/random_forest_scores/scores.csv')
+# linear_df = pd.read_csv('/workspaces/subject_predictions/linear_regression_scores/scores.csv')
+# random_forest_df = pd.read_csv('/workspaces/subject_predictions/random_forest_scores/scores.csv')
 # teacher_df = pd.read_csv('teacher_scores/scores.csv')
+xbg_df = pd.read_csv('xgb_scores/scores.csv')
 
 df1 = ridge_df
-df2 = random_forest_df
+df2 = xbg_df
 
 try:
     if df1.equals(teacher_df) or df2.equals(teacher_df):

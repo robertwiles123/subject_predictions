@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-from sklearn.linear_model import Ridge
+#from sklearn.linear_model import Ridge
 # from sklearn.ensemble import RandomForestRegressor
+import xgboost as xgb
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
@@ -62,7 +63,7 @@ for subject in subjects:
         y = y.values.ravel()
 
     # spit data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=27)
 
     # asign model
     if model_name =='random_forest':
@@ -158,7 +159,7 @@ for subject in subjects:
     plt.legend(loc='lower right')
     plt.ylim([0, 1])
     plt.show()
-    plt.savefig(f"{model_name}_scores/{subject}_{model}.png", )
+    plt.savefig(f"{model_name}_scores/{subject}_{model_name}.png", )
     plt.clf()
     print('Graph saved')
 
