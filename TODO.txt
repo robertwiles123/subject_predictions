@@ -2,7 +2,6 @@ Improve full split and broad clean's if else statements, that is a lot of the sa
 
 Comment code
 
-Create script to remove all csv's for to_be_predicted ready for next years. 
 
 Get full data for: 
     d_&_t_product_design

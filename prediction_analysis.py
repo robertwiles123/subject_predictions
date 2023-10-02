@@ -43,7 +43,6 @@ ax.legend()
 # Show the plot
 plt.tight_layout()
 plt.grid(True, linestyle='--', alpha=0.6)
-
 # Save the plot with the title and file extension
 plt.savefig(f'analysis_graphs/{model}_MSE_RMSE_by_subject.png')
 
