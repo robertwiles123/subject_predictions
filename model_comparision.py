@@ -6,15 +6,17 @@ import pandas as pd
 ridge_df = pd.read_csv('/workspaces/subject_predictions/ridge_scores/scores.csv')
 # linear_df = pd.read_csv('/workspaces/subject_predictions/linear_regression_scores/scores.csv')
 # random_forest_df = pd.read_csv('/workspaces/subject_predictions/random_forest_scores/scores.csv')
-# teacher_df = pd.read_csv('teacher_scores/scores.csv')
-xbg_df = pd.read_csv('xgb_scores/scores.csv')
+teacher_df = pd.read_csv('teacher_scores/scores.csv')
+# xbg_df = pd.read_csv('xgb_scores/scores.csv')
+# svr_df = pd.read_csv('svr_scores/scores.csv')
+# bridge_df = pd.read_csv('bridge_scores/scores.csv')
 
 df1 = ridge_df
-df2 = xbg_df
+df2 = teacher_df
 
 try:
     if df1.equals(teacher_df) or df2.equals(teacher_df):
-        metric_names = ['MSE', 'RMSE', 'R2']
+        metric_names = ['MSE', 'RMSE', 'R2', 'Mean Absolute Error']
 except NameError:
     metric_names = ['MSE', 'RMSE', 'R2', 'Mean cross validation', 'Mean Absolute Error']
 

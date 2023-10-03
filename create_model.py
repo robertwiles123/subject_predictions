@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-#from sklearn.linear_model import Ridge
+# from sklearn.linear_model import BayesianRidge
 # from sklearn.ensemble import RandomForestRegressor
-import xgboost as xgb
+# import xgboost as xgb
+from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import matplotlib.pyplot as plt
 import re
@@ -11,7 +12,10 @@ import joblib
 import subject_list
 
 # change model that is being used. Also update line 52
-model_name = subject_list.get_model_name(globals())
+if 'RandomForestRegresssor' in globals():
+    model = subject_list.get_models(x=globals(), name=subject)
+else:
+    model_name, model = subject_list.get_models(globals())
 
 
 # Define subject and year here
@@ -65,14 +69,6 @@ for subject in subjects:
     # spit data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=27)
 
-    # asign model
-    if model_name =='random_forest':
-        model = subject_list.get_models(x=globals(), name=subject)
-    else:
-        model = subject_list.get_models(globals())
-    for column in X.columns:
-        if 'M1' in X[column].values:
-            print(f"'M1' found in column: {column}")
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
 

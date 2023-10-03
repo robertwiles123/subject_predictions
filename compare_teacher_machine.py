@@ -35,4 +35,3 @@ for subject in subjects:
 
     mse_teacher = ((teacher_prediction[teacher_filtered] - real_grades['real_grades']) ** 2).mean()
     print("Mean Squared Error (MSE) prediction:", mse_teacher)
-   

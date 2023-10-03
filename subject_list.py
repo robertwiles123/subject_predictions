@@ -15,23 +15,11 @@ d_&_t_textiles_technology
 def grades_mapped():
     return {'0': 0, 'P1': 1, 'P2': 2, 'M1': 3, 'M2': 4, 'D1': 5, 'D2': 6, 'D*1': 7, 'D*2': 8}
 
-
-def get_model_name(x):
-    # Check if RandomForestRegressor is imported, if yes, return 'random_forest', otherwise return 'linear_regression'
-    if 'RandomForestRegressor' in x:
-        return 'random_forest'
-    elif 'LinearRegression' in x:
-        return 'linear_regression'
-    elif 'Ridge' in x:
-        return 'ridge'  
-    elif 'xgb':
-        return 'xgb'  
-
 def get_models(x, name = None):
     # Check if RandomForestRegressor is imported, if yes, return 'random_forest', otherwise return 'linear_regression'
     if 'RandomForestRegressor' in x:
         from sklearn.ensemble import RandomForestRegressor
-        df = pd.read_csv('/workspace/subject_predictions/models/params.csv')
+        df = pd.read_csv('/workspaces/subject_predictions/models/params.csv')
         hyperparameters = {}
         subject_row = df[df['subject'] == name]
         if subject_row.empty or subject_row.isnull().values.any():
@@ -43,17 +31,22 @@ def get_models(x, name = None):
                 value = subject_row[column].values[0]
                 if pd.notna(value) and column != 'subject':
                     hyperparameters[column] = value
-        return RandomForestRegressor(**hyperparameters)
+        return 'random_forest', RandomForestRegressor(**hyperparameters)
     elif 'LinearRegression' in x:
         from sklearn.linear_model import LinearRegression
-        return LinearRegression()
+        return 'linear_regresion', LinearRegression()
     elif 'Ridge' in x:
         from sklearn.linear_model import Ridge
-        return Ridge(alpha=1)  
+        return 'ridge', Ridge(alpha=1)  
     elif 'xgb' in x:
         import xgboost as xgb
-        return xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)
-
+        return 'xbg', xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)
+    elif 'SVR' in x:
+        from sklearn.svm import SVR
+        return 'svr', SVR(kernel='linear')  # You can choose different kernels: 'linear', 'poly', 'rbf', etc.
+    elif 'BayesianRidge' in x:
+        from sklearn.linear_model import BayesianRidge
+        return 'bridge', BayesianRidge()
 
 # for testing why they don't work
 def removed_subjects():

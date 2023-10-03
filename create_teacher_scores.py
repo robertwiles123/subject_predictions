@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 from math import sqrt
 import re
 import subject_list
@@ -41,13 +41,17 @@ for subject in subjects:
 
             # Calculate R-squared (R2)
             r2 = r2_score(df[real_column], df[ap2_column])
+
+            mae = mean_absolute_error(df[real_column], df[ap2_column])
+
         except ValueError:
             continue
 
         # Print the results
+        print(f"Mean absolue error (MAE) for {subject}: {mae}")
         print(f"Mean Squared Error (MSE) for {subject}: {mse}")
         print(f"Root Mean Squared Error (RMSE) for {subject}: {rmse}")
-        print(f"R-squared (R2) for {subject}: {r2}")#
+        print(f"R-squared (R2) for {subject}: {r2}")
         print()
         print()
         print()
@@ -58,7 +62,7 @@ for subject in subjects:
         # Check if the subject already exists in "scores.csv"
         if subject in scores_df['subject'].values:
             # Update the existing row with the new values
-            scores_df.loc[scores_df['subject'] == subject, ['MSE', 'RMSE', 'R2']] = [mse, rmse, r2]
+            scores_df.loc[scores_df['subject'] == subject, ['MSE', 'RMSE', 'R2', 'Mean Absolute Error']] = [mse, rmse, r2, mae]
         else:
             # Add a new row for the subject
             new_row = {'subject': subject, 'MSE': mse, 'RMSE': rmse, 'R2': r2}
