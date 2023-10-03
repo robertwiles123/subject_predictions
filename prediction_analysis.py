@@ -38,7 +38,9 @@ ax.set_xlabel('Subjects')
 ax.set_ylabel('Error Values')
 ax.set_title(f'{model.capitalize()} MSE and RMSE by Subject')
 ax.legend()
-
+# line to show average MSE
+plt.axhline(y=1.5414, color='blue', linestyle='--', label='Teacher MSE')
+plt.axhline(y=1.1838, color='red', linestyle='--', label='Teacher RMSE')
 
 # Show the plot
 plt.tight_layout()
@@ -71,6 +73,8 @@ ax.set_xticklabels(subjects, rotation=45, ha='right')
 ax.set_xlabel('Subjects')
 ax.set_ylabel('R2 Score')
 ax.set_title(f'{model.capitalize()} R2 Score by Subject')
+
+plt.axhline(y=0.6636, color='blue', linestyle='--', label='Teacher R2')
 
 # Adjust the layout
 plt.tight_layout()

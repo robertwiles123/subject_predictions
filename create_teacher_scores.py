@@ -65,7 +65,7 @@ for subject in subjects:
             scores_df.loc[scores_df['subject'] == subject, ['MSE', 'RMSE', 'R2', 'Mean Absolute Error']] = [mse, rmse, r2, mae]
         else:
             # Add a new row for the subject
-            new_row = {'subject': subject, 'MSE': mse, 'RMSE': rmse, 'R2': r2}
+            new_row = {'subject': subject, 'MSE': mse, 'RMSE': rmse, 'R2': r2, 'Mean Absolute Error': mae}
             scores_df = pd.concat([scores_df, pd.DataFrame([new_row])], ignore_index=True)
 
         # Save the updated DataFrame back to "scores.csv"
