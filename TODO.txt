@@ -2,8 +2,6 @@ Improve full split and broad clean's if else statements, that is a lot of the sa
 
 Comment code
 
-Include MAE for teacher predictions, although it is a less useful metric for predicting grades, will help to explain to stakeholders
-
 update compare model so that it is easier to use and grow something like:
     model names = ['x', 'y']
     for name in model_names:

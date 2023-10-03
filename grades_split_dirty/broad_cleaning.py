@@ -1,43 +1,48 @@
-# All but science double are giving the right amount out. Science double is missing any end 
+# Import necessary libraries
 import os
 import pandas as pd
 import numpy as np
 import sys
-# import folder needed for following imports
+
+# Add a custom folder to the Python path for additional imports
 sys.path.append('/workspaces/subject_predictions') 
 import subject_list
 
-# will need to update so loads in multiple models if model selected and join them together
+# Prompt the user for input regarding the year of prediction or model
 year = input('Input year of prediction or model')
 year = '_'+year
 
-# Define a list of subjects
+# Define a list of subjects using a function from the subject_list module
 subjects = subject_list.full_subjects()
 
 # Specify the folder path where the CSV files are located
 folder_path = "/workspaces/subject_predictions/grades_split_dirty"
 
-
-# Iterate through CSV files in the folder
+# Iterate through CSV files in the specified folder
 for root, dirs, files in os.walk(folder_path):
     for file in files:
         if file.endswith(".csv") and year in file:
             # Extract the subject name from the file name
-            subject = file.split(year)[0]           
+            subject = file.split(year)[0]
+
             # Check if the subject is in the list of subjects
             if subject in subjects:
                 # Read the CSV file
                 csv_path = os.path.join(root, file)
                 df = pd.read_csv(csv_path)
+                
+                # Define a regex pattern based on the subject name
                 regex_pattern = f'^{subject}.*_ap[12]$'
 
-                # Filter the DataFrame based on the regex pattern
+                # Filter the DataFrame columns based on the regex pattern
                 filtered_columns = df.filter(regex=regex_pattern)
 
+                # Loop through the filtered columns
                 for col in filtered_columns.columns:
                     target_col_name = col.replace('ap1', 'ap2').replace('ap2', 'ap1')
 
                     try:
+                        # Attempt to cast the target column to the same data type as the current column
                         df[target_col_name] = df[target_col_name].astype(df[col].dtype)
                     except ValueError:
                         # Handle the ValueError by replacing 'U' with 0
@@ -45,17 +50,19 @@ for root, dirs, files in os.walk(folder_path):
 
                     # Use np.where to fill NaN values based on a condition
                     df[col] = np.where(df[col].notna(), df[col], df[target_col_name])
+
                 # Remove rows with any remaining NaN values
                 df.dropna(inplace=True)
+
                 # Replace 'U' with '0' in all columns except 'gender_ap2'
                 columns_to_replace = df.columns.difference(['gender_ap2', 'upn'])
                 try:
                     df[columns_to_replace] = df[columns_to_replace].replace(['U','u', 'X', 'x'], '0')
                     df[columns_to_replace] = df[columns_to_replace].astype(int)
-                    # Convert non-'gender_ap2' columns to integers
                 except ValueError:
                     pass
 
+                # Convert non-'gender_ap2' columns to integers
                 for column in df.columns:
                     if column != 'upn':
                         try:
@@ -63,10 +70,12 @@ for root, dirs, files in os.walk(folder_path):
                         except ValueError:
                             # If the conversion to int raises a ValueError, skip to the next column
                             continue
+
+                # If the subject is 'science_double', drop columns with '2nd' in their names
                 if subject == 'science_double':
                     df.drop(columns=df.columns[df.columns.str.contains('2nd')], inplace=True)
 
-                #Save files
+                # Save the processed DataFrame to CSV files in different directories based on the year
                 if year[1].lower() == 'm':
                     year = '_model'
                     file_name = f'{subject}.csv'
@@ -82,6 +91,3 @@ for root, dirs, files in os.walk(folder_path):
                     print(f'{subject} saved')
                 else:
                     print(f'{subject} not saved')
-
-                
-

@@ -34,7 +34,7 @@ def get_models(x, name = None):
         return 'random_forest', RandomForestRegressor(**hyperparameters)
     elif 'LinearRegression' in x:
         from sklearn.linear_model import LinearRegression
-        return 'linear_regresion', LinearRegression()
+        return 'linear_regression', LinearRegression()
     elif 'Ridge' in x:
         from sklearn.linear_model import Ridge
         return 'ridge', Ridge(alpha=1)  
