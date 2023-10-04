@@ -1,9 +1,11 @@
 # Import necessary libraries
 import pandas as pd
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, confusion_matrix
 from math import sqrt
 import re
 import subject_list  # Assuming this is a custom module containing subject-related functions
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Get a list of subjects from the subject_list module
 subjects = subject_list.prediction_subjects()
@@ -46,6 +48,15 @@ for subject in subjects:
 
             # Calculate Mean Absolute Error (MAE)
             mae = mean_absolute_error(df[real_column], df[ap2_column])
+
+            conf_matrix = confusion_matrix(df[real_column], df[ap2_column])
+
+            sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues")
+            plt.xlabel("Predicted Labels")
+            plt.ylabel("True Labels")
+            plt.title(f"Confusion Matrix for {subject}")
+            plt.savefig(f'teacher_scores/{subject} teacher.png')
+            plt.clf()
 
         except ValueError:
             continue

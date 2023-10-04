@@ -5,8 +5,9 @@ from sklearn.linear_model import Ridge
 # from sklearn.ensemble import RandomForestRegressor
 # import xgboost as xgb
 # from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, confusion_matrix
 import matplotlib.pyplot as plt
+import seaborn as sns
 import re
 import joblib
 import subject_list
@@ -150,7 +151,6 @@ for subject in subjects:
     plt.ylim([0, 1])
 
     # Show the learning curve graph
-    plt.show()
 
     # Save the learning curve graph as an image
     plt.savefig(f"{model_name}_scores/{subject}_{model_name}.png")
@@ -164,5 +164,13 @@ for subject in subjects:
     joblib.dump(model, f'models/{subject}_{model_name}.pkl')
 
     print('Model saved')
+    conf_matrix = confusion_matrix(y_test, y_pred_true)
+
+    sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues")
+    plt.xlabel("Predicted Labels")
+    plt.ylabel("True Labels")
+    plt.title(f"Confusion Matrix for {subject}")
+    plt.savefig(f'{model_name}_scores/{subject}_confusion.png')
+    plt.clf()
     print()
     print()
