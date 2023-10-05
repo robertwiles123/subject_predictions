@@ -24,3 +24,5 @@ Compare prediction to real grades
 Create_teacher_scores not working with combined computer_science, nor Btec (ecnode it same as in model)
 
 Compare the scores of teacher to ridge
+
+Create a predition of students for intervention. Both for model, teacher and who actually needed it.

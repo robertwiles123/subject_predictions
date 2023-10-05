@@ -1,10 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-from sklearn.linear_model import Ridge
 #from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
-import matplotlib.pyplot as plt
 import re
 import joblib
 import subject_list
@@ -31,9 +27,10 @@ for topic in subjects:
 
     for col in prediction.columns:
         if 'btec' in subject or 'tech_' in subject:
-            grade_mapping = subject_list.grades_mapped()
-            if re.match(rf'{subject}.*_(ap1|ap2)', col):
-                encoded_columns[col] = prediction[col].map(grade_mapping)
+            for col in prediction.columns:
+                grade_mapping = subject_list.grades_mapped()
+                if re.match(rf'{subject}.*_(ap1|ap2)', col):
+                    encoded_columns[col] = prediction[col].map(grade_mapping)
         if col == 'gender_ap2':
             # Use pd.get_dummies for the gender column
             gender_encoded = pd.get_dummies(prediction[col], prefix=col)
