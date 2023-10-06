@@ -172,5 +172,24 @@ for subject in subjects:
     plt.title(f"Confusion Matrix for {subject}")
     plt.savefig(f'{model_name}_scores/{subject}_confusion.png')
     plt.clf()
+
+    # Get the coefficients of the Ridge model
+    coefficients = model.coef_[0]
+
+    # Create a DataFrame to store helping variables and their coefficients
+    variable_coeff_df = pd.DataFrame({'Variable': X, 'Coefficient': coefficients})
+
+    # Sort the DataFrame by the absolute values of coefficients in descending order
+    variable_coeff_df = variable_coeff_df.reindex(variable_coeff_df['Coefficient'].abs().sort_values(ascending=False).index)
+
+    # Separate helping and not helping variables based on the threshold (e.g., 1e-10)
+    helping_variables = variable_coeff_df[variable_coeff_df['Coefficient'].abs() >= 1e-10]
+    not_helping_variables = variable_coeff_df[variable_coeff_df['Coefficient'].abs() < 1e-10]
+
+    # Print the sorted DataFrame of helping variables
+    print(f"Helping Variables for {subject} (sorted by coefficient magnitude):")
+    print(helping_variables)
+    print("\nNot Helping Variables (coefficients close to zero):")
+    print(not_helping_variables)
     print()
     print()
