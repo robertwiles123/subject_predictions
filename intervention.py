@@ -97,3 +97,14 @@ for subject in subjects:
     # Print the merged DataFrame
     merged_df.to_csv(f'intervention/{subject}.csv')
     print('csv saved')
+
+    merged_df['AverageDifference'] = np.mean(merged_df[['model_difference', 'teacher_difference']], axis=1)
+
+    final_list = (merged_df.assign(AverageDifference=lambda x: (x['model_difference'] + x['teacher_difference']) / 2)
+              .loc[(merged_df['model_difference'] < 0) & (merged_df['teacher_difference'] < 0)]
+              .sort_values(by='AverageDifference', ascending=True)
+              ['upn'])
+    
+
+    final_list.to_excel(f'intervention/{subject}_auto.xlsx')
+    print('excel saved')
