@@ -5,7 +5,7 @@ from sklearn.linear_model import Ridge
 # from sklearn.ensemble import RandomForestRegressor
 # import xgboost as xgb
 # from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, confusion_matrix
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, confusion_matrix, accuracy_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 import re
@@ -21,6 +21,7 @@ else:
 
 subjects = subject_list.prediction_subjects()
 
+results = []
 # Iterate over each subject
 for subject in subjects:
     print(f'{subject} scores:')
@@ -90,7 +91,7 @@ for subject in subjects:
     scores = cross_val_score(model, X, y, cv=kf, scoring='r2')
     scores.sort()
     cross_val_mean = np.mean(scores)
-    mae = mean_absolute_error(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred_true)
 
     print(f"Mean Squared Error (MSE): {mse:.2f}")
     print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
@@ -133,6 +134,36 @@ for subject in subjects:
 
     print('Scores updated in scores.csv')
 
+    # to help with analysis using ordinal testing
+    true_grades = y_test
+    true_grades = np.array(true_grades).astype(int)
+    model_predictions = y_pred_true
+    model_predictions = np.array(model_predictions).astype(int)
+    teacher_predictions = X_test.filter(regex=f'{subject}.*_ap2').values
+    
+    # Calculate accuracy for model predictions
+    model_accuracy = accuracy_score(true_grades, model_predictions)
+
+    # Calculate accuracy for teacher predictions
+    teacher_accuracy = accuracy_score(true_grades, teacher_predictions)
+
+    # Count predictions off by one or two or more
+    off_by_one_model = sum(abs(true - pred) == 1 for true, pred in zip(true_grades, model_predictions))
+    off_by_more_than_two_model = sum(abs(true - pred) > 2 for true, pred in zip(true_grades, model_predictions))
+
+    off_by_one_teacher = sum(abs(true - pred) == 1 for true, pred in zip(true_grades, teacher_predictions))
+    off_by_more_than_two_teacher = sum(abs(true - pred) > 2 for true, pred in zip(true_grades, teacher_predictions))
+
+    results.append({
+        "Subject": subject,
+        "Model_Accuracy": model_accuracy,
+        "Teacher_Accuracy": teacher_accuracy,
+        "Model_Off_One": off_by_one_model,
+        "Model_Off_2+": off_by_more_than_two_model,
+        "Teacher_Off_One": off_by_one_teacher,
+        "Teacher_Off_2+": off_by_more_than_two_teacher
+    })
+
     # Create a learning curve graph
     train_sizes, train_scores, test_scores = learning_curve(model, X, y, train_sizes=np.linspace(0.1, 1.0, 10), cv=5)
     train_mean = np.mean(train_scores, axis=1)
@@ -172,7 +203,10 @@ for subject in subjects:
     plt.title(f"Confusion Matrix for {subject}")
     plt.savefig(f'{model_name}_scores/{subject}_confusion.png')
     plt.clf()
-
+    
+    print()
+    print()
+    """
     # Get the coefficients of the Ridge model
     coefficients = model.coef_[0]
 
@@ -191,5 +225,9 @@ for subject in subjects:
     print(helping_variables)
     print("\nNot Helping Variables (coefficients close to zero):")
     print(not_helping_variables)
-    print()
-    print()
+    """
+
+# Save the DataFrame to a CSV file
+results_df = pd.DataFrame(results)
+results_df.to_csv(f"accuracy_scores/{model_name}_accuracy.csv", index=False)
+print('Accuracy csv saved')

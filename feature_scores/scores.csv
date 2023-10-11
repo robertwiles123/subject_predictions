@@ -1,0 +1,22 @@
+subject,MSE,RMSE,R2,Mean Absolute Error
+art_&_design,1.825,1.351,0.800,0.893
+biology,0.863,0.929,0.654,0.588
+business_studies,2.753,1.659,0.262,1.272
+chemistry,0.925,0.962,0.762,0.675
+computer_science,3.167,1.780,0.533,1.444
+drama,3.098,1.760,0.599,1.492
+english_language,1.199,1.095,0.646,0.792
+english_literature,1.062,1.031,0.725,0.746
+food_technology,1.429,1.195,0.699,0.615
+french_language,1.407,1.186,0.767,0.797
+geography,2.248,1.499,0.557,1.099
+german,0.864,0.929,0.566,0.315
+history,1.636,1.279,0.679,0.955
+ict_btec,0.176,0.420,0.751,0.153
+maths,0.754,0.868,0.837,0.552
+music_studies,1.057,1.028,0.665,0.354
+music_tech_grade,0.447,0.669,0.768,0.197
+pearson_btec_sport,0.718,0.847,0.824,0.422
+physics,1.000,1.000,0.724,0.775
+science_double,1.151,1.073,0.832,0.544
+spanish,3.435,1.854,0.198,1.339
