@@ -37,7 +37,19 @@ def get_models(x, name = None):
         return 'linear_regression', LinearRegression()
     elif 'Ridge' in x:
         from sklearn.linear_model import Ridge
-        return 'ridge', Ridge(alpha=1)  
+        df = pd.read_csv('/workspaces/subject_predictions/models/ridge_params.csv')
+        hyperparameters = {}
+        subject_row = df[df['subject'] == name]
+        if subject_row.empty or subject_row.isnull().values.any():
+            print(f"Hyperparameters for subject '{name}' not found in the CSV.")
+            model = Ridge(alpha=1)
+        else:
+            # Extract hyperparameters as a dictionary
+            for column in df.columns:
+                value = subject_row[column].values[0]
+                if pd.notna(value) and column != 'subject':
+                    hyperparameters[column] = value
+        return 'ridge', Ridge(**hyperparameters)  
     elif 'xgb' in x:
         import xgboost as xgb
         return 'xbg', xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)

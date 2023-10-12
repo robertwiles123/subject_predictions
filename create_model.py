@@ -12,11 +12,6 @@ import re
 import joblib
 import subject_list
 
-# Code to assign model and name of model based on inported model
-if 'RandomForestRegresssor' in globals():
-    model_name, model = subject_list.get_models(x=globals(), name=subject)
-else:
-    model_name, model = subject_list.get_models(globals())
 
 
 subjects = subject_list.prediction_subjects()
@@ -24,6 +19,12 @@ subjects = subject_list.prediction_subjects()
 results = []
 # Iterate over each subject
 for subject in subjects:
+    # Code to assign model and name of model based on inported model
+    if 'RandomForestRegresssor' in globals():
+        model_name, model = subject_list.get_models(x=globals(), name=subject)
+    else:
+        model_name, model = subject_list.get_models(globals())
+
     print(f'{subject} scores:')
 
     # Regular expression pattern for matching column names related to the subject
