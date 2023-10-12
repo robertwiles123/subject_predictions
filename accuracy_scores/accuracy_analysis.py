@@ -1,6 +1,7 @@
 import pandas as pd
 from scipy import stats
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load the CSV data into a Pandas DataFrame
 data = pd.read_csv('ridge_accuracy.csv')
@@ -82,3 +83,21 @@ plt.tight_layout()
 
 plt.savefig('off_by_two.png')
 plt.clf()
+
+
+# Create a KDE plot for Model_Accuracy with a smaller bandwidth
+sns.kdeplot(data['Model_Accuracy'], label='Model Accuracy', bw=0.5)
+
+# Create a KDE plot for Teacher_Accuracy with a smaller bandwidth
+sns.kdeplot(data['Teacher_Accuracy'], label='Teacher Accuracy', bw=0.5)
+
+plt.xlim(0, 1)
+
+# Add labels and a legend
+plt.xlabel('Accuracy Scores')
+plt.ylabel('Density')
+plt.title('Distribution of Ridge and Teacher accuracy')
+plt.legend()
+
+plt.savefig('hist_accuracy.png')
+plt.clf

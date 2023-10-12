@@ -16,7 +16,6 @@ def grades_mapped():
     return {'0': 0, 'P1': 1, 'P2': 2, 'M1': 3, 'M2': 4, 'D1': 5, 'D2': 6, 'D*1': 7, 'D*2': 8}
 
 def get_models(x, name = None):
-    # Check if RandomForestRegressor is imported, if yes, return 'random_forest', otherwise return 'linear_regression'
     if 'RandomForestRegressor' in x:
         from sklearn.ensemble import RandomForestRegressor
         df = pd.read_csv('/workspaces/subject_predictions/models/params.csv')
