@@ -98,6 +98,11 @@ for subject in subjects:
     print('Cross-validation scores:', scores)
     print(f'Mean cross-validation scores: {cross_val_mean}')
 
+    mae_unrounded = mean_absolute_error(y_test, y_pred)
+    mse_unrounded = mean_squared_error(y_test, y_pred)
+    rmse_unrounded = mean_squared_error(y_test, y_pred, squared=False)
+    r2_unrounded = r2_score(y_test, y_pred)
+
     # Dictionary to save scores
     scores_dict = {
         'subject': subject,
@@ -106,7 +111,11 @@ for subject in subjects:
         'R2': r2,
         'Mean Absolute Error': mae,
         'Cross-validation': scores,
-        'Mean cross-validation': cross_val_mean
+        'Mean cross-validation': cross_val_mean,
+        'mae_unrounded': mae_unrounded,
+        'mse_unrounded': mse_unrounded,
+        'rmse_unrounded': rmse_unrounded,
+        'r2_unrounded': r2_unrounded,
     }
 
     # Load an existing scores CSV file
@@ -153,7 +162,7 @@ for subject in subjects:
     off_by_more_than_two_teacher = sum(abs(true - pred) > 2 for true, pred in zip(true_grades, teacher_predictions))
 
     results.append({
-        "Subject": subject,
+        "subject": subject,
         "Model_Accuracy": model_accuracy,
         "Teacher_Accuracy": teacher_accuracy,
         "Model_Off_One": off_by_one_model,

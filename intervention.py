@@ -101,7 +101,7 @@ for subject in subjects:
     merged_df['AverageDifference'] = np.mean(merged_df[['model_difference', 'teacher_difference']], axis=1)
 
     final_list = (merged_df.assign(AverageDifference=lambda x: (x['model_difference'] + x['teacher_difference']) / 2)
-              .loc[(merged_df['model_difference'] < 0) & (merged_df['teacher_difference'] < 0)]
+              .loc[(merged_df['model_difference'] <= 0) & (merged_df['teacher_difference'] <= 0)]
               .sort_values(by='AverageDifference', ascending=True)
               ['upn'])
     

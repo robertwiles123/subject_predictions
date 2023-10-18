@@ -14,7 +14,7 @@ teacher_df = pd.read_csv('teacher_scores/scores.csv')
 
 df1 = ridge_df
 df2 = teacher_df
-
+metric_names = []
 try:
     if df1.equals(teacher_df) or df2.equals(teacher_df):
         metric_names = ['MSE', 'RMSE', 'R2', 'Mean Absolute Error']
@@ -25,9 +25,16 @@ except NameError:
     except NameError:
             metric_names = ['MSE', 'RMSE', 'R2', 'Mean cross validation', 'Mean Absolute Error']
 
-# Extract the performance metrics as NumPy arrays
-df1_metrics = df1[metric_names].values
-df2_metrics = df2[metric_names].values
+if len(metric_names) == 0:
+    metric_names = ['MSE', 'RMSE', 'R2', 'Mean Absolute Error']
+
+if df1.equals(df2):
+    df1_metrics = df1[metric_names].values
+    df2_metrics = df2[['mae_unrounded', 'mse_unrounded', 'rmse_unrounded', 'r2_unrounded']].values
+else:
+    # Extract the performance metrics as NumPy arrays
+    df1_metrics = df1[metric_names].values
+    df2_metrics = df2[metric_names].values
 
 # Calculate the differences in performance metrics
 differences = df1_metrics - df2_metrics
