@@ -4,7 +4,7 @@ def full_subjects():
     return ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science', 'd_&_t_product_design', 'd_&_t_textiles_technology', 'drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'ict_btec', 'maths', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'physics', 'product_design', 'science_double', 'spanish']
 
 def prediction_subjects():
-    return ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science','drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'ict_btec', 'maths', 'music_studies', 'music_tech_grade', 'pearson_btec_sport', 'physics', 'science_double', 'spanish']
+    return ['art_&_design', 'biology', 'business_studies', 'chemistry', 'computer_science','drama', 'english_language', 'english_literature', 'food_technology', 'french_language', 'geography', 'german', 'history', 'ict_btec', 'maths', 'music_studies',  'music_tech_grade', 'pearson_btec_sport', 'physics', 'science_double', 'spanish']
 
 """
 Removed subjects
@@ -37,6 +37,7 @@ def get_models(x, name = None):
     elif 'Ridge' in x:
         from sklearn.linear_model import Ridge
         df = pd.read_csv('/workspaces/subject_predictions/models/ridge_params.csv')
+        print(name)
         hyperparameters = {}
         subject_row = df[df['subject'] == name]
         if subject_row.empty or subject_row.isnull().values.any():
@@ -51,7 +52,7 @@ def get_models(x, name = None):
         return 'ridge', Ridge(**hyperparameters)  
     elif 'xgb' in x:
         import xgboost as xgb
-        return 'xbg', xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)
+        return 'xgb', xgb.XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3)
     elif 'SVR' in x:
         from sklearn.svm import SVR
         return 'svr', SVR(kernel='linear')  # You can choose different kernels: 'linear', 'poly', 'rbf', etc.

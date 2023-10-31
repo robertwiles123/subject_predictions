@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import r2_score, mean_squared_error
-from sklearn.model_selection import KFold, cross_val_score, learning_curve
+from sklearn.metrics import make_scorer, mean_squared_error
+
 from sklearn.model_selection import GridSearchCV
 import subject_list
 import re
@@ -14,6 +14,13 @@ results_df = pd.DataFrame(columns=['subject', 'max_depth', 'n_estimators', 'min_
            'min_samples_leaf', 'max_features', 'max_samples', 'bootstrap',
            'random_state'])
 
+def rmse_scorer(y_true, y_pred):
+    mse = mean_squared_error(y_true, y_pred)
+    return np.sqrt(mse)
+
+# Create a scorer from the custom RMSE scorer
+rmse_scorer = make_scorer(rmse_scorer, greater_is_better=False)
+
 for subject in subjects:
     # regex for none standard grade endings
     regex_pattern = re.compile(rf'{subject}.*_real')
@@ -22,7 +29,7 @@ for subject in subjects:
     subject_model = subject + '.csv'
     predictor = pd.read_csv('model_csvs/' + subject_model)
 
-    predictor.drop(columns=['upn'], inplace=True)
+    predictor.drop(columns=['upn', 'eal_bool', 'pp_bool', 'fsm_bool', 'pp_bool', 'sen_bool'], inplace=True)
 
     # Create an empty DataFrame to store the encoded columns
     encoded_columns = pd.DataFrame()
@@ -62,7 +69,7 @@ for subject in subjects:
         'n_estimators': [50, 100, 200],
         'min_samples_split': [2, 5, 10],
         'min_samples_leaf': [1, 2, 4],
-        'max_features': ['sqrt', 'log2'],
+        'max_features': ['sqrt'],
         'max_samples': [None, 0.5, 0.8],
         'bootstrap': [True, False],
         'random_state': [42]
@@ -73,13 +80,13 @@ for subject in subjects:
     rf_model = RandomForestRegressor()
 
    # Perform grid search with cross-validation
-    grid_search = GridSearchCV(rf_model, param_grid, cv=5, scoring='neg_mean_squared_error')
+    grid_search = GridSearchCV(rf_model, param_grid, cv=5, scoring=rmse_scorer)
     grid_search.fit(X, y)
 
     # Print the best hyperparameters and corresponding score
     print(f"Best hyperparameters for {subject}:")
     print(grid_search.best_params_)
-    print("Best Score (Negative MSE):", -grid_search.best_score_)
+    print("Best Score (Negative RMSE):", -grid_search.best_score_)
 
     # Append the results to the DataFrame
     best_params = grid_search.best_params_
@@ -90,7 +97,7 @@ for subject in subjects:
     results_df = pd.concat([results_df, df_to_add], ignore_index=True)
 
 # Save the DataFrame to a CSV file
-results_df.to_csv('/workspace/subject_predictions/models/params.csv', index=False)
+results_df.to_csv('/workspaces/subject_predictions/models/params.csv', index=False)
 print('Saved')
 
 

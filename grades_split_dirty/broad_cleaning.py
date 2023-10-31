@@ -10,7 +10,7 @@ import subject_list
 
 csv_files = [file for file in os.listdir() if file.endswith(".csv")]
 
-years = ['2122']
+years = ['2122','2223']
 
 # Define a list of subjects using a function from the subject_list module
 subjects = subject_list.full_subjects()
@@ -24,17 +24,31 @@ combined_dataframes = {}
 for subject in subjects:
     for year in years:
         key = f"{subject}_{year}.csv"
-        # Check if the key exists in the dictionary
-        if key in csv_files:
-            df = pd.read_csv(key)
+        # Construct the full file path
+        file_path = os.path.join(folder_path, key)
+        # Check if the file exists before reading it
+        if os.path.exists(file_path):
+            df = pd.read_csv(file_path)
+            if subject == 'ict_btec' and year == '2223':
+                df['ict_btec_ap1'] = df['ict_btec']
+                df['ict_btec_ap2'] = df['ict_btec']
+                df.drop(columns=['ict_btec'], inplace=True)
             if subject not in combined_dataframes:
                 combined_dataframes[subject] = df
             else:
+            # If it's in the dictionary, check for missing columns
+                missing_columns = df.columns.difference(combined_dataframes[subject].columns)
+                
+                # Add missing columns with 0 values to the existing DataFrame
+                for col in missing_columns:
+                    combined_dataframes[subject][col] = '0'
+
+                # Concatenate the DataFrames
                 combined_dataframes[subject] = pd.concat([combined_dataframes[subject], df], ignore_index=True)
+                
 
 for subject, df in combined_dataframes.items():
     regex_pattern = f'^{subject}.*_ap[12]$'
-
     # Filter the DataFrame columns based on the regex pattern
     filtered_columns = df.filter(regex=regex_pattern)
 
@@ -71,36 +85,52 @@ for subject, df in combined_dataframes.items():
             except ValueError:
                 # If the conversion to int raises a ValueError, skip to the next column
                 continue
+
     # Define a custom function to apply the condition
     def map_to_boolean(value):
-        if pd.isna(value) or value.lower() == 'n' or value.lower() == 'f':
-            return False
-        elif value.lower() == 't':
-                return True
+        if value == 0:
+            value = '0'
+        if pd.isna(value) or value.lower() in ['n', '0']:
+            return 0
+        elif value.lower() in ['f', 'k', 'e']:
+            return 1
+        elif value.lower() in ['t']:
+            return 2
+        
         else:
-            print(f'{suubject} {value} not value')
+            print(f'{subject} {value} not value')
 
     # Apply the custom function to the 'SEN' column and create a new 'SEN_bool' column
-    df['sen_bool'] = df['sen'].apply(map_to_boolean)
-    df.drop('SEN', axis=1, inplace=True)
+    try:
+        df['sen_bool'] = df['sen_real'].apply(map_to_boolean)
+        df.drop('sen_real', axis=1, inplace=True)
 
-    df['p_bool'] = df['pp'].apply(map_to_boolean)
-    df.drop('PP', axis=1, inplace=True
-    
-    df['fsm_bool'] = df['fsm'].apply(map_to_boolean_sen)
-    df.drop('', axis=1, inplace=True
-            
+        df['pp_bool'] = df['pp_real'].apply(map_to_boolean)
+        df.drop('pp_real', axis=1, inplace=True)
+        
+        df['fsm_bool'] = df['fsm_real'].apply(map_to_boolean)
+        df.drop('fsm_real', axis=1, inplace=True)
+
+        df['eal_bool'] = df['eal_real'].apply(map_to_boolean)
+        df.drop('eal_real', axis=1, inplace=True)
+
+        columns_to_convert = ['sen_bool', 'pp_bool', 'fsm_bool', 'eal_bool']
+
+        # Convert the specified columns to bool
+        df[columns_to_convert] = df[columns_to_convert].astype(int)
+    except KeyError:
+        print('error')
 
     # If the subject is 'science_double', drop columns with '2nd' in their names
     if subject == 'science_double':
         df.drop(columns=df.columns[df.columns.str.contains('2nd')], inplace=True)
-        
 
     file_name = f'{subject}.csv'
     output_directory = '/workspaces/subject_predictions/model_csvs'
     file_path = os.path.join(output_directory, file_name)
     df.to_csv(file_path, index=False)
     print(f'{subject} saved')
+
 
 
 

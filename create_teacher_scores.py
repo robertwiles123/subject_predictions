@@ -20,7 +20,6 @@ for subject in subjects:
 
     # Find columns in the DataFrame that match a specific pattern
     matching_columns = [col for col in df.columns if re.match(regex_pattern, col)]
-    print(matching_columns)
 
     # Check if the matching columns were found in the DataFrame
     if matching_columns:

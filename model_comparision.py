@@ -28,13 +28,8 @@ except NameError:
 if len(metric_names) == 0:
     metric_names = ['MSE', 'RMSE', 'R2', 'Mean Absolute Error']
 
-if df1.equals(df2):
-    df1_metrics = df1[metric_names].values
-    df2_metrics = df2[['mae_unrounded', 'mse_unrounded', 'rmse_unrounded', 'r2_unrounded']].values
-else:
-    # Extract the performance metrics as NumPy arrays
-    df1_metrics = df1[metric_names].values
-    df2_metrics = df2[metric_names].values
+df1_metrics = df1[metric_names].values
+df2_metrics = df2[metric_names].values
 
 # Calculate the differences in performance metrics
 differences = df1_metrics - df2_metrics
@@ -61,5 +56,5 @@ selected_metrics = [metric for i, metric in enumerate(metric_names) if p_value_w
 average_scores = np.mean(df1_metrics[:, [i for i, metric in enumerate(metric_names) if metric in selected_metrics]], axis=1)
 
 # Report individual metrics and their averages
-for metric in selected_metrics:
+for metric in metric_names:
     print(f"{metric}: df1={df1_metrics[:, metric_names.index(metric)].mean():.4f}, df2={df2_metrics[:, metric_names.index(metric)].mean():.4f}")

@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-from sklearn.linear_model import Ridge
-# from sklearn.ensemble import RandomForestRegressor
+# from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 # import xgboost as xgb
-# from sklearn.svm import SVR
+#from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, confusion_matrix, accuracy_score
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -32,7 +32,7 @@ for subject in subjects:
     predictor = pd.read_csv('model_csvs/' + subject_model)
 
     # Remove the 'upn' column from the dataset
-    predictor.drop(columns=['upn'], inplace=True)
+    predictor.drop(columns=['upn', 'sen_bool', 'eal_bool', 'pp_bool', 'fsm_bool'], inplace=True)
 
     # Create an empty DataFrame to store encoded columns
     encoded_columns = pd.DataFrame()
@@ -42,7 +42,8 @@ for subject in subjects:
         if 'btec' in subject or 'tech_' in subject:
             # Map grades for certain subjects
             grade_mapping = subject_list.grades_mapped()
-            if re.match(rf'{subject}.*_(ap1|ap2|real)', col):
+            if re.match(rf'{subject}.*', col):
+                print(col)
                 encoded_columns[col] = predictor[col].map(grade_mapping)
         if col == 'gender_ap2':
             # One-hot encode the 'gender_ap2' column
@@ -98,11 +99,6 @@ for subject in subjects:
     print('Cross-validation scores:', scores)
     print(f'Mean cross-validation scores: {cross_val_mean}')
 
-    mae_unrounded = mean_absolute_error(y_test, y_pred)
-    mse_unrounded = mean_squared_error(y_test, y_pred)
-    rmse_unrounded = mean_squared_error(y_test, y_pred, squared=False)
-    r2_unrounded = r2_score(y_test, y_pred)
-
     # Dictionary to save scores
     scores_dict = {
         'subject': subject,
@@ -110,12 +106,8 @@ for subject in subjects:
         'RMSE': rmse,
         'R2': r2,
         'Mean Absolute Error': mae,
-        'Cross-validation': scores,
-        'Mean cross-validation': cross_val_mean,
-        'mae_unrounded': mae_unrounded,
-        'mse_unrounded': mse_unrounded,
-        'rmse_unrounded': rmse_unrounded,
-        'r2_unrounded': r2_unrounded,
+        'Cross-validation': scores,  # Convert to list
+        'Mean cross-validation': cross_val_mean  # Store the mean value directly
     }
 
     # Load an existing scores CSV file
@@ -150,7 +142,6 @@ for subject in subjects:
     
     # Calculate accuracy for model predictions
     model_accuracy = accuracy_score(true_grades, model_predictions)
-
     # Calculate accuracy for teacher predictions
     teacher_accuracy = accuracy_score(true_grades, teacher_predictions)
 
@@ -201,7 +192,7 @@ for subject in subjects:
     # Save the trained model as a joblib file
     joblib.dump(model, f'models/{subject}_{model_name}.pkl')
 
-    print('Model saved')
+    print(f'{subject} Model saved')
     conf_matrix = confusion_matrix(y_test, y_pred_true)
 
     sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues")

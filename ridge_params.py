@@ -3,12 +3,21 @@ import re
 from sklearn.linear_model import Ridge
 from sklearn.model_selection import GridSearchCV
 import subject_list
+import numpy as np
+from sklearn.metrics import make_scorer, mean_squared_error
 
 # Define a list of subjects
 subjects = subject_list.prediction_subjects()
 
 # Create a DataFrame to store the alpha scores
 alpha_scores = []
+
+def rmse_scorer(y_true, y_pred):
+    mse = mean_squared_error(y_true, y_pred)
+    return np.sqrt(mse)
+
+# Create a scorer from the custom RMSE scorer
+rmse_scorer = make_scorer(rmse_scorer, greater_is_better=False)
 
 # Loop through the subjects
 for subject in subjects:
@@ -18,7 +27,7 @@ for subject in subjects:
     subject_model = subject + '.csv'
     predictor = pd.read_csv('model_csvs/' + subject_model)
 
-    predictor.drop(columns=['upn'], inplace=True)
+    predictor.drop(columns=['upn', 'sen_bool', 'eal_bool', 'pp_bool', 'fsm_bool'], inplace=True)
 
     # Create an empty DataFrame to store the encoded columns
     encoded_columns = pd.DataFrame()
@@ -26,7 +35,7 @@ for subject in subjects:
     for col in predictor.columns:
         if 'btec' in subject or 'tech_' in subject:
             grade_mapping = subject_list.grades_mapped()
-            if re.match(rf'{subject}.*_(ap1|ap2|real)', col):
+            if re.match(rf'{subject}.*', col):
                 encoded_columns[col] = predictor[col].map(grade_mapping)
         if col == 'gender_ap2':
             # Use pd.get_dummies for the gender column
@@ -53,20 +62,27 @@ for subject in subjects:
     y = y.values.ravel()
 
     # Define a range of alpha values to search
-    alphas = [0.01, 0.1, 1.0, 10.0]
+    alphas = [0, 0.001, 0.01, 0.1, 1.0, 10.0, 100]
  # Create the Ridge regression model
     ridge = Ridge()
 
     # Perform grid search to find the best alpha
     param_grid = {'alpha': alphas}
-    grid_search = GridSearchCV(ridge, param_grid, cv=5, scoring='r2')  # You can change the scoring metric
-    grid_search.fit(X, y)
+    grid_search = GridSearchCV(ridge, param_grid, cv=5, scoring=rmse_scorer)  # You can change the scoring metric
+    y_rounded = np.round(y)
+    grid_search.fit(X, y_rounded)
 
     # Get the best alpha from the grid search
     best_alpha = grid_search.best_params_['alpha']
-
+    ridge = Ridge(alpha=best_alpha)
     # Append the results to the list
-    alpha_scores.append({'Subject': subject, 'Alpha': best_alpha})
+    alpha_scores.append({'subject': subject, 'alpha': best_alpha})
+    ridge.fit(X, y)
+    feature_coefficients = ridge.coef_
+    feature_names = X.columns.tolist()
+    print(subject)
+    for feature, coefficient in zip(feature_names, ridge.coef_):
+        print(f"{feature}: {coefficient:.4f}")
 
 # Create a DataFrame from the list
 alpha_scores_df = pd.DataFrame(alpha_scores)
