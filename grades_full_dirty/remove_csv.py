@@ -13,7 +13,7 @@ if delete[0].lower() == 'y':
 
         # Loop through the files and remove .csv files
         for file in files:
-            if file.endswith(".csv"):
+            if file.endswith(".xlsx"):
                 file_path = os.path.join(current_directory, file)
                 os.remove(file_path)
         print(f"Removed file: {file_path}")

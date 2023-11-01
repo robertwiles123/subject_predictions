@@ -39,13 +39,8 @@ ax.set_ylabel('Error Values')
 ax.set_title(f'{model.capitalize()} MAE and RMSE by Subject')
 ax.legend()
 # line to show average MSE
-<<<<<<< HEAD
-plt.axhline(y=0.8603, color='blue', linestyle='--', label='Teacher MAE')
-plt.axhline(y=1.1838, color='red', linestyle='--', label='Teacher RMSE')
-=======
-plt.axhline(y=1.5508, color='blue', linestyle='--', label='Teacher MSE')
-plt.axhline(y=1.2085, color='red', linestyle='--', label='Teacher RMSE')
->>>>>>> fd2f2d3 (Stopping github removing code space)
+plt.axhline(y=0.4216, color='blue', linestyle='--', label='Teacher MAE')
+plt.axhline(y=0.8203, color='red', linestyle='--', label='Teacher RMSE')
 
 # Show the plot
 plt.tight_layout()
@@ -79,7 +74,7 @@ ax.set_xlabel('Subjects')
 ax.set_ylabel('R2 Score')
 ax.set_title(f'{model.capitalize()} R2 Score by Subject')
 
-plt.axhline(y=0.6636, color='blue', linestyle='--', label='Teacher R2')
+plt.axhline(y=0.8126, color='blue', linestyle='--', label='Teacher R2')
 
 # Adjust the layout
 plt.tight_layout()

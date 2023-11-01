@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-# from sklearn.linear_model import LinearRegression
+# from sklearn.linear_model import BayesianRidge
 from sklearn.ensemble import RandomForestRegressor
 # import xgboost as xgb
 #from sklearn.svm import SVR
@@ -32,7 +32,7 @@ for subject in subjects:
     predictor = pd.read_csv('model_csvs/' + subject_model)
 
     # Remove the 'upn' column from the dataset
-    predictor.drop(columns=['upn', 'sen_bool', 'eal_bool', 'pp_bool', 'fsm_bool'], inplace=True)
+    predictor.drop(columns=['upn'], inplace=True)
 
     # Create an empty DataFrame to store encoded columns
     encoded_columns = pd.DataFrame()
@@ -45,7 +45,7 @@ for subject in subjects:
             if re.match(rf'{subject}.*', col):
                 print(col)
                 encoded_columns[col] = predictor[col].map(grade_mapping)
-        if col == 'gender_ap2':
+        if col in subject_list.columns_encode():
             # One-hot encode the 'gender_ap2' column
             gender_encoded = pd.get_dummies(predictor[col], prefix=col)
             encoded_columns = pd.concat([encoded_columns, gender_encoded], axis=1)
@@ -70,7 +70,7 @@ for subject in subjects:
         y = y.values.ravel()
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=27)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=27)
 
     # Fit the model
     model.fit(X_train, y_train)
@@ -138,6 +138,7 @@ for subject in subjects:
     true_grades = np.array(true_grades).astype(int)
     model_predictions = y_pred_true
     model_predictions = np.array(model_predictions).astype(int)
+
     teacher_predictions = X_test.filter(regex=f'{subject}.*_ap2').values
     
     # Calculate accuracy for model predictions

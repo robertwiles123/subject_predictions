@@ -29,7 +29,7 @@ for subject in subjects:
     subject_model = subject + '.csv'
     predictor = pd.read_csv('model_csvs/' + subject_model)
 
-    predictor.drop(columns=['upn', 'eal_bool', 'pp_bool', 'fsm_bool', 'pp_bool', 'sen_bool'], inplace=True)
+    predictor.drop(columns=['upn'], inplace=True)
 
     # Create an empty DataFrame to store the encoded columns
     encoded_columns = pd.DataFrame()
@@ -39,7 +39,7 @@ for subject in subjects:
             grade_mapping = subject_list.grades_mapped()
             if re.match(rf'{subject}.*_(ap1|ap2|real)', col):
                 encoded_columns[col] = predictor[col].map(grade_mapping)
-        if col == 'gender_ap2':
+        if col in subject_list.columns_encode():
             # Use pd.get_dummies for the gender column
             gender_encoded = pd.get_dummies(predictor[col], prefix=col)
             encoded_columns = pd.concat([encoded_columns, gender_encoded], axis=1)

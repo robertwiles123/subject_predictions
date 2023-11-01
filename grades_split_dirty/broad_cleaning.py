@@ -10,7 +10,7 @@ import subject_list
 
 csv_files = [file for file in os.listdir() if file.endswith(".csv")]
 
-years = ['2122','2223']
+years = ['1819', '2122','2223']
 
 # Define a list of subjects using a function from the subject_list module
 subjects = subject_list.full_subjects()
@@ -102,8 +102,8 @@ for subject, df in combined_dataframes.items():
 
     # Apply the custom function to the 'SEN' column and create a new 'SEN_bool' column
     try:
-        df['sen_bool'] = df['sen_real'].apply(map_to_boolean)
-        df.drop('sen_real', axis=1, inplace=True)
+        """df['sen_bool'] = df['sen_real'].apply(map_to_boolean)
+        df.drop('sen_real', axis=1, inplace=True)"""
 
         df['pp_bool'] = df['pp_real'].apply(map_to_boolean)
         df.drop('pp_real', axis=1, inplace=True)
@@ -114,7 +114,7 @@ for subject, df in combined_dataframes.items():
         df['eal_bool'] = df['eal_real'].apply(map_to_boolean)
         df.drop('eal_real', axis=1, inplace=True)
 
-        columns_to_convert = ['sen_bool', 'pp_bool', 'fsm_bool', 'eal_bool']
+        columns_to_convert = ['pp_bool', 'fsm_bool', 'eal_bool']
 
         # Convert the specified columns to bool
         df[columns_to_convert] = df[columns_to_convert].astype(int)

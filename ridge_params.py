@@ -21,13 +21,14 @@ rmse_scorer = make_scorer(rmse_scorer, greater_is_better=False)
 
 # Loop through the subjects
 for subject in subjects:
+    print(subject)
     # regex for none standard grade endings
     regex_pattern = re.compile(rf'{subject}.*_real')
     # Load the data for the model
     subject_model = subject + '.csv'
     predictor = pd.read_csv('model_csvs/' + subject_model)
 
-    predictor.drop(columns=['upn', 'sen_bool', 'eal_bool', 'pp_bool', 'fsm_bool'], inplace=True)
+    predictor.drop(columns=['upn'], inplace=True)
 
     # Create an empty DataFrame to store the encoded columns
     encoded_columns = pd.DataFrame()
@@ -37,7 +38,7 @@ for subject in subjects:
             grade_mapping = subject_list.grades_mapped()
             if re.match(rf'{subject}.*', col):
                 encoded_columns[col] = predictor[col].map(grade_mapping)
-        if col == 'gender_ap2':
+        if col in subject_list.columns_encode():
             # Use pd.get_dummies for the gender column
             gender_encoded = pd.get_dummies(predictor[col], prefix=col)
             encoded_columns = pd.concat([encoded_columns, gender_encoded], axis=1)
@@ -80,7 +81,7 @@ for subject in subjects:
     ridge.fit(X, y)
     feature_coefficients = ridge.coef_
     feature_names = X.columns.tolist()
-    print(subject)
+
     for feature, coefficient in zip(feature_names, ridge.coef_):
         print(f"{feature}: {coefficient:.4f}")
 
