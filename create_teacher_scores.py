@@ -13,7 +13,7 @@ subjects = subject_list.prediction_subjects()
 # Iterate through each subject
 for subject in subjects:
     # Read a CSV file for the current subject
-    df = pd.read_csv(f'model_csvs/{subject}.csv')
+    df = pd.read_csv(f'model_csvs/{subject}_2223.csv')
     print(f'subject: {subject}')
     escaped_subject = re.escape(subject)
     regex_pattern = fr'^{escaped_subject}.*?_ap2$'

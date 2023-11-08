@@ -121,6 +121,11 @@ for subject, df in combined_dataframes.items():
     except KeyError:
         print('error')
 
+    try:
+        df.drop(columns='fft.1', inplace=True)
+    except KeyError:
+        pass
+
     # If the subject is 'science_double', drop columns with '2nd' in their names
     if subject == 'science_double':
         df.drop(columns=df.columns[df.columns.str.contains('2nd')], inplace=True)

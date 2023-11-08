@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, learning_curve, KFold, cross_val_score
-# from sklearn.linear_model import BayesianRidge
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import Ridge
+# from sklearn.ensemble import RandomForestRegressor
 # import xgboost as xgb
 #from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error, confusion_matrix, accuracy_score
@@ -40,10 +40,8 @@ for subject in subjects:
     # Iterate over columns in the dataset
     for col in predictor.columns:
         if 'btec' in subject or 'tech_' in subject:
-            # Map grades for certain subjects
-            grade_mapping = subject_list.grades_mapped()
-            if re.match(rf'{subject}.*', col):
-                print(col)
+            if re.match(rf'{subject}.*', col) or col == 'fft':
+                grade_mapping = subject_list.grades_mapped()
                 encoded_columns[col] = predictor[col].map(grade_mapping)
         if col in subject_list.columns_encode():
             # One-hot encode the 'gender_ap2' column
@@ -139,19 +137,22 @@ for subject in subjects:
     model_predictions = y_pred_true
     model_predictions = np.array(model_predictions).astype(int)
 
-    teacher_predictions = X_test.filter(regex=f'{subject}.*_ap2').values
-    
+    teacher_predictions_full = X_test.filter(regex=f'{subject}.*_ap2').values
+
     # Calculate accuracy for model predictions
     model_accuracy = accuracy_score(true_grades, model_predictions)
     # Calculate accuracy for teacher predictions
-    teacher_accuracy = accuracy_score(true_grades, teacher_predictions)
+    teacher_df = pd.read_csv(f'model_csvs/{subject}_2223.csv')
+    teacher_predictions = teacher_df[f'{subject}_ap2']
+    teacher_true = teacher_df[f'{subject}_real']
+    teacher_accuracy = accuracy_score(teacher_true, teacher_predictions)
 
     # Count predictions off by one or two or more
     off_by_one_model = sum(abs(true - pred) == 1 for true, pred in zip(true_grades, model_predictions))
     off_by_more_than_two_model = sum(abs(true - pred) > 2 for true, pred in zip(true_grades, model_predictions))
 
-    off_by_one_teacher = sum(abs(true - pred) == 1 for true, pred in zip(true_grades, teacher_predictions))
-    off_by_more_than_two_teacher = sum(abs(true - pred) > 2 for true, pred in zip(true_grades, teacher_predictions))
+    off_by_one_teacher = sum(abs(true - pred) == 1 for true, pred in zip(true_grades, teacher_predictions_full))
+    off_by_more_than_two_teacher = sum(abs(true - pred) > 2 for true, pred in zip(true_grades, teacher_predictions_full))
 
     results.append({
         "subject": subject,

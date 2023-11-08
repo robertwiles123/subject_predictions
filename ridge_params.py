@@ -35,11 +35,11 @@ for subject in subjects:
 
     for col in predictor.columns:
         if 'btec' in subject or 'tech_' in subject:
-            grade_mapping = subject_list.grades_mapped()
-            if re.match(rf'{subject}.*', col):
+            if re.match(rf'{subject}.*', col) or col == 'fft':
+                grade_mapping = subject_list.grades_mapped()
                 encoded_columns[col] = predictor[col].map(grade_mapping)
         if col in subject_list.columns_encode():
-            # Use pd.get_dummies for the gender column
+            # One-hot encode the 'gender_ap2' column
             gender_encoded = pd.get_dummies(predictor[col], prefix=col)
             encoded_columns = pd.concat([encoded_columns, gender_encoded], axis=1)
         else:
