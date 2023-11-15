@@ -8,23 +8,64 @@ import subject_list
 
 years = ['1819' ,'2122', '2223']
 
+date_formats = [
+    r'%d/%m/%Y %H:%M:%S',
+    r'%d/%m/%Y',
+    r'%d/%m/%Y %H:%M:%S',
+    r'%d/%m/%Y',
+    r'%d/%m/%Y %H:%M:%S',
+    r'%d/%m/%Y %H:%M:%S',
+    # Add more date formats as needed
+]
+
+# Function to parse dates using multiple formats
+def parse_dates(date_str):
+    for fmt in date_formats:
+        try:
+            return pd.to_datetime(date_str, format=fmt)
+        except ValueError:
+            pass
+    return pd.NaT
 
     # to ensure there is no issues with the columns names
 def clean_column_names(df):
     df.columns = df.columns.astype(str).str.strip().str.lower().str.replace(' ', '_').str.replace('(', '').str.replace(')', '')
 for year in years:
 
-    ap1 = pd.read_excel(f'Y11 {year} Ap1 MLG P8.xlsx', header=1)
-    ap2 = pd.read_excel(f'Y11 {year} Ap2 MLG P8.xlsx', header=1)
-    p8 = pd.read_excel(f'Y11 {year} Actual Results P8.xlsx', header=1)
-    fft = pd.read_excel(f'y11 {year} FFT20.xlsx', header=1)
+    ap1 = pd.read_excel(f'subject_predictions/Y11 {year} Ap1 MLG P8.xlsx', header=1)
+    ap2 = pd.read_excel(f'subject_predictions/Y11 {year} Ap2 MLG P8.xlsx', header=1)
+    p8 = pd.read_excel(f'subject_predictions/Y11 {year} Actual Results P8.xlsx', header=1)
+    fft = pd.read_excel(f'subject_predictions/y11 {year} FFT20.xlsx', header=1)
     
     dataframes = (ap1, ap2, p8, fft)
     
     for df in dataframes:
         clean_column_names(df)
 
-    columns_to_remove = ['ethnicity_code', 'fsm', 'sen', 'pp', 'eal']
+    p8['post_code'] = p8['post_code'].str.split().str[0]
+
+    mode_post_code = p8['post_code'].mode().iloc[0]
+
+    # Fill NaN values with the mode post code
+    p8['post_code'].fillna(mode_post_code, inplace=True)
+
+    p8['dob'] = p8['dob'].apply(parse_dates)
+
+    # Extract month and create a new column
+    p8['dob'] = p8['dob'].dt.month
+
+    median_dob = p8['dob'].median()
+
+    # Round the median to the nearest whole number
+    median_dob_rounded = round(median_dob)
+
+    # Fill NaN values with the rounded median
+    p8['dob'].fillna(median_dob_rounded, inplace=True)
+
+    # Convert the 'dob' column to integer type
+    p8['dob'] = p8['dob'].astype(int)
+
+    columns_to_remove = ['ethnicity_code', 'fsm', 'sen', 'pp', 'eal', 'dob', 'post_code']
 
     # Remove the specified columns from ap1 and ap2 dataframes
     ap1 = ap1.drop(columns=columns_to_remove)
@@ -49,7 +90,6 @@ for year in years:
     # Give the remaining columns a suffix "_real"
     p8.columns = ['upn'] + [f'{col}_real' for col in p8.columns if col != 'upn']
 
-
     #merge real grades with the outcomes
     full = pd.merge(full, p8, on='upn', how='outer')
 
@@ -65,15 +105,28 @@ for year in years:
         subject_pattern = f'{subject}.*'
         
         # Select columns using regex pattern and add common columns
-        selected_columns  = ['upn', 'gender_ap2', 'fsm_real', 'sen_real', 'pp_real', 'eal_real', 'ethnicity_code_real', 'first_language_real'] + [col for col in full.columns if re.search(subject_pattern, col)]
+        selected_columns  = ['upn', 'gender_ap2', 'fsm_real', 'sen_real', 'pp_real', 'eal_real', 'ethnicity_code_real', 'first_language_real', 'dob_real', 'post_code_real'] + [col for col in full.columns if re.search(subject_pattern, col)]
         
         columns_to_select = [col for col in selected_columns if col in full.columns]
 
         # Create the DataFrame for the subject
         subject_df = full[columns_to_select]
-        
+         # Find the columns in the fft DataFrame that match the subject pattern
+        fft_subject_columns = [col for col in fft.columns if re.search(subject_pattern, col)]
+        try:
+            fft['fft'] = fft[fft_subject_columns]
+            fft.drop(columns=fft_subject_columns, inplace=True)
+        except ValueError:
+            print('fft empty')
+        # Merge the subject_dataframe with the selected columns from the fft DataFrame based on the 'upn' column
+        try:
+            merged_df = pd.merge(subject_df, fft[['upn', 'fft']], on='upn', how='inner')
+            
+        except KeyError:
+            merged_df = subject_df.copy()
+ 
         # Add the subject DataFrame to the dictionary with a key based on the subject
-        subject_dataframes[subject] = subject_df
+        subject_dataframes[subject] = merged_df
     # Access individual DataFrames dynamically by subject name
     for subject in subjects:
         globals()[f'{subject}_df'] = subject_dataframes[subject]

@@ -66,4 +66,4 @@ def removed_subjects():
     return ['d_&_t_product_design', 'd_&_t_textiles_technology']
 
 def columns_encode():
-    return ['ethnicity_code_real', 'gender_ap2','sen_real']
+    return ['ethnicity_code_real', 'gender_ap2','sen_real', 'post_code_real']
